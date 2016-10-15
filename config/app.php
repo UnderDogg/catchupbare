@@ -337,11 +337,15 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
 //        Zofe\Rapyd\RapydServiceProvider::class,
         Baum\Providers\BaumServiceProvider::class,
-        Sroutier\LESKModules\ModulesServiceProvider::class,
-        Mgallegos\LaravelJqgrid\LaravelJqgridServiceProvider::class,
-        Creativeorange\Gravatar\GravatarServiceProvider::class,
+        //Sroutier\LESKModules\ModulesServiceProvider::class,
+        //Mgallegos\LaravelJqgrid\LaravelJqgridServiceProvider::class,
+        //Creativeorange\Gravatar\GravatarServiceProvider::class,
         //Tylercd100\LERN\LERNServiceProvider::class,
         Arcanedev\Settings\SettingsServiceProvider::class,
+
+        Caffeinated\Modules\ModulesServiceProvider::class,
+
+
 
     ],
 
@@ -398,10 +402,11 @@ return [
         'Theme'       => YAAP\Theme\Facades\Theme::class,
         'Entrust'     => Zizaco\Entrust\EntrustFacade::class,
         'MenuBuilder' => App\Facades\MenuBuilderFacade::class,
-        'Module'      => Sroutier\LESKModules\Facades\Module::class,
-        'GridRender'  => Mgallegos\LaravelJqgrid\Facades\GridRender::class,
-        'GridEncoder' => Mgallegos\LaravelJqgrid\Facades\GridEncoder::class,
-        'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
+        'Module'      => Caffeinated\Modules\Facades\Module::class,
+        //'Module'      => Sroutier\LESKModules\Facades\Module::class,
+        //'GridRender'  => Mgallegos\LaravelJqgrid\Facades\GridRender::class,
+        //'GridEncoder' => Mgallegos\LaravelJqgrid\Facades\GridEncoder::class,
+        //'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
         //'LERN'        => Tylercd100\LERN\Facades\LERN::class,
         // Commented out to force the usage of the Setting model located at app/Models/Setting.php
 //        'Setting'     => Arcanedev\Settings\Facades\Setting::class,
