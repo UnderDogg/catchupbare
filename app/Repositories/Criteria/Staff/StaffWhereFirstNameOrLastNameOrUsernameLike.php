@@ -1,9 +1,9 @@
-<?php namespace App\Repositories\Criteria\User;
+<?php namespace App\Repositories\Criteria\Staff;
 
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
-class UsersWhereFirstNameOrLastNameOrUsernameLike extends Criteria {
+class StaffWhereFirstNameOrLastNameOrStaffnameLike extends Criteria {
 
     private $str;
 

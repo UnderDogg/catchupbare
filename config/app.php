@@ -133,17 +133,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Permission and User relationship table
+    | Permission and Staff relationship table
     |--------------------------------------------------------------------------
     |
-    | This is the permission_user table used to save relationship
-    | between permissions and users to the database.
+    | This is the permission_staff table used to save relationship
+    | between permissions and staff to the database.
     |
     | See: 'config/entrust.php'
     |
     */
 
-    'permission_user_table' => 'permission_user',
+    'permission_staff_table' => 'permission_staff',
 
     /*
     |--------------------------------------------------------------------------
@@ -153,7 +153,7 @@ return [
     | The name of the route that requests will be redirected to when calling
     | the 'home' or '/' route.
     | This setting defaults to the 'welcome' route and it will be checked against
-    | the users permission before redirecting, if the user does not have the
+    | the staff permission before redirecting, if the staff does not have the
     | permission required to see the configured home route, the 'welcome'
     | route will be selected.
     |
@@ -214,7 +214,7 @@ return [
     | Allow registration
     |--------------------------------------------------------------------------
     |
-    | Boolean flag that allows users to register themselves, defaults to true.
+    | Boolean flag that allows staff to register themselves, defaults to true.
     |
     */
     'allow_registration' => env('APP.ALLOW_REGISTRATION', true),
@@ -241,23 +241,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Extended user menu
+    | Extended staff menu
     |--------------------------------------------------------------------------
     |
-    | Boolean flag that shows extended user menu boilerplate, defaults to true.
+    | Boolean flag that shows extended staff menu boilerplate, defaults to true.
     |
     */
-    'extended_user_menu' => env('APP.EXTENDED_USER_MENU', true),
+    'extended_staff_menu' => env('APP.EXTENDED_USER_MENU', true),
 
     /*
     |--------------------------------------------------------------------------
-    | User profile link
+    | Staff profile link
     |--------------------------------------------------------------------------
     |
-    | Boolean flag that shows the user profile link boilerplate, defaults to true.
+    | Boolean flag that shows the staff profile link boilerplate, defaults to true.
     |
     */
-    'user_profile_link' => env('APP.USER_PROFILE_LINK', true),
+    'staff_profile_link' => env('APP.USER_PROFILE_LINK', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -300,7 +300,7 @@ return [
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        Illuminate\Routing\ControllerServiceProvider::class,
+        //Illuminate\Routing\ControllerServiceProvider::class,
         Illuminate\Cookie\CookieServiceProvider::class,
         Illuminate\Database\DatabaseServiceProvider::class,
         Illuminate\Encryption\EncryptionServiceProvider::class,
@@ -327,7 +327,7 @@ return [
         App\Providers\MenuBuilderServiceProvider::class,
         App\Providers\CustomBladeServiceProvider::class,
 
-        Sroutier\EloquentLDAP\Providers\EloquentLDAPServiceProvider::class,
+        //Sroutier\EloquentLDAP\Providers\EloquentLDAPServiceProvider::class,
 
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
@@ -340,7 +340,7 @@ return [
         Sroutier\LESKModules\ModulesServiceProvider::class,
         Mgallegos\LaravelJqgrid\LaravelJqgridServiceProvider::class,
         Creativeorange\Gravatar\GravatarServiceProvider::class,
-        Tylercd100\LERN\LERNServiceProvider::class,
+        //Tylercd100\LERN\LERNServiceProvider::class,
         Arcanedev\Settings\SettingsServiceProvider::class,
 
     ],
@@ -402,7 +402,7 @@ return [
         'GridRender'  => Mgallegos\LaravelJqgrid\Facades\GridRender::class,
         'GridEncoder' => Mgallegos\LaravelJqgrid\Facades\GridEncoder::class,
         'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
-        'LERN'        => Tylercd100\LERN\Facades\LERN::class,
+        //'LERN'        => Tylercd100\LERN\Facades\LERN::class,
         // Commented out to force the usage of the Setting model located at app/Models/Setting.php
 //        'Setting'     => Arcanedev\Settings\Facades\Setting::class,
 

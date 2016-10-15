@@ -1,17 +1,10 @@
-<?php namespace App\Repositories\Criteria\User;
+<?php namespace App\Repositories\Criteria\Staff;
 
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
-class UserWhereEmailEquals extends Criteria {
+class StaffWithRoles extends Criteria {
 
-    private $str;
-
-
-    public function __construct($str)
-    {
-        $this->str = $str;
-    }
 
     /**
      * @param $model
@@ -21,7 +14,7 @@ class UserWhereEmailEquals extends Criteria {
      */
     public function apply( $model, Repository $repository )
     {
-        $model = $model->where('email', '=', $this->str);
+        $model = $model->with('roles');
         return $model;
     }
 

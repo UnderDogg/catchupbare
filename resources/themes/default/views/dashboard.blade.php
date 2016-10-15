@@ -41,7 +41,7 @@
                                 <div class="description-block">
                                     <div class="sparkbar pad" data-color="#fff">82,66,40,89,21,53,78,28,62,54</div>
                                     <h5 class="description-header">70%</h5>
-                                    <span class="description-text">Unique users</span>
+                                    <span class="description-text">Unique staff</span>
                                 </div><!-- /.description-block -->
                             </div>
                         </div><!-- /.col -->
@@ -83,59 +83,59 @@
             <!-- USERS LIST -->
             <div class="box box-danger">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Online Users</h3>
+                    <h3 class="box-title">Online Staff</h3>
                     <div class="box-tools pull-right">
-                        <span class="label label-danger">15 users online</span>
+                        <span class="label label-danger">15 staff online</span>
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body no-padding">
-                    <ul class="users-list clearfix">
+                    <ul class="staff-list clearfix">
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user1-128x128.jpg") }}" alt="User Image">
-                            <a class="users-list-name" href="#">Alexander Pierce</a>
-                            <span class="users-list-date">Today</span>
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff1-128x128.jpg") }}" alt="Staff Image">
+                            <a class="staff-list-name" href="#">Alexander Pierce</a>
+                            <span class="staff-list-date">Today</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user8-128x128.jpg") }}" alt="User Image">
-                            <a class="users-list-name" href="#">Norman</a>
-                            <span class="users-list-date">Yesterday</span>
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff8-128x128.jpg") }}" alt="Staff Image">
+                            <a class="staff-list-name" href="#">Norman</a>
+                            <span class="staff-list-date">Yesterday</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user7-128x128.jpg") }}" alt="User Image">
-                            <a class="users-list-name" href="#">Jane</a>
-                            <span class="users-list-date">12 Jan</span>
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff7-128x128.jpg") }}" alt="Staff Image">
+                            <a class="staff-list-name" href="#">Jane</a>
+                            <span class="staff-list-date">12 Jan</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user6-128x128.jpg") }}" alt="User Image">
-                            <a class="users-list-name" href="#">John</a>
-                            <span class="users-list-date">12 Jan</span>
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff6-128x128.jpg") }}" alt="Staff Image">
+                            <a class="staff-list-name" href="#">John</a>
+                            <span class="staff-list-date">12 Jan</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user2-160x160.jpg") }}" alt="User Image">
-                            <a class="users-list-name" href="#">Alexander</a>
-                            <span class="users-list-date">13 Jan</span>
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff2-160x160.jpg") }}" alt="Staff Image">
+                            <a class="staff-list-name" href="#">Alexander</a>
+                            <span class="staff-list-date">13 Jan</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user5-128x128.jpg") }}" alt="User Image">
-                            <a class="users-list-name" href="#">Sarah</a>
-                            <span class="users-list-date">14 Jan</span>
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff5-128x128.jpg") }}" alt="Staff Image">
+                            <a class="staff-list-name" href="#">Sarah</a>
+                            <span class="staff-list-date">14 Jan</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user4-128x128.jpg") }}" alt="User Image">
-                            <a class="users-list-name" href="#">Nora</a>
-                            <span class="users-list-date">15 Jan</span>
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff4-128x128.jpg") }}" alt="Staff Image">
+                            <a class="staff-list-name" href="#">Nora</a>
+                            <span class="staff-list-date">15 Jan</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user3-128x128.jpg") }}" alt="User Image">
-                            <a class="users-list-name" href="#">Nadia</a>
-                            <span class="users-list-date">15 Jan</span>
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff3-128x128.jpg") }}" alt="Staff Image">
+                            <a class="staff-list-name" href="#">Nadia</a>
+                            <span class="staff-list-date">15 Jan</span>
                         </li>
-                    </ul><!-- /.users-list -->
+                    </ul><!-- /.staff-list -->
                 </div><!-- /.box-body -->
                 <div class="box-footer text-center">
-                    <a href="javascript::" class="uppercase">View All Users</a>
+                    <a href="javascript::" class="uppercase">View All Staff</a>
                 </div><!-- /.box-footer -->
             </div>
 
@@ -254,7 +254,7 @@
             //String - A legend template
             legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
             //String - A tooltip template
-            tooltipTemplate: "<%=value %> <%=label%> users"
+            tooltipTemplate: "<%=value %> <%=label%> staff"
         };
         //Create pie or douhnut chart
         // You can switch between pie and douhnut using the method below.

@@ -20,7 +20,7 @@ return array(
     | Path to exempt from the walled garden
     |--------------------------------------------------------------------------
     |
-    | List of path to exempt from the walled garden. To allow users to login,
+    | List of path to exempt from the walled garden. To allow staff to login,
     | register, recover passwords or debug.
     |
     */

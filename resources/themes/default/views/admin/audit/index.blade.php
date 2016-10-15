@@ -4,7 +4,7 @@
     <div class='row'>
         <div class='col-md-12'>
             <!-- Box -->
-            {!! Form::open( array('route' => 'admin.audit.purge', 'id' => 'frmUserList') ) !!}
+            {!! Form::open( array('route' => 'admin.audit.purge', 'id' => 'frmStaffList') ) !!}
                 <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ trans('admin/audit/general.page.index.table-title') }}</h3>
@@ -38,10 +38,10 @@
                             <tbody>
                                 @foreach($audits as $audit)
                                     <tr>
-                                        <td>{{ ($audit->user) ? $audit->user->username : "N/A" }}</td>
+                                        <td>{{ ($audit->staff) ? $audit->staff->username : "N/A" }}</td>
                                         <td>{{ $audit->category }}</td>
                                         <td>{{ $audit->message }}</td>
-                                        <td>@userTimeZone($audit->created_at)</td>
+                                        <td>@staffTimeZone($audit->created_at)</td>
                                         <td>
                                             <a href="{!! route('admin.audit.show', $audit->id) !!}" title="{{ trans('general.button.display') }}"><i id="action-show" class="fa fa-eye"></i></a>
                                             @if ( $audit->replay_route )

@@ -322,7 +322,7 @@ th {
 .glyphicon-star-empty:before {
   content: "\e007";
 }
-.glyphicon-user:before {
+.glyphicon-staff:before {
   content: "\e008";
 }
 .glyphicon-film:before {
@@ -2999,10 +2999,10 @@ select[multiple].form-group-lg .form-control {
   -ms-touch-action: manipulation;
       touch-action: manipulation;
   cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -webkit-staff-select: none;
+     -moz-staff-select: none;
+      -ms-staff-select: none;
+          staff-select: none;
   background-image: none;
   border: 1px solid transparent;
   border-radius: 4px;

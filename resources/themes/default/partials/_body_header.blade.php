@@ -41,8 +41,8 @@
                                         <li><!-- start message -->
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <!-- User Image -->
-                                                    <img src="{{ asset("/bower_components/admin-lte/dist/img/generic_user_160x160.jpg") }}" class="img-circle" alt="User Image"/>
+                                                    <!-- Staff Image -->
+                                                    <img src="{{ asset("/bower_components/admin-lte/dist/img/generic_staff_160x160.jpg") }}" class="img-circle" alt="Staff Image"/>
                                                 </div>
                                                 <!-- Message title and timestamp -->
                                                 <h4>
@@ -72,7 +72,7 @@
                                     <ul class="menu">
                                         <li><!-- start notification -->
                                             <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                                <i class="fa fa-staff text-aqua"></i> 5 new members joined today
                                             </a>
                                         </li><!-- end notification -->
                                     </ul>
@@ -117,28 +117,28 @@
                         </li>
                     @endif
 
-                    <!-- User Account Menu -->
-                    <li class="dropdown user user-menu">
+                    <!-- Staff Account Menu -->
+                    <li class="dropdown staff staff-menu">
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <!-- The user image in the navbar-->
-                            <img src="{{ Gravatar::get(Auth::user()->email , 'tiny') }}" class="user-image" alt="User Image"/>
+                            <!-- The staff image in the navbar-->
+                            <img src="{{ Gravatar::get(Auth::user()->email , 'tiny') }}" class="staff-image" alt="Staff Image"/>
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{ Auth::user()->username }}</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <!-- The user image in the menu -->
-                            <li class="user-header">
-                                <img src="{{ Gravatar::get(Auth::user()->email , 'medium') }}" class="img-circle" alt="User Image" />
+                            <!-- The staff image in the menu -->
+                            <li class="staff-header">
+                                <img src="{{ Gravatar::get(Auth::user()->email , 'medium') }}" class="img-circle" alt="Staff Image" />
                                 <p>
                                     {{ Auth::user()->full_name }}
                                     <small>Member since {{ Auth::user()->created_at->format("F, Y") }}</small>
                                 </p>
                             </li>
 
-                            @if ( config('app.extended_user_menu') )
+                            @if ( config('app.extended_staff_menu') )
                                 <!-- Menu Body -->
-                                <li class="user-body">
+                                <li class="staff-body">
                                     <div class="col-xs-4 text-center">
                                         <a href="#">Followers</a>
                                     </div>
@@ -152,11 +152,11 @@
                             @endif
 
                             <!-- Menu Footer-->
-                            <li class="user-footer">
+                            <li class="staff-footer">
 
-                                @if ( config('app.user_profile_link') )
+                                @if ( config('app.staff_profile_link') )
                                     <div class="pull-left">
-                                        {!! link_to_route('user.profile', 'Profile', [], ['class' => "btn btn-default btn-flat"]) !!}
+                                        {!! link_to_route('staff.profile', 'Profile', [], ['class' => "btn btn-default btn-flat"]) !!}
                                     </div>
                                 @endif
 

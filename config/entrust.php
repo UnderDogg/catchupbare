@@ -66,13 +66,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Entrust role_user Table
+    | Entrust role_staff Table
     |--------------------------------------------------------------------------
     |
-    | This is the role_user table used by Entrust to save assigned roles to the
+    | This is the role_staff table used by Entrust to save assigned roles to the
     | database.
     |
     */
-    'role_user_table' => 'role_user',
+    'role_staff_table' => 'role_staff',
 
 ];

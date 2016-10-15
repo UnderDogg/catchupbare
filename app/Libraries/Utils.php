@@ -2,7 +2,7 @@
 
 use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
-use App\User;
+use App\Staff;
 use Auth;
 use DateTime;
 use DateTimeZone;
@@ -49,21 +49,21 @@ class Utils
 
     /**
      * Iterate through the flattened array of settings and removes
-     * all user settings. A new array is build and returned.
+     * all staff settings. A new array is build and returned.
      *
-     * User settings are found to start with the 'User" key followed by a number,
+     * Staff settings are found to start with the 'Staff" key followed by a number,
      * both parts are separated by a dot ('.').
      *
      * @param $allSettings
      * @return array
      */
-    public static function FilterOutUserSettings($allSettings)
+    public static function FilterOutStaffSettings($allSettings)
     {
-        $allNonUserSetting = Arr::where($allSettings, function ($k) {
-            if ("User." === substr( $k, 0, 5 ) ) {
+        $allNonStaffSetting = Arr::where($allSettings, function ($k) {
+            if ("Staff." === substr( $k, 0, 5 ) ) {
                 $kparts = explode('.', $k);
-                $user = User::ofUsername($kparts[1])->first();
-                if ($user instanceof User) {
+                $staff = Staff::ofStaffname($kparts[1])->first();
+                if ($staff instanceof Staff) {
                     return false;
                 }
             }
@@ -71,7 +71,7 @@ class Utils
             return true;
         });
 
-        return $allNonUserSetting;
+        return $allNonStaffSetting;
     }
 
 
@@ -101,7 +101,7 @@ class Utils
 
 
     /**
-     * Send flash message to the users screen and logs an audit log. If an exception is provided
+     * Send flash message to the staff screen and logs an audit log. If an exception is provided
      * the exception message will be included in the audit log entry.
      *
      * @param $auditCategory
@@ -113,9 +113,9 @@ class Utils
     {
         $auditMsg = $msg;
 
-        // Get current user or set guest to true for unauthenticated users.
+        // Get current staff or set guest to true for unauthenticated staff.
         if ( Auth::check() ) {
-            $user       = Auth::user();
+            $staff       = Auth::user();
 
             if( (isset($exception)) && (strlen($exception->getMessage()) > 0) ) {
                 $auditMsg = $msg . " Exception information: " . $exception->getMessage();
@@ -136,7 +136,7 @@ class Utils
                     break;
 
             }
-            Audit::log( $user->id, $auditCategory, $auditMsg );
+            Audit::log( $staff->id, $auditCategory, $auditMsg );
         }
     }
 
@@ -161,16 +161,16 @@ class Utils
      * @return string
      */
 //    public static function convertToLocalDateTime($utcDate)
-    public static function userTimeZone($date)
+    public static function staffTimeZone($date)
     {
-        $time_zone = Utils::getUserOrAppOrDefaultSetting('time_zone', 'app.time_zone', 'UTC');
-        $time_format = Utils::getUserOrAppOrDefaultSetting('time_format', 'app.time_format', '24');
+        $time_zone = Utils::getStaffOrAppOrDefaultSetting('time_zone', 'app.time_zone', 'UTC');
+        $time_format = Utils::getStaffOrAppOrDefaultSetting('time_format', 'app.time_format', '24');
 
         // Get the time zone abbreviation to display from the time zone identifier
         $dateTime = new DateTime();
         $dateTime->setTimeZone(new DateTimeZone($time_zone));
         $tzAbrev = $dateTime->format('T');
-        // Convert system time to user's timezone
+        // Convert system time to staff's timezone
         $locDate = $date;
         $locDate->setTimeZone(new DateTimeZone($time_zone));
 
@@ -187,17 +187,17 @@ class Utils
     /**
      * @return mixed|null
      */
-    public static function getUserOrAppOrDefaultSetting($userKey, $appKey = null, $default = null)
+    public static function getStaffOrAppOrDefaultSetting($staffKey, $appKey = null, $default = null)
     {
         $setting = null;
 
         if (null == $appKey) {
-            $appKey = $userKey;
+            $appKey = $staffKey;
         }
 
         if (\Auth::check()) {
-            $user = \Auth::user();
-            $setting = $user->settings()->get($userKey);
+            $staff = \Auth::user();
+            $setting = $staff->settings()->get($staffKey);
         }
         if (null == $setting) {
             $setting = (new Setting())->get($appKey, $default);

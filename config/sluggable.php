@@ -23,7 +23,7 @@ return [
 	 * What field to we store the slug in?  Defaults to "slug".
 	 * You need to configure this when building the SQL for your database, e.g.:
 	 *
-	 * Schema::create('users', function($table)
+	 * Schema::create('staff', function($table)
 	 * {
 	 *    $table->string('slug');
 	 * });

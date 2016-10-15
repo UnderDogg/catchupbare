@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
+        //Model::unguard();
 
         $this->call('ProductionSeeder');
 
@@ -22,6 +22,6 @@ class DatabaseSeeder extends Seeder
 //            $this->call('DevelopmentSeeder');
 //        }
 
-        Model::reguard();
+        //Model::reguard();
     }
 }

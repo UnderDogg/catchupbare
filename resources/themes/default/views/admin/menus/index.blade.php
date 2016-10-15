@@ -142,7 +142,7 @@
         });
     </script>
 
-    <!-- Load menu details into edit form when user clicks on tree node. -->
+    <!-- Load menu details into edit form when staff clicks on tree node. -->
     <script language="JavaScript">
         $('#jstree_menu_div').on("select_node.jstree", function (e, nodeSelected) {
 

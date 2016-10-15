@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Config;
 
-trait PermissionHasUsersTrait
+trait PermissionHasStaffTrait
 {
 
     /**
@@ -21,7 +21,7 @@ trait PermissionHasUsersTrait
                 // Repeat role->sync code attached from EntrustPermissionTrait::boot() as this boot()
                 // function overwrites it.
                 $permission->roles()->sync([]);
-                $permission->users()->sync([]);
+                $permission->user()->sync([]);
             }
 
             return true;
@@ -29,25 +29,25 @@ trait PermissionHasUsersTrait
     }
 
     /**
-     * Many-to-Many relations with user model.
+     * Many-to-Many relations with staff model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(config('auth.model', 'App\User'), Config::get('app.permission_user_table'));
+        return $this->belongsToMany(config('auth.model', 'App\Staff'), Config::get('app.permission_staff_table'));
     }
 
     /**
-     * @param $userName
+     * @param $staffName
      *
      * @return bool
      */
-    public function hasUser($userName)
+    public function hasStaff($staffName)
     {
-        foreach($this->users as $user)
+        foreach($this->staff as $staff)
         {
-            if($user->username == $userName)
+            if($staff->username == $staffName)
             {
                 return true;
             }
@@ -58,9 +58,9 @@ trait PermissionHasUsersTrait
     /**
      * @return bool
      */
-    public function getIsUsedByUserAttribute()
+    public function getIsUsedByStaffAttribute()
     {
-        return ($this->users->count() > 0);
+        return ($this->staff->count() > 0);
     }
 
 

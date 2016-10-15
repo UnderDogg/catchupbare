@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePermissionUserLinkTable extends Migration
+class CreatePermissionStaffLinkTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,17 +12,17 @@ class CreatePermissionUserLinkTable extends Migration
      */
     public function up()
     {
-        // Create table for associating permissions to users (Many-to-Many)
-        Schema::create('permission_user', function (Blueprint $table) {
+        // Create table for associating permissions to staff (Many-to-Many)
+        Schema::create('permission_staff', function (Blueprint $table) {
             $table->unsignedInteger('permission_id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('staff_id');
 
             $table->foreign('permission_id')->references('id')->on('permissions')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')
+            $table->foreign('staff_id')->references('id')->on('staff')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->primary(['permission_id', 'user_id']);
+            $table->primary(['permission_id', 'staff_id']);
         });
     }
 
@@ -34,6 +34,6 @@ class CreatePermissionUserLinkTable extends Migration
     public function down()
     {
         // Drop the table
-        Schema::drop('permission_user');
+        Schema::drop('permission_staff');
     }
 }

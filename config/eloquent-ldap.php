@@ -42,7 +42,7 @@ return [
     | Automatically create new accounts on first login
     |--------------------------------------------------------------------------
     |
-    | Should user accounts be automatically created, if they do not already
+    | Should staff accounts be automatically created, if they do not already
     | exists, after successful authentication against the configured
     | LDAP/AD server. This behaviour is set to true by default.
     |
@@ -55,9 +55,9 @@ return [
     | Automatically replicate group membership
     |--------------------------------------------------------------------------
     |
-    | Should a user's LDAP group membership be replicated in local group/roles?
+    | Should a staff's LDAP group membership be replicated in local group/roles?
     | If enabled the package will iterate through all LDAP groups that the
-    | user is a member of and assigned membership of the local group with
+    | staff is a member of and assigned membership of the local group with
     | the same name. This behaviour is set to true by default.
     | NOTE: New groups will not be created, membership will only be granted to
     | existing groups with the same name.
@@ -71,7 +71,7 @@ return [
     | Automatically resync group membership on login
     |--------------------------------------------------------------------------
     |
-    | Should a user's LDAP group membership be resynchronized on every login?
+    | Should a staff's LDAP group membership be resynchronized on every login?
     | If enabled the package will resynchronized group membership on
     | every login.
     | NOTE: New groups will not be created, membership will only be granted to
@@ -87,9 +87,9 @@ return [
     |--------------------------------------------------------------------------
     |
     | Name of model that represents a group or role. This is the model that
-    | will automatically be granted membership to based on the user's LDAP
+    | will automatically be granted membership to based on the staff's LDAP
     | membership if the option 'assign_group' is enabled.
-    | NOTE: The user model is picked up from the 'model' variable in the
+    | NOTE: The staff model is picked up from the 'model' variable in the
     | '\config\auth.php' configuration file.
     |
     */
@@ -101,9 +101,9 @@ return [
     | Internal label
     |--------------------------------------------------------------------------
     |
-    | Value to use in the auth_type column for each user to mark them as
+    | Value to use in the auth_type column for each staff to mark them as
     | internal.
-    | NOTE: To avoid errors, the package will consider both user with
+    | NOTE: To avoid errors, the package will consider both staff with
     | an aut_type of this value and null or unset to be internal.
     |
     */
@@ -115,7 +115,7 @@ return [
     | LDAP label
     |--------------------------------------------------------------------------
     |
-    | Value to use in the auth_type column for each user to mark them as
+    | Value to use in the auth_type column for each staff to mark them as
     | originating from the LDAP server.
     |
     */
@@ -171,21 +171,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | User name
+    | Staff name
     |--------------------------------------------------------------------------
     |
-    | Enter the name of the user that will query the AD/LDAP server.
+    | Enter the name of the staff that will query the AD/LDAP server.
     |
     */
 
-    'user_name' => env('LDAP.USER_NAME', "ldap_reader"),
+    'staff_name' => env('LDAP.USER_NAME', "ldap_reader"),
 
     /*
     |--------------------------------------------------------------------------
     | Password
     |--------------------------------------------------------------------------
     |
-    | Enter the password of the user that will query the AD/LDAP server.
+    | Enter the password of the staff that will query the AD/LDAP server.
     |
     */
 
@@ -234,7 +234,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Resolve group membership recursively. When disabled only groups that a
-    | given user is a direct member of will be returned. May incur extra
+    | given staff is a direct member of will be returned. May incur extra
     | processing.
     |
     */
@@ -257,32 +257,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | User name field
+    | Staff name field
     |--------------------------------------------------------------------------
     |
-    | Enter the name of the field that will contain the user name.
+    | Enter the name of the field that will contain the staff name.
     |
     */
 
-    'username_field' => env('LDAP.USERNAME_FIELD', "samaccountname"),
+    'staffname_field' => env('LDAP.USERNAME_FIELD', "samaccountname"),
 
     /*
     |--------------------------------------------------------------------------
     | Email field
     |--------------------------------------------------------------------------
     |
-    | Enter the name of the field that will contain the user's email address.
+    | Enter the name of the field that will contain the staff's email address.
     |
     */
 
-    'email_field' => env('LDAP.EMAIL_FIELD', "userprincipalname"),
+    'email_field' => env('LDAP.EMAIL_FIELD', "staffprincipalname"),
 
     /*
     |--------------------------------------------------------------------------
     | First name field
     |--------------------------------------------------------------------------
     |
-    | Enter the name of the field that will contain the user's first name.
+    | Enter the name of the field that will contain the staff's first name.
     |
     */
 
@@ -293,7 +293,7 @@ return [
     | Title
     |--------------------------------------------------------------------------
     |
-    | Enter the name of the field that will contain the user's last name.
+    | Enter the name of the field that will contain the staff's last name.
     |
     */
 

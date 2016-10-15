@@ -21,11 +21,11 @@
                         <div class="tab-pane active" id="tab_details">
                             <div class="form-group">
                                 {!! Form::label('date', trans('admin/error/general.columns.date')) !!}
-                                {!! Form::text('date', App\Libraries\Utils::userTimeZone($error->created_at), ['class' => 'form-control', 'readonly']) !!}
+                                {!! Form::text('date', App\Libraries\Utils::staffTimeZone($error->created_at), ['class' => 'form-control', 'readonly']) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('user', trans('admin/error/general.columns.user')) !!}
-                                {!! Form::text('user', ($error->user)? $error->user->username : "N/A", ['class' => 'form-control', 'readonly']) !!}
+                                {!! Form::label('staff', trans('admin/error/general.columns.staff')) !!}
+                                {!! Form::text('staff', ($error->staff)? $error->staff->username : "N/A", ['class' => 'form-control', 'readonly']) !!}
                             </div>
                             <div class="form-group">
                                 {!! Form::label('class', trans('admin/error/general.columns.class')) !!}

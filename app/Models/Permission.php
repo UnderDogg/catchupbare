@@ -1,12 +1,12 @@
 <?php namespace App\Models;
 
 use App\Traits\BaseModelTrait;
-use App\Traits\PermissionHasUsersTrait;
+use App\Traits\PermissionHasStaffTrait;
 use Zizaco\Entrust\EntrustPermission;
 
 class Permission extends EntrustPermission
 {
-    use PermissionHasUsersTrait;
+    use PermissionHasStaffTrait;
     use BaseModelTrait;
 
     /**
@@ -61,7 +61,7 @@ class Permission extends EntrustPermission
      */
     public function getIsUsedAttribute()
     {
-        return ($this->is_used_by_role || $this->is_used_by_route || $this->is_used_by_user);
+        return ($this->is_used_by_role || $this->is_used_by_route || $this->is_used_by_staff);
     }
 
     /**

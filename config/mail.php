@@ -36,7 +36,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This is the SMTP port used by your application to deliver e-mails to
-    | users of the application. Like the host we have set this value to
+    | staff of the application. Like the host we have set this value to
     | stay compatible with the Mailgun e-mail application by default.
     |
     */
@@ -74,7 +74,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | SMTP Server Username
+    | SMTP Server Staffname
     |--------------------------------------------------------------------------
     |
     | If your SMTP server requires a username for authentication, you should

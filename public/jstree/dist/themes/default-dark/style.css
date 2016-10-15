@@ -99,10 +99,10 @@
   cursor: pointer;
   position: absolute;
   left: 0;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  -webkit-staff-select: none;
+  -moz-staff-select: none;
+  -ms-staff-select: none;
+  staff-select: none;
 }
 .vakata-context {
   display: none;

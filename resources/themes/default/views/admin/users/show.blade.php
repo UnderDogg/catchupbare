@@ -10,7 +10,7 @@
         <div class='col-md-12'>
             <div class="box-body">
 
-                {!! Form::model($user, ['route' => 'admin.users.index', 'method' => 'GET']) !!}
+                {!! Form::model($staff, ['route' => 'admin.staff.index', 'method' => 'GET']) !!}
 
                 <!-- Custom Tabs -->
                 <div class="nav-tabs-custom">
@@ -24,37 +24,37 @@
 
                         <div class="tab-pane active" id="tab_profile">
                             <div class="form-group">
-                                {!! Form::label('first_name', trans('admin/users/general.columns.first_name')) !!}
+                                {!! Form::label('first_name', trans('admin/staff/general.columns.first_name')) !!}
                                 {!! Form::text('first_name', null, ['class' => 'form-control', 'readonly']) !!}
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('last_name', trans('admin/users/general.columns.last_name')) !!}
+                                {!! Form::label('last_name', trans('admin/staff/general.columns.last_name')) !!}
                                 {!! Form::text('last_name', null, ['class' => 'form-control', 'readonly']) !!}
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('username', trans('admin/users/general.columns.username')) !!}
+                                {!! Form::label('username', trans('admin/staff/general.columns.username')) !!}
                                 {!! Form::text('username', null, ['class' => 'form-control', 'readonly']) !!}
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('email', trans('admin/users/general.columns.email')) !!}
+                                {!! Form::label('email', trans('admin/staff/general.columns.email')) !!}
                                 {!! Form::text('email', null, ['class' => 'form-control', 'readonly']) !!}
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('password', trans('admin/users/general.columns.password')) !!}
+                                {!! Form::label('password', trans('admin/staff/general.columns.password')) !!}
                                 {!! Form::password('password', ['class' => 'form-control', 'readonly']) !!}
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('password_confirmation', trans('admin/users/general.columns.password_confirmation')) !!}
+                                {!! Form::label('password_confirmation', trans('admin/staff/general.columns.password_confirmation')) !!}
                                 {!! Form::password('password_confirmation', ['class' => 'form-control', 'readonly']) !!}
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('auth_type', trans('admin/users/general.columns.type')) !!}
+                                {!! Form::label('auth_type', trans('admin/staff/general.columns.type')) !!}
                                 {!! Form::text('auth_type', null, ['class' => 'form-control', 'readonly']) !!}
                             </div>
                         </div><!-- /.tab-pane -->
@@ -64,29 +64,29 @@
                             <div class="form-group">
                                 <div class="checkbox">
                                     <label>
-                                        {!! Form::checkbox('enabled', '1', $user->enabled, ['disabled']) !!} {!! trans('general.status.enabled') !!}
+                                        {!! Form::checkbox('enabled', '1', $staff->enabled, ['disabled']) !!} {!! trans('general.status.enabled') !!}
                                     </label>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('theme', trans('admin/users/general.columns.theme')) !!}
+                                {!! Form::label('theme', trans('admin/staff/general.columns.theme')) !!}
                                 {!! Form::text('theme', $theme, ['class' => 'form-control', 'readonly']) !!}
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('time_zone', trans('admin/users/general.columns.time_zone')) !!}
+                                {!! Form::label('time_zone', trans('admin/staff/general.columns.time_zone')) !!}
                                 {!! Form::text('time_zone', $time_zone, ['class' => 'form-control', 'readonly']) !!}
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('time_format', trans('admin/users/general.columns.time_format')) !!}&nbsp;
-                                <label class="radio-inline"><input type="radio" name="time_format" value="12" {{("12"==$time_format)?'checked="checked"':''}} readonly="readonly">{{trans('admin/users/general.options.12_hours')}}</label>
-                                <label class="radio-inline"><input type="radio" name="time_format" value="24" {{("24"==$time_format)?'checked="checked"':''}} readonly="readonly">{{trans('admin/users/general.options.24_hours')}}</label>
+                                {!! Form::label('time_format', trans('admin/staff/general.columns.time_format')) !!}&nbsp;
+                                <label class="radio-inline"><input type="radio" name="time_format" value="12" {{("12"==$time_format)?'checked="checked"':''}} readonly="readonly">{{trans('admin/staff/general.options.12_hours')}}</label>
+                                <label class="radio-inline"><input type="radio" name="time_format" value="24" {{("24"==$time_format)?'checked="checked"':''}} readonly="readonly">{{trans('admin/staff/general.options.24_hours')}}</label>
                             </div>
 
                             <div class="form-group">
-                                {!! Form::label('locale', trans('admin/users/general.columns.locale')) !!}
+                                {!! Form::label('locale', trans('admin/staff/general.columns.locale')) !!}
                                 {!! Form::text('locale', $locale, ['class' => 'form-control', 'readonly']) !!}
                             </div>
 
@@ -111,7 +111,7 @@
                                             <th>{!! trans('admin/roles/general.columns.enabled')  !!}</th>
                                             <th style="text-align: right">{!! trans('admin/roles/general.columns.actions')  !!}</th>
                                         </tr>
-                                        @foreach($user->roles as $role)
+                                        @foreach($staff->roles as $role)
                                             <tr>
                                                 <td>{!! link_to_route('admin.roles.show', $role->display_name, [$role->id], []) !!}</td>
                                                 <td>{!! link_to_route('admin.roles.show', $role->description, [$role->id], []) !!}</td>
@@ -140,22 +140,22 @@
                                     <table class="table table-hover">
                                         <tbody>
                                             <tr>
-                                                <th>{!! trans('admin/users/general.columns.name')  !!}</th>
-                                                <th>{!! trans('admin/users/general.columns.assigned')  !!}</th>
-                                                <th>{!! trans('admin/users/general.columns.effective')  !!}</th>
+                                                <th>{!! trans('admin/staff/general.columns.name')  !!}</th>
+                                                <th>{!! trans('admin/staff/general.columns.assigned')  !!}</th>
+                                                <th>{!! trans('admin/staff/general.columns.effective')  !!}</th>
                                             </tr>
                                             @foreach($perms as $perm)
                                                 <tr>
                                                     <td>{!! link_to_route('admin.permissions.show', $perm->display_name, [$perm->id], []) !!}</td>
                                                     <td>
-                                                        @if($user->hasPermission($perm->name))
+                                                        @if($staff->hasPermission($perm->name))
                                                             <i class="fa fa-check text-green"></i>
                                                         @else
                                                             <i class="fa fa-close text-red"></i>
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if($user->can($perm->name))
+                                                        @if($staff->can($perm->name))
                                                             <i class="fa fa-check text-green"></i>
                                                         @else
                                                             <i class="fa fa-close text-red"></i>
@@ -174,7 +174,7 @@
 
                 <div class="form-group">
                     {!! Form::submit(trans('general.button.close'), ['class' => 'btn btn-primary']) !!}
-                    <a href="{!! route('admin.users.edit', $user->id) !!}" title="{{ trans('general.button.edit') }}" class='btn btn-default'>{{ trans('general.button.edit') }}</a>
+                    <a href="{!! route('admin.staff.edit', $staff->id) !!}" title="{{ trans('general.button.edit') }}" class='btn btn-default'>{{ trans('general.button.edit') }}</a>
                 </div>
 
                 {!! Form::close() !!}

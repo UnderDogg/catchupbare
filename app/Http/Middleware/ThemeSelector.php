@@ -17,7 +17,7 @@ class ThemeSelector
      */
     public function handle($request, Closure $next)
     {
-        $themeName = Utils::getUserOrAppOrDefaultSetting('theme', 'theme.default', 'default');
+        $themeName = Utils::getStaffOrAppOrDefaultSetting('theme', 'theme.default', 'default');
 
         Theme::init( $themeName );
 

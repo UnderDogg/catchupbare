@@ -7,19 +7,19 @@
 
             <div class="form-group has-feedback">
                 <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First name" value="{{ old('first_name') }}" required autofocus/>
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                <span class="glyphicon glyphicon-staff form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
                 <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last name" value="{{ old('last_name') }}" required/>
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                <span class="glyphicon glyphicon-staff form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="text" id="username" name="username" class="form-control" placeholder="User name" value="{{ old('username') }}" required/>
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Staff name" value="{{ old('username') }}" required/>
+                <span class="glyphicon glyphicon-staff form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
                 <input type="text" id="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required/>
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                <span class="glyphicon glyphicon-staff form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
                 <input type="password" id="password" name="password" class="form-control" placeholder="Password" required/>

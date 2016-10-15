@@ -12,7 +12,7 @@
         // Join all roles from array to hidden field separated by a comma.
         $('#selected_roles').val(roles.join(','));
         // Post form.
-        $("#form_edit_user").submit();
+        $("#form_edit_staff").submit();
     });
 </script>
 

@@ -6,7 +6,7 @@ use App\Libraries\Str;
 use App\Models\Error;
 use App\Models\Role;
 use App\Models\Setting;
-use App\Traits\UserHasPermissionsTrait;
+use App\Traits\StaffHasPermissionsTrait;
 use Auth;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -17,52 +17,46 @@ use Mail;
 use Sroutier\EloquentLDAP\Contracts\EloquentLDAPUserInterface;
 use Zizaco\Entrust\Traits\EntrustUserTrait as EntrustUserTrait;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract, EloquentLDAPUserInterface
+class Staff extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword;
-    use EntrustUserTrait, UserHasPermissionsTrait {
+    use EntrustUserTrait, StaffHasPermissionsTrait {
         EntrustUserTrait::hasRole as entrustUserTraitHasRole;
-        UserHasPermissionsTrait::can insteadof EntrustUserTrait;
-        UserHasPermissionsTrait::boot insteadof EntrustUserTrait;
+        StaffHasPermissionsTrait::can insteadof EntrustUserTrait;
+        StaffHasPermissionsTrait::boot insteadof EntrustUserTrait;
     }
-
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'users';
-
+    protected $table = 'staff';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = ['first_name', 'last_name', 'username', 'email', 'password', 'auth_type', 'enabled'];
-
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-
     /**
      * The accessor to append to the model's array form.
      *
      * @var array
      */
     protected $appends = ['full_name'];
-
     /**
      * Handle on the users settings class.
      *
      * @var Setting
      */
     protected $settings = null;
-
     /**
-     * Eloquent hook to HasMany relationship between User and Audit
+     * Eloquent hook to HasMany relationship between Staff and Audit
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -70,9 +64,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->hasMany('App\Models\Audit');
     }
-
     /**
-     * Eloquent hook to HasMany relationship between User and Error
+     * Eloquent hook to HasMany relationship between Staff and Error
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -80,7 +73,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->hasMany(Error::class);
     }
-
     /**
      * Alias to eloquent many-to-many relation's sync() method.
      *
@@ -94,7 +86,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $this->roles()->sync([]);
         }
     }
-
     /**
      * Alias to eloquent many-to-many relation's sync() method.
      *
@@ -108,7 +99,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $this->permissions()->sync([]);
         }
     }
-
     /**
      * @return string
      */
@@ -116,7 +106,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return "$this->first_name $this->last_name";
     }
-
     /**
      * @return string
      */
@@ -124,7 +113,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return "$this->first_name $this->last_name ($this->username)";
     }
-
     /**
      * @param $value
      */
@@ -132,7 +120,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $this->attributes['password'] = bcrypt($value);
     }
-
     /**
      * @return bool
      */
@@ -145,7 +132,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         // Otherwise
         return false;
     }
-
     /**
      * @return bool
      */
@@ -162,7 +148,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         // Otherwise
         return true;
     }
-
     /**
      * @return bool
      */
@@ -179,7 +164,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         // Otherwise
         return true;
     }
-
     /**
      *
      * Force the user to have the given role.
@@ -195,7 +179,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $this->roles()->attach($roleToForce->id);
         }
     }
-
     /**
      * Code copy of EntrustUserTrait::hasRole(...) with the one addition to,
      * optionally, check if a role is enabled before returning true.
@@ -209,14 +192,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if (is_array($name)) {
             foreach ($name as $roleName) {
                 $hasRole = $this->hasRole($roleName);
-
                 if ($hasRole && !$requireAll) {
                     return true;
                 } elseif (!$hasRole && $requireAll) {
                     return false;
                 }
             }
-
             // If we've made it this far and $requireAll is FALSE, then NONE of the roles were found
             // If we've made it this far and $requireAll is TRUE, then ALL of the roles were found.
             // Return the value of $requireAll;
@@ -236,49 +217,45 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
                 }
             }
         }
-
         return false;
     }
-
     /**
      * Overwrite Model::create(...) to save group membership if included,
-     * or clear it if not. Also force membership to group 'users'.
+     * or clear it if not. Also force membership to group 'staff'.
      *
      * @param array $attributes
      * @return User
      */
     public static function create(array $attributes = [])
     {
-
         // If the auth_type is not explicitly set by the call function or module,
         // set it to the internal value.
         if (!array_key_exists('auth_type', $attributes) || ("" == ($attributes['auth_type'])) ) {
             $attributes['auth_type'] = (new Setting())->get('eloquent-ldap.label_internal');
         }
-
         // Call original create method from parent
-        $user = parent::create($attributes);
-
+        $staff = parent::create($attributes);
         // Assign membership(s)
-        $user->assignMembership($attributes);
+        $staff->assignMembership($attributes);
         // Assign permission(s)
-        $user->assignPermission($attributes);
+        $staff->assignPermission($attributes);
         // Force membership to group 'users'
-        $user->forceRole('users');
-
-        return $user;
+        $staff->forceRole('staff');
+        return $staff;
     }
+
+
+
 
     /**
      * Overwrite Model::update(...) to save group membership if included,
-     * or clear it if not. Also force membership to group 'users'.
+     * or clear it if not. Also force membership to group 'staff'.
      *
      * @param array $attributes
      * @return void
      */
-    public function update(array $attributes = [])
+    public function update(array $attributes = [], array $options = [])
     {
-
         if ( array_key_exists('first_name', $attributes) ) {
             $this->first_name = $attributes['first_name'];
         }
@@ -298,23 +275,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             $this->enabled = $attributes['enabled'];
         }
         $this->save();
-
         // Assign membership(s)
         $this->assignMembership($attributes);
         // Assign permission(s)
         $this->assignPermission($attributes);
-        // Force membership to group 'users'
-        $this->forceRole('users');
-
+        // Force membership to group 'staff'
+        $this->forceRole('staff');
         // Process user settings
         $this->processUserSetting('theme', $attributes);
         $tzIdentifiers = \DateTimeZone::listIdentifiers();
         $this->processUserSetting('time_zone', $attributes, $tzIdentifiers);
         $this->processUserSetting('time_format', $attributes);
         $this->processUserSetting('locale', $attributes);
-
     }
-
     /**
      * Overwrite Model::delete() to clear/delete user settings first,
      * then invoke original delete method.
@@ -326,7 +299,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         $this->settings()->forget();
         parent::delete();
     }
-
     /**
      * Implements the 'isMemberOf(...)' as required by Eloquent-LDAP by using
      * the hasRole method and ignoring the enable state of the role.
@@ -338,7 +310,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->hasRole($name, false, false);
     }
-
     /**
      * Implements the 'membershipList()' method as required by Eloquent-LDAP.
      *
@@ -349,35 +320,32 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->roles();
     }
-
     /**
-     * Returns the validation rules required to create a User.
+     * Returns the validation rules required to create a Staff.
      *
      * @return array
      */
     public static function getCreateValidationRules()
     {
         return array( 'username'          => 'required|unique:users',
-                      'email'             => 'required|unique:users',
-                      'first_name'        => 'required',
-                      'last_name'         => 'required',
-                    );
+            'email'             => 'required|unique:users',
+            'first_name'        => 'required',
+            'last_name'         => 'required',
+        );
     }
-
     /**
-     * Returns the validation rules required to update a User.
+     * Returns the validation rules required to update a Staff.
      *
      * @return array
      */
     public static function getUpdateValidationRules($id)
     {
         return array( 'username'          => 'required|unique:users,username,' . $id,
-                      'email'             => 'required|unique:users,email,' . $id,
-                      'first_name'        => 'required',
-                      'last_name'         => 'required',
-                    );
+            'email'             => 'required|unique:users,email,' . $id,
+            'first_name'        => 'required',
+            'last_name'         => 'required',
+        );
     }
-
     /**
      * Return the existing instance of the users settings or create a new one.
      *
@@ -388,10 +356,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if (null != $this->settings) {
             return $this->settings;
         } else {
-            return new Setting('User.' . $this->username);
+            return new Setting('Staff.' . $this->username);
         }
     }
-
     /**
      * Save or forget a user setting with the value from the attribute list.
      * If an array of value is provided, the setting value in the attribute
@@ -424,7 +391,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             // Setting [$settingKey] not found in list [$attributes]?!
         }
     }
-
     /**
      * Scope a query to only include users of a given username
      *
@@ -436,7 +402,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $query->where('username', $string);
     }
-
     /**
      * Scope a query to only include users with a given confirmation_code
      *
@@ -448,14 +413,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $query->where('confirmation_code', $string);
     }
-
     /**
      * If option enabled, send an email to the user with email validation link.
      */
     public function emailValidation()
     {
         $settings = new Setting();
-
         if ($settings->get('auth.email_validation')) {
             // Set or reset validation code.
             $confirmation_code = str_random(30);
@@ -468,14 +431,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             });
         }
     }
-
     /**
      * If option enabled, send an email to the user to notify him of the password change
      */
     public function emailPasswordChange()
     {
         $settings = new Setting();
-
         if ($settings->get('app.email_notifications')) {
             // Send an email to the user to notify him of the password change.
             Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $this], function ($message) use ($settings) {
@@ -484,5 +445,4 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             });
         }
     }
-
 }

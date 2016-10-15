@@ -75,7 +75,7 @@ class AuditsController extends Controller {
 
         $isCallable = is_callable($data_parser, true, $callable_name);
         if ($isCallable) {
-            $dataArray = call_user_func($data_parser, $id);
+            $dataArray = call_staff_func($data_parser, $id);
 
             $data_view_name = $dataArray['show_partial'];
             if (($data_view_name) && (\View::exists($data_view_name))) {

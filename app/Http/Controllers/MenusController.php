@@ -18,7 +18,7 @@ class MenusController extends Controller
      */
     public function index()
     {
-        // Log action by user.
+        // Log action by staff.
         Audit::log(Auth::user()->id, trans('admin/menu-builder/menu-builder.audit-log.category'), trans('admin/menu-builder/menu-builder.audit-log.msg-index'));
 
         // Set page title and description.
@@ -102,7 +102,7 @@ class MenusController extends Controller
                                                     'label' => 'required',
                 ));
 
-                // Log action by user.
+                // Log action by staff.
                 Audit::log(Auth::user()->id, trans('admin/menu-builder/menu-builder.audit-log.category'), trans('admin/menu-builder/menu-builder.audit-log.msg-index'));
 
                 // Update menu item.
@@ -166,7 +166,7 @@ class MenusController extends Controller
         if (!$menu->isdeletable()) {
             $modal_title = trans('admin/menu-builder/menu-builder.modal-delete-title-cant-be-deleted');
             $modal_body  = trans('admin/menu-builder/menu-builder.modal-delete-message-cant-be-deleted', ['id' => $menu->id, 'label' => $menu->label]);
-            // Force a redirect to the index page if the user clicks on OK.
+            // Force a redirect to the index page if the staff clicks on OK.
             $modal_route = route('admin.menus.index');
         } else {
             $modal_title = trans('admin/menu-builder/menu-builder.modal-delete-title');

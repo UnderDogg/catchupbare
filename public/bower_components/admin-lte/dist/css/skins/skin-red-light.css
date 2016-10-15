@@ -49,7 +49,7 @@
 .skin-red-light .main-header .logo:hover {
   background-color: #dc4735;
 }
-.skin-red-light .main-header li.user-header {
+.skin-red-light .main-header li.staff-header {
   background-color: #dd4b39;
 }
 .skin-red-light .content-header {
@@ -64,8 +64,8 @@
 .skin-red-light .main-footer {
   border-left: 1px solid #d2d6de;
 }
-.skin-red-light .user-panel > .info,
-.skin-red-light .user-panel > .info > a {
+.skin-red-light .staff-panel > .info,
+.skin-red-light .staff-panel > .info > a {
   color: #444444;
 }
 .skin-red-light .sidebar-menu > li {

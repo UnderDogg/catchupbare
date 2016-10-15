@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta charset="UTF-8">
     <title>{{ config('app.short_name') }} | {{ $page_title or "Page Title" }}</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, staff-scalable=no' name='viewport'>
     <!-- Set a meta reference to the CSRF token for use in AJAX request -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- Bootstrap 3.3.4 -->
@@ -37,7 +37,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
       <!-- Optionally, you can add Slimscroll and FastClick plugins.
             Both of these plugins are recommended to enhance the
-            user experience. Slimscroll is required when using the
+            staff experience. Slimscroll is required when using the
             fixed layout. -->
 
       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -52,7 +52,7 @@ class LESKSecuredMenuHandler implements MenuHandlerInterface
     {
         $itemContent = "";
 
-        if ($this->currentUserIsAuthorized($item)) {
+        if ($this->currentStaffIsAuthorized($item)) {
             $itemContent = $this->traitRenderMenuItem($item, $variables, $menuBranch);
         }
 
@@ -60,19 +60,19 @@ class LESKSecuredMenuHandler implements MenuHandlerInterface
     }
 
 
-    public function currentUserIsAuthorized( Menu $item )
+    public function currentStaffIsAuthorized( Menu $item )
     {
         $authorized     = false;
         $perm           = null;
         $guest          = false;
-        $username       = null;
-        $user           = null;
+        $staffname       = null;
+        $staff           = null;
 
 
-        // Get current user or set guest to true for unauthenticated users.
+        // Get current staff or set guest to true for unauthenticated staff.
         if ( \Auth::check() ) {
-            $user       = \Auth::user();
-            $username   = $user->username;
+            $staff       = \Auth::user();
+            $staffname   = $staff->username;
         } elseif ( \Auth::guest() ) {
             $guest      = true;
         }
@@ -95,17 +95,17 @@ class LESKSecuredMenuHandler implements MenuHandlerInterface
                 $authorized = true;
             }
             // TODO: Get 'guest-only' role name from config, and replace all occurrences.
-            // User is guest/unauthenticated and the route is restricted to guests.
+            // Staff is guest/unauthenticated and the route is restricted to guests.
             elseif ( $guest && 'guest-only' == $perm->name ) {
                 $authorized = true;
             }
-            // The user has the permission required by the route.
-            elseif ( !$guest && isset($user) && ($user->enabled) && $user->can($perm->name) ) {
+            // The staff has the permission required by the route.
+            elseif ( !$guest && isset($staff) && ($staff->enabled) && $staff->can($perm->name) ) {
                 $authorized = true;
             }
             // If all checks fail.
             else {
-                Log::info("Authorization denied for menu [" . $item->name . "], guest [" . $guest . "], username [" . $username . "].");
+                Log::info("Authorization denied for menu [" . $item->name . "], guest [" . $guest . "], username [" . $staffname . "].");
             }
         }
         // If item has children it may be rendered if any of the children is rendered.
@@ -115,7 +115,7 @@ class LESKSecuredMenuHandler implements MenuHandlerInterface
         }
         // If all checks fail.
         else {
-            Log::info("Menu has no children and/or no permission set for the requested menu [" . $item->name . "], guest [" . $guest . "], username [" . $username . "].");
+            Log::info("Menu has no children and/or no permission set for the requested menu [" . $item->name . "], guest [" . $guest . "], username [" . $staffname . "].");
         }
 
         return $authorized;

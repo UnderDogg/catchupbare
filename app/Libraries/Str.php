@@ -136,7 +136,7 @@ class Str extends BaseStr
      * Return true if the trim'ed value is unset, null or empty.
      *
      * Modification from: http://stackoverflow.com/a/381275
-     * Author: Michael Haren (http://stackoverflow.com/users/29/michael-haren)
+     * Author: Michael Haren (http://stackoverflow.com/staff/29/michael-haren)
      *
      * @param $question
      * @return bool

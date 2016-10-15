@@ -29,7 +29,7 @@
 
 @section('body_bottom')
     <!-- Select2 js -->
-    @include('partials._body_bottom_select2_js_user_search')
+    @include('partials._body_bottom_select2_js_staff_search')
     <!-- form submit -->
     @include('partials._body_bottom_submit_role_edit_form_js')
 @endsection

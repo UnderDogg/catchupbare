@@ -17,7 +17,7 @@ class LocaleSelector
      */
     public function handle($request, Closure $next)
     {
-        $locale = Utils::getUserOrAppOrDefaultSetting('locale', 'app.locale', 'en');
+        $locale = Utils::getStaffOrAppOrDefaultSetting('locale', 'app.locale', 'en');
 
         App::setLocale($locale);
 

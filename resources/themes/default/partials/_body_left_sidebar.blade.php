@@ -4,11 +4,11 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel">
+        <!-- Sidebar staff panel (optional) -->
+        <div class="staff-panel">
             @if (Auth::check())
                 <div class="pull-left image">
-                    <img src="{{ Gravatar::get(Auth::user()->email , 'small') }}" class="img-circle" alt="User Image" />
+                    <img src="{{ Gravatar::get(Auth::user()->email , 'small') }}" class="img-circle" alt="Staff Image" />
                 </div>
                 <div class="pull-left info">
                     <p>{{ Auth::user()->full_name }}</p>

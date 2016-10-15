@@ -23,7 +23,7 @@ return [
     'page'                => [
         'index'               => [
             'title'               => 'Admin | Audit log',
-            'description'         => 'log of all actions performed by users',
+            'description'         => 'log of all actions performed by staff',
             'table-title'         => 'Audit log',
         ],
         'show'              => [
@@ -34,7 +34,7 @@ return [
     ],
 
     'columns'             => [
-        'username'            =>  'User name',
+        'username'            =>  'Staff name',
         'category'            =>  'Category',
         'message'             =>  'Message',
         'date'                =>  'Date',

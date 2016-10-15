@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
-use App\Repositories\Criteria\User\UserWhereEmailEquals;
-use App\Repositories\UserRepository as User;
+use App\Repositories\Criteria\Staff\StaffWhereEmailEquals;
+use App\Repositories\StaffRepository as Staff;
 use Flash;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
@@ -30,19 +30,19 @@ class PasswordController extends Controller
     use ResetsPasswords;
 
     /**
-     * @var User
+     * @var Staff
      */
-    protected $user;
+    protected $staff;
 
     /**
      * Create a new password controller instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(Staff $staff)
     {
         $this->middleware('guest');
-        $this->user  = $user;
+        $this->staff  = $staff;
     }
 
     /**
@@ -58,7 +58,7 @@ class PasswordController extends Controller
     }
 
     /**
-     * Send a reset link to the given user.
+     * Send a reset link to the given staff.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -68,15 +68,15 @@ class PasswordController extends Controller
         $this->validate($request, ['email' => 'required|email']);
 
         $email = $request->input('email');
-        $user = $this->user->pushCriteria(new UserWhereEmailEquals($email))->all()->first();
+        $staff = $this->staff->pushCriteria(new StaffWhereEmailEquals($email))->all()->first();
 
         Audit::log(null, trans('passwords.audit-log.category'), trans('passwords.audit-log.msg-request-reset', ['email' => $email]));
 
-        if (is_null($user)) {
+        if (is_null($staff)) {
             Flash::error( trans(Password::INVALID_USER) );
             return redirect()->back();
         }
-        elseif ($user->auth_type !== 'internal') {
+        elseif ($staff->auth_type !== 'internal') {
             Flash::error(trans('passwords.auth_type'));
             return redirect()->back();
         } else {
@@ -115,7 +115,7 @@ class PasswordController extends Controller
     }
 
     /**
-     * Reset the given user's password.
+     * Reset the given staff's password.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -132,8 +132,8 @@ class PasswordController extends Controller
             'email', 'password', 'password_confirmation', 'token'
         );
 
-        $response = Password::reset($credentials, function ($user, $password) {
-            $this->resetPassword($user, $password);
+        $response = Password::reset($credentials, function ($staff, $password) {
+            $this->resetPassword($staff, $password);
         });
 
         Audit::log(null, trans('passwords.audit-log.category'), trans('passwords.audit-log.msg-reset-password', ['email' => $credentials['email']]));
@@ -151,22 +151,22 @@ class PasswordController extends Controller
     }
 
     /**
-     * Reset the given user's password.
+     * Reset the given staff's password.
      *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $staff
      * @param  string  $password
      * @return void
      */
-    protected function resetPassword($user, $password)
+    protected function resetPassword($staff, $password)
     {
-        // Do not crypt the password here, the User model does it.
-        $user->password = $password;
+        // Do not crypt the password here, the Staff model does it.
+        $staff->password = $password;
 
-        $user->save();
+        $staff->save();
 
-        $user->emailPasswordChange();
+        $staff->emailPasswordChange();
 
-        Auth::login($user);
+        Auth::login($staff);
     }
 
 }

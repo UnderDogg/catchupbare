@@ -9,4 +9,4 @@
  */
 
 
-class InvalidUserException extends \Exception {}
+class InvalidStaffException extends \Exception {}

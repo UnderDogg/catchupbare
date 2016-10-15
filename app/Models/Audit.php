@@ -10,11 +10,11 @@ class Audit extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'category', 'message', 'data', 'data_parser', 'replay_route'];
+    protected $fillable = ['staff_id', 'category', 'message', 'data', 'data_parser', 'replay_route'];
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Staff');
     }
 
 }

@@ -1,9 +1,9 @@
-<?php namespace App\Repositories\Criteria\User;
+<?php namespace App\Repositories\Criteria\Staff;
 
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
-class UsersWithRoles extends Criteria {
+class StaffByUsernamesAscending extends Criteria {
 
 
     /**
@@ -14,7 +14,7 @@ class UsersWithRoles extends Criteria {
      */
     public function apply( $model, Repository $repository )
     {
-        $model = $model->with('roles');
+        $model = $model->orderBy('username', 'ASC');
         return $model;
     }
 

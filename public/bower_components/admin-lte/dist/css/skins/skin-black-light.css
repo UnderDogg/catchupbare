@@ -68,7 +68,7 @@
     background-color: #1f1f1f;
   }
 }
-.skin-black-light .main-header li.user-header {
+.skin-black-light .main-header li.staff-header {
   background-color: #222;
 }
 .skin-black-light .content-header {
@@ -84,8 +84,8 @@
 .skin-black-light .main-footer {
   border-left: 1px solid #d2d6de;
 }
-.skin-black-light .user-panel > .info,
-.skin-black-light .user-panel > .info > a {
+.skin-black-light .staff-panel > .info,
+.skin-black-light .staff-panel > .info > a {
   color: #444444;
 }
 .skin-black-light .sidebar-menu > li {

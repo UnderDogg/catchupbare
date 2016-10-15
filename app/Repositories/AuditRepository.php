@@ -12,7 +12,7 @@ class AuditRepository extends Repository
     }
 
     /**
-     * @param $user_id
+     * @param $staff_id
      * @param $category
      * @param $message
      * @param array $attributes
@@ -20,7 +20,7 @@ class AuditRepository extends Repository
      * @param null $replay_route
      * @return bool|static
      */
-    public static function log($user_id, $category, $message, Array $attributes = null, $data_parser = null, $replay_route = null)
+    public static function log($staff_id, $category, $message, Array $attributes = null, $data_parser = null, $replay_route = null)
     {
 
         $audit_enabled = (new Setting())->get('audit.enabled');
@@ -39,7 +39,7 @@ class AuditRepository extends Repository
             }
 
             $audit = Audit::create([
-                "user_id" => $user_id,
+                "staff_id" => $staff_id,
                 "category" => $category,
                 "message" => $message,
                 "data" => $attJson,

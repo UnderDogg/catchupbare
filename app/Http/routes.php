@@ -40,30 +40,30 @@ Route::get( 'welcome', ['as' => 'welcome',     'uses' => 'HomeController@welcome
 Route::group(['middleware' => 'authorize'], function () {
     // Application routes...
     Route::get(   'dashboard',      ['as' => 'dashboard',          'uses' => 'DashboardController@index']);
-    Route::get(   'user/profile',   ['as' => 'user.profile',       'uses' => 'UsersController@profile']);
-    Route::patch( 'user/profile',   ['as' => 'user.profile.patch', 'uses' => 'UsersController@profileUpdate']);
+    Route::get(   'staff/profile',   ['as' => 'staff.profile',       'uses' => 'StaffController@profile']);
+    Route::patch( 'staff/profile',   ['as' => 'staff.profile.patch', 'uses' => 'StaffController@profileUpdate']);
 
     // Site administration section
     Route::group(['prefix' => 'admin'], function () {
-        // User routes
-        Route::post(  'users/enableSelected',          ['as' => 'admin.users.enable-selected',  'uses' => 'UsersController@enableSelected']);
-        Route::post(  'users/disableSelected',         ['as' => 'admin.users.disable-selected', 'uses' => 'UsersController@disableSelected']);
-        Route::get(   'users/search',                  ['as' => 'admin.users.search',           'uses' => 'UsersController@searchByName']);
-        Route::get(   'users/list',                    ['as' => 'admin.users.list',             'uses' => 'UsersController@listByPage']);
-        Route::post(  'users/getInfo',                 ['as' => 'admin.users.get-info',         'uses' => 'UsersController@getInfo']);
-        Route::post(  'users',                         ['as' => 'admin.users.store',            'uses' => 'UsersController@store']);
-        Route::get(   'users',                         ['as' => 'admin.users.index',            'uses' => 'UsersController@index']);
-        Route::get(   'users/create',                  ['as' => 'admin.users.create',           'uses' => 'UsersController@create']);
-        Route::get(   'users/{userId}',                ['as' => 'admin.users.show',             'uses' => 'UsersController@show']);
-        Route::patch( 'users/{userId}',                ['as' => 'admin.users.patch',            'uses' => 'UsersController@update']);
-        Route::put(   'users/{userId}',                ['as' => 'admin.users.update',           'uses' => 'UsersController@update']);
-        Route::delete('users/{userId}',                ['as' => 'admin.users.destroy',          'uses' => 'UsersController@destroy']);
-        Route::get(   'users/{userId}/edit',           ['as' => 'admin.users.edit',             'uses' => 'UsersController@edit']);
-        Route::get(   'users/{userId}/confirm-delete', ['as' => 'admin.users.confirm-delete',   'uses' => 'UsersController@getModalDelete']);
-        Route::get(   'users/{userId}/delete',         ['as' => 'admin.users.delete',           'uses' => 'UsersController@destroy']);
-        Route::get(   'users/{userId}/enable',         ['as' => 'admin.users.enable',           'uses' => 'UsersController@enable']);
-        Route::get(   'users/{userId}/disable',        ['as' => 'admin.users.disable',          'uses' => 'UsersController@disable']);
-        Route::get(   'users/{userId}/replayEdit',      ['as' => 'admin.users.replay-edit',      'uses' => 'UsersController@replayEdit']);
+        // Staff routes
+        Route::post(  'staff/enableSelected',          ['as' => 'admin.staff.enable-selected',  'uses' => 'StaffController@enableSelected']);
+        Route::post(  'staff/disableSelected',         ['as' => 'admin.staff.disable-selected', 'uses' => 'StaffController@disableSelected']);
+        Route::get(   'staff/search',                  ['as' => 'admin.staff.search',           'uses' => 'StaffController@searchByName']);
+        Route::get(   'staff/list',                    ['as' => 'admin.staff.list',             'uses' => 'StaffController@listByPage']);
+        Route::post(  'staff/getInfo',                 ['as' => 'admin.staff.get-info',         'uses' => 'StaffController@getInfo']);
+        Route::post(  'staff',                         ['as' => 'admin.staff.store',            'uses' => 'StaffController@store']);
+        Route::get(   'staff',                         ['as' => 'admin.staff.index',            'uses' => 'StaffController@index']);
+        Route::get(   'staff/create',                  ['as' => 'admin.staff.create',           'uses' => 'StaffController@create']);
+        Route::get(   'staff/{staffId}',                ['as' => 'admin.staff.show',             'uses' => 'StaffController@show']);
+        Route::patch( 'staff/{staffId}',                ['as' => 'admin.staff.patch',            'uses' => 'StaffController@update']);
+        Route::put(   'staff/{staffId}',                ['as' => 'admin.staff.update',           'uses' => 'StaffController@update']);
+        Route::delete('staff/{staffId}',                ['as' => 'admin.staff.destroy',          'uses' => 'StaffController@destroy']);
+        Route::get(   'staff/{staffId}/edit',           ['as' => 'admin.staff.edit',             'uses' => 'StaffController@edit']);
+        Route::get(   'staff/{staffId}/confirm-delete', ['as' => 'admin.staff.confirm-delete',   'uses' => 'StaffController@getModalDelete']);
+        Route::get(   'staff/{staffId}/delete',         ['as' => 'admin.staff.delete',           'uses' => 'StaffController@destroy']);
+        Route::get(   'staff/{staffId}/enable',         ['as' => 'admin.staff.enable',           'uses' => 'StaffController@enable']);
+        Route::get(   'staff/{staffId}/disable',        ['as' => 'admin.staff.disable',          'uses' => 'StaffController@disable']);
+        Route::get(   'staff/{staffId}/replayEdit',      ['as' => 'admin.staff.replay-edit',      'uses' => 'StaffController@replayEdit']);
         // Role routes
         Route::post(  'roles/enableSelected',          ['as' => 'admin.roles.enable-selected',  'uses' => 'RolesController@enableSelected']);
         Route::post(  'roles/disableSelected',         ['as' => 'admin.roles.disable-selected', 'uses' => 'RolesController@disableSelected']);

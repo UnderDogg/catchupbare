@@ -27,7 +27,7 @@ class SettingsController extends Controller
 
         $settings = (new Setting())->all();
         $settings = Arr::dot($settings);
-        $settingsFiltered = Utils::FilterOutUserSettings($settings);
+        $settingsFiltered = Utils::FilterOutStaffSettings($settings);
         $settingsFiltered = Arr::sortRecursive($settingsFiltered);
 
         return view('admin.settings.index', compact('settingsFiltered', 'page_title', 'page_description'));

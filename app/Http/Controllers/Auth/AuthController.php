@@ -4,7 +4,7 @@ use App\Exceptions\InvalidConfirmationCodeException;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
-use App\User;
+use App\Staff;
 use Auth;
 use Flash;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -19,8 +19,8 @@ class AuthController extends Controller
     | Registration & Login Controller
     |--------------------------------------------------------------------------
     |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
+    | This controller handles the registration of new staff, as well as the
+    | authentication of existing staff. By default, this controller uses
     | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
@@ -49,20 +49,20 @@ class AuthController extends Controller
             'first_name' => 'required|min:3|max:255',
             'last_name' => 'required|min:3|max:255',
             'username' => 'required|min:3|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'email' => 'required|email|max:255|unique:staff',
             'password' => 'required|confirmed|min:6',
         ]);
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Create a new staff instance after a valid registration.
      *
      * @param  array  $data
      * @return User
      */
     protected function create(array $data)
     {
-        $user = User::create([
+        $staff = Staff::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'username' => $data['username'],
@@ -70,8 +70,18 @@ class AuthController extends Controller
             'password' => $data['password'],
         ]);
 
-        return $user;
+        return $staff;
     }
+
+
+    protected function authenticated($request,$user){
+        if($user->role === 'admin'){
+            return redirect()->intended('admin'); //redirect to admin panel
+        }
+
+        return redirect()->intended('/'); //redirect to standard user homepage
+    }
+
 
     /**
      * Handle a login request to the application.
@@ -89,16 +99,17 @@ class AuthController extends Controller
 
         $credentials = $request->only('username', 'password');
 
+
         if (Auth::attempt($credentials, $request->has('remember'))) {
 
-            $user = Auth::user();
-            // Allow only if user is root or enabled.
-            if ( ('root' == $user->username) || ($user->enabled) )
-            {
-                Audit::log(Auth::user()->id, trans('general.audit-log.category-login'), trans('general.audit-log.msg-login-success', ['username' => $user->username]));
+            $staff = Auth::user();
+            // Allow only if staff is root or enabled.
 
+            if ( $staff->enabled )
+            {
                 Flash::success("Welcome " . Auth::user()->first_name);
                 return redirect()->intended($this->redirectPath());
+
             }
             else
             {
@@ -108,14 +119,12 @@ class AuthController extends Controller
                 return redirect(route('login'))
                     ->withInput($request->only('username', 'remember'))
                     ->withErrors([
-                        'username' => trans('admin/users/general.error.login-failed-user-disabled'),
+                        'username' => trans('admin/staff/general.error.login-failed-staff-disabled'),
                     ]);
             }
         }
 
-        Audit::log(null, trans('general.audit-log.category-login'), trans('general.audit-log.msg-login-failed', ['username' => $credentials['username']]));
-
-        return redirect($this->loginPath())
+        return redirect('/')
             ->withInput($request->only('username', 'remember'))
             ->withErrors([
                 'username' => $this->getFailedLoginMessage(),
@@ -154,11 +163,11 @@ class AuthController extends Controller
      */
     public function postRegister(Request $request)
     {
-        $username = "N/A";
+        $staffname = "N/A";
         if ($request->has('username')) {
-            $username = $request['username'];
+            $staffname = $request['username'];
         }
-        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-registration-attempt', ['username' => $username]));
+        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-registration-attempt', ['username' => $staffname]));
 
         $validator = $this->validator($request->all());
 
@@ -168,29 +177,29 @@ class AuthController extends Controller
             );
         }
 
-        $user = $this->create($request->all());
-        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-created', ['username' => $user->username]));
+        $staff = $this->create($request->all());
+        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-created', ['username' => $staff->username]));
 
         if ((new Setting())->get('auth.enable_user_on_create')) {
-            $user->enabled = true;
-            $user->save();
-            Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-enabled', ['username' => $user->username]));
+            $staff->enabled = true;
+            $staff->save();
+            Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-enabled', ['username' => $staff->username]));
         }
 
-        $user->emailValidation();
+        $staff->emailValidation();
 
-        if ($user->enabled) {
-            Flash::success("Welcome " . $user->first_name . ", your account has been created");
-            Auth::login($user);
+        if ($staff->enabled) {
+            Flash::success("Welcome " . $staff->first_name . ", your account has been created");
+            Auth::login($staff);
             $request->flashExcept(['password', 'password_confirmation']);
             return redirect($this->redirectPath());
         } else {
             if ((new Setting())->get('auth.email_validation')) {
-                Flash::success("Welcome " . $user->first_name . ", your account has been created, an email has been sent to your address to complete the registration process.");
+                Flash::success("Welcome " . $staff->first_name . ", your account has been created, an email has been sent to your address to complete the registration process.");
                 $request->flashExcept(['password', 'password_confirmation']);
                 return redirect(route('confirm_emailPost'));
             } else {
-                Flash::success("Welcome " . $user->first_name . ", your account has been created, and will soon be enabled.");
+                Flash::success("Welcome " . $staff->first_name . ", your account has been created, and will soon be enabled.");
                 $request->flashExcept(['password', 'password_confirmation']);
                 return redirect(route('home'));
             }
@@ -205,23 +214,23 @@ class AuthController extends Controller
             throw new InvalidConfirmationCodeException;
         }
 
-        $user = User::whereConfirmationCode($confirmation_code)->first();
+        $staff = Staff::whereConfirmationCode($confirmation_code)->first();
 
-        if ( ! $user)
+        if ( ! $staff)
         {
             throw new InvalidConfirmationCodeException;
         }
 
-        $user->confirmed = 1;
-        $user->confirmation_code = null;
-        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-email-validated', ['username' => $user->username]));
+        $staff->confirmed = 1;
+        $staff->confirmation_code = null;
+        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-email-validated', ['username' => $staff->username]));
 
         if ((new Setting())->get('auth.enable_user_on_validation')) {
-            $user->enabled = true;
-            Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-enabled', ['username' => $user->username]));
+            $staff->enabled = true;
+            Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-enabled', ['username' => $staff->username]));
         }
 
-        $user->save();
+        $staff->save();
 
         Flash::message(trans('general.status.email-validated'));
 

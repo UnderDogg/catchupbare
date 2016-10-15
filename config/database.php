@@ -46,11 +46,7 @@ return [
 
     'connections' => [
 
-        'sqlite' => [
-            'driver'   => 'sqlite',
-            'database' => storage_path('database.sqlite'),
-            'prefix'   => '',
-        ],
+
 
         'mysql' => [
             'driver'    => 'mysql',
@@ -64,26 +60,7 @@ return [
             'strict'    => false,
         ],
 
-        'pgsql' => [
-            'driver'   => 'pgsql',
-            'host'     => env('DB_HOST', 'localhost'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset'  => 'utf8',
-            'prefix'   => '',
-            'schema'   => 'public',
-        ],
 
-        'sqlsrv' => [
-            'driver'   => 'sqlsrv',
-            'host'     => env('DB_SQLSRV_HOST',     'localhost'),
-            'port'     => env('DB_SQLSRV_PORT',     '1433'),
-            'database' => env('DB_SQLSRV_DATABASE', 'lesk'),
-            'username' => env('DB_SQLSRV_USERNAME', 'lesk'),
-            'password' => env('DB_SQLSRV_PASSWORD', 'Password1'),
-            'prefix'   => '',
-        ],
 
     ],
 

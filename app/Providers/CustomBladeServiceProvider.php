@@ -57,12 +57,12 @@ class CustomBladeServiceProvider extends ServiceProvider
             return "<?php echo e(App\Libraries\Str::head_and_tail({$value}, {$limit}, '{$end}')); ?>";
         });
 
-        Blade::directive('userTimeZone', function($expression){
+        Blade::directive('staffTimeZone', function($expression){
 
             $parms = Utils::splitBladeParameters($expression, true);
             $dateCode = $parms[0];
 
-            return "<?php echo e(App\Libraries\Utils::userTimeZone({$dateCode})); ?>";
+            return "<?php echo e(App\Libraries\Utils::staffTimeZone({$dateCode})); ?>";
         });
 
     }

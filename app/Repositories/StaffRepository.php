@@ -2,11 +2,11 @@
 
 use Bosnadev\Repositories\Eloquent\Repository;
 
-class UserRepository extends Repository
+class StaffRepository extends Repository
 {
     public function model()
     {
-        return 'App\User';
+        return 'App\Staff';
     }
 
 }

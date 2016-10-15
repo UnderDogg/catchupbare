@@ -1,10 +1,17 @@
-<?php namespace App\Repositories\Criteria\Error;
+<?php namespace App\Repositories\Criteria\Staff;
 
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
-class ErrorsWithUsers extends Criteria {
+class StaffWhereEmailEquals extends Criteria {
 
+    private $str;
+
+
+    public function __construct($str)
+    {
+        $this->str = $str;
+    }
 
     /**
      * @param $model
@@ -14,7 +21,7 @@ class ErrorsWithUsers extends Criteria {
      */
     public function apply( $model, Repository $repository )
     {
-        $model = $model->with('user');
+        $model = $model->where('email', '=', $this->str);
         return $model;
     }
 

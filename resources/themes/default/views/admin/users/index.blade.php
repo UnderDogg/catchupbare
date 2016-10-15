@@ -4,20 +4,20 @@
     <div class='row'>
         <div class='col-md-12'>
             <!-- Box -->
-            {!! Form::open( array('route' => 'admin.users.enable-selected', 'id' => 'frmUserList') ) !!}
+            {!! Form::open( array('route' => 'admin.staff.enable-selected', 'id' => 'frmStaffList') ) !!}
                 <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{ trans('admin/users/general.page.index.table-title') }}</h3>
+                    <h3 class="box-title">{{ trans('admin/staff/general.page.index.table-title') }}</h3>
                     &nbsp;
-                    <a class="btn btn-default btn-sm" href="{!! route('admin.users.create') !!}" title="{{ trans('admin/users/general.button.create') }}">
+                    <a class="btn btn-default btn-sm" href="{!! route('admin.staff.create') !!}" title="{{ trans('admin/staff/general.button.create') }}">
                         <i class="fa fa-plus-square"></i>
                     </a>
                     &nbsp;
-                    <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmUserList'].action = '{!! route('admin.users.enable-selected') !!}';  document.forms['frmUserList'].submit(); return false;" title="{{ trans('general.button.enable') }}">
+                    <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmStaffList'].action = '{!! route('admin.staff.enable-selected') !!}';  document.forms['frmStaffList'].submit(); return false;" title="{{ trans('general.button.enable') }}">
                         <i class="fa fa-check-circle-o"></i>
                     </a>
                     &nbsp;
-                    <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmUserList'].action = '{!! route('admin.users.disable-selected') !!}';  document.forms['frmUserList'].submit(); return false;" title="{{ trans('general.button.disable') }}">
+                    <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmStaffList'].action = '{!! route('admin.staff.disable-selected') !!}';  document.forms['frmStaffList'].submit(); return false;" title="{{ trans('general.button.disable') }}">
                         <i class="fa fa-ban"></i>
                     </a>
 
@@ -36,13 +36,13 @@
                                             <i class="fa fa-check-square-o"></i>
                                         </a>
                                     </th>
-                                    <th>{{ trans('admin/users/general.columns.gravatar') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.username') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.name') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.roles') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.email') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.type') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.actions') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.gravatar') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.username') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.name') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.roles') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.email') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.type') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.actions') }}</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -52,53 +52,53 @@
                                             <i class="fa fa-check-square-o"></i>
                                         </a>
                                     </th>
-                                    <th>{{ trans('admin/users/general.columns.gravatar') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.username') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.name') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.roles') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.email') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.type') }}</th>
-                                    <th>{{ trans('admin/users/general.columns.actions') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.gravatar') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.username') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.name') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.roles') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.email') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.type') }}</th>
+                                    <th>{{ trans('admin/staff/general.columns.actions') }}</th>
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @foreach($users as $user)
+                                @foreach($staffs as $staff)
                                     <tr>
                                         <td align="center">
-                                            @if ($user->canBeDisabled())
-                                                {!! Form::checkbox('chkUser[]', $user->id); !!}
+                                            @if ($staff->canBeDisabled())
+                                                {!! Form::checkbox('chkStaff[]', $staff->id); !!}
                                             @endif
                                         </td>
-                                        <td><img src="{{ Gravatar::get($user->email , 'tiny') }}" class="user-image" alt="User Image"/></td>
-                                        <td>{!! link_to_route('admin.users.show', $user->username, [$user->id], []) !!}</td>
-                                        <td>{!! link_to_route('admin.users.show', $user->full_name, [$user->id], []) !!}</td>
-                                        <td>{{ $user->roles->count() }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->auth_type }}</td>
+                                        <td><img src="{{ Gravatar::get($staff->email , 'tiny') }}" class="staff-image" alt="Staff Image"/></td>
+                                        <td>{!! link_to_route('admin.staff.show', $staff->username, [$staff->id], []) !!}</td>
+                                        <td>{!! link_to_route('admin.staff.show', $staff->full_name, [$staff->id], []) !!}</td>
+                                        <td>{{ $staff->roles->count() }}</td>
+                                        <td>{{ $staff->email }}</td>
+                                        <td>{{ $staff->auth_type }}</td>
                                         <td>
-                                            <a href="{!! route('admin.users.edit', $user->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
+                                            <a href="{!! route('admin.staff.edit', $staff->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
 
-                                            @if ($user->canBeDisabled())
-                                                @if ( $user->enabled )
-                                                    <a href="{!! route('admin.users.disable', $user->id) !!}" title="{{ trans('general.button.disable') }}"><i class="fa fa-check-circle-o enabled"></i></a>
+                                            @if ($staff->canBeDisabled())
+                                                @if ( $staff->enabled )
+                                                    <a href="{!! route('admin.staff.disable', $staff->id) !!}" title="{{ trans('general.button.disable') }}"><i class="fa fa-check-circle-o enabled"></i></a>
                                                 @else
-                                                    <a href="{!! route('admin.users.enable', $user->id) !!}" title="{{ trans('general.button.enable') }}"><i class="fa fa-ban disabled"></i></a>
+                                                    <a href="{!! route('admin.staff.enable', $staff->id) !!}" title="{{ trans('general.button.enable') }}"><i class="fa fa-ban disabled"></i></a>
                                                 @endif
                                             @else
-                                                    <i class="fa fa-ban text-muted" title="{{ trans('admin/users/general.error.cant-be-disabled') }}"></i>
+                                                    <i class="fa fa-ban text-muted" title="{{ trans('admin/staff/general.error.cant-be-disabled') }}"></i>
                                             @endif
 
-                                            @if ( $user->isDeletable() )
-                                                <a href="{!! route('admin.users.confirm-delete', $user->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
+                                            @if ( $staff->isDeletable() )
+                                                <a href="{!! route('admin.staff.confirm-delete', $staff->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
                                             @else
-                                                <i class="fa fa-trash-o text-muted" title="{{ trans('admin/users/general.error.cant-be-deleted') }}"></i>
+                                                <i class="fa fa-trash-o text-muted" title="{{ trans('admin/staff/general.error.cant-be-deleted') }}"></i>
                                             @endif
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {!! $users->render() !!}
+                        {!! $staffs->render() !!}
                     </div> <!-- table-responsive -->
 
                 </div><!-- /.box-body -->
@@ -114,7 +114,7 @@
 @section('body_bottom')
     <script language="JavaScript">
         function toggleCheckbox() {
-            checkboxes = document.getElementsByName('chkUser[]');
+            checkboxes = document.getElementsByName('chkStaff[]');
             for(var i=0, n=checkboxes.length;i<n;i++) {
                 checkboxes[i].checked = !checkboxes[i].checked;
             }

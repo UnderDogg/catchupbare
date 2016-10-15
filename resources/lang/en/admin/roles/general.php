@@ -63,7 +63,7 @@ return [
         'permissions'               =>  'Permissions',
         'resync_on_login'           =>  'Re-sync on login',
         'options'                   =>  'Options',
-        'users'                     =>  'Users',
+        'staff'                     =>  'Staff',
         'created'                   =>  'Created',
         'updated'                   =>  'Updated',
         'actions'                   =>  'Actions',

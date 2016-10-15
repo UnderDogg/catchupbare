@@ -5,11 +5,11 @@ use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 use Illuminate\Contracts\Auth\Guard;
 
 // TODO: Is this class needed?
-class RoleLowerOrEqualToCurrentUser extends Criteria {
+class RoleLowerOrEqualToCurrentStaff extends Criteria {
 
-    public function __construct($user)
+    public function __construct($staff)
     {
-        $this->user = $user;
+        $this->staff = $staff;
     }
 
     /**
@@ -20,7 +20,7 @@ class RoleLowerOrEqualToCurrentUser extends Criteria {
      */
     public function apply( $model, Repository $repository )
     {
-        $model = $model->where('level', '<=', $this->user->getLevelMax());
+        $model = $model->where('level', '<=', $this->staff->getLevelMax());
         return $model;
     }
 

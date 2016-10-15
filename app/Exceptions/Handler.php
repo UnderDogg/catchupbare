@@ -78,17 +78,17 @@ class Handler extends ExceptionHandler
         LERN::setMessage(function (Exception $exception) {
             $url = Request::url();
             $method = Request::method();
-            $user = Auth::user();
-            if ($user) {
-                $user_id = $user->id;
-                $user_name = $user->username;
-                $user_first_name = $user->first_name;
-                $user_last_name = $user->last_name;
+            $staff = Auth::user();
+            if ($staff) {
+                $staff_id = $staff->id;
+                $staff_name = $staff->username;
+                $staff_first_name = $staff->first_name;
+                $staff_last_name = $staff->last_name;
             } else {
-                $user_id = 'N/A';
-                $user_name = 'unauthenticated';
-                $user_first_name = 'Unauthenticated User';
-                $user_last_name = 'N/A';
+                $staff_id = 'N/A';
+                $staff_name = 'unauthenticated';
+                $staff_first_name = 'Unauthenticated Staff';
+                $staff_last_name = 'N/A';
             }
             $exception_class = get_class($exception);
             $exception_file = $exception->getFile();
@@ -122,8 +122,8 @@ class Handler extends ExceptionHandler
                 $exception_trace_formatted[] = $formatted_trace;
             }
 
-            $view = View::make('emails.html.lern_notification', compact('url', 'method', 'user_id', 'user_name',
-                'user_first_name', 'user_last_name', 'exception_class', 'exception_file', 'exception_line',
+            $view = View::make('emails.html.lern_notification', compact('url', 'method', 'staff_id', 'staff_name',
+                'staff_first_name', 'staff_last_name', 'exception_class', 'exception_file', 'exception_line',
                 'exception_message', 'exception_trace', 'exception_trace_formatted', 'input'));
 
             $msg = $view->render();

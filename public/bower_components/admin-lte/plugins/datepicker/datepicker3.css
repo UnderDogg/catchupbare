@@ -90,11 +90,11 @@
 .datepicker table {
   margin: 0;
   -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  -webkit-staff-select: none;
+  -khtml-staff-select: none;
+  -moz-staff-select: none;
+  -ms-staff-select: none;
+  staff-select: none;
 }
 .datepicker table tr td,
 .datepicker table tr th {

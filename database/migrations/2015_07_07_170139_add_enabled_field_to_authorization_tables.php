@@ -12,7 +12,7 @@ class AddEnabledFieldToAuthorizationTables extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
+        Schema::table('staff', function ($table) {
             $table->boolean('enabled')->default(false);
         });
         Schema::table('routes', function ($table) {
@@ -33,7 +33,7 @@ class AddEnabledFieldToAuthorizationTables extends Migration
      */
     public function down()
     {
-        Schema::table('users', function ($table) {
+        Schema::table('staff', function ($table) {
             $table->dropColumn('enabled');
         });
         Schema::table('routes', function ($table) {

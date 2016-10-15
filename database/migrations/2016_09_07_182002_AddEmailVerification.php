@@ -12,7 +12,7 @@ class AddEmailVerification extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
+        Schema::table('staff', function ($table) {
             $table->boolean('confirmed')->default(false);
             $table->string('confirmation_code')->nullable();
         });
@@ -25,7 +25,7 @@ class AddEmailVerification extends Migration
      */
     public function down()
     {
-        Schema::table('users', function ($table) {
+        Schema::table('staff', function ($table) {
             $table->dropColumn('confirmed');
             $table->dropColumn('confirmation_code');
         });

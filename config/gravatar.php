@@ -15,7 +15,7 @@ return array(
         // would you like to return a https://... image
         'secure' => false,
 
-        // Gravatar allows users to self-rate their images so that they can indicate if an image
+        // Gravatar allows staff to self-rate their images so that they can indicate if an image
         // is appropriate for a certain audience. By default, only 'G' rated images are displayed
         // unless you indicate that you would like to see higher ratings.
         // Available options:

@@ -43,7 +43,7 @@ class WalledGarden
         $exemptionPath         = $settings->get('walled-garden.exemptions-path');
         $exemptionsRegEx       = $settings->get('walled-garden.exemptions-regex');
 
-        // Redirect to the login page if the user is not authenticated and the site
+        // Redirect to the login page if the staff is not authenticated and the site
         // is configured as a walled garden, except if the request is going to a page
         // or route that is exempt from authentication.
         if ( $walled_garden_enabled )

@@ -22,7 +22,7 @@
                         <div class="tab-pane active" id="tab_details">
                             <div class="form-group">
                                 {!! Form::label('username', trans('admin/audit/general.columns.username')) !!}
-                                {!! Form::text('username', $audit->user->username, ['class' => 'form-control', 'readonly']) !!}
+                                {!! Form::text('username', $audit->staff->username, ['class' => 'form-control', 'readonly']) !!}
                             </div>
                             <div class="form-group">
                                 {!! Form::label('category', trans('admin/audit/general.columns.category')) !!}
@@ -34,7 +34,7 @@
                             </div>
                             <div class="form-group">
                                 {!! Form::label('date', trans('admin/audit/general.columns.date')) !!}
-                                {!! Form::text('date', App\Libraries\Utils::userTimeZone($audit->created_at), ['class' => 'form-control', 'readonly']) !!}
+                                {!! Form::text('date', App\Libraries\Utils::staffTimeZone($audit->created_at), ['class' => 'form-control', 'readonly']) !!}
                             </div>
                         </div><!-- /.tab-pane -->
 

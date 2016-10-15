@@ -2,10 +2,10 @@
 
 use App\Http\Requests\Request;
 
-class UpdateUserRequest extends Request {
+class CreateStaffRequest extends Request {
 
     /**
-     * Determine if the user is authorized to make this request.
+     * Determine if the staff is authorized to make this request.
      *
      * @return bool
      */
@@ -22,7 +22,9 @@ class UpdateUserRequest extends Request {
     public function rules()
     {
         return [
-            'password' => 'confirmed',
+            'email'    => 'required|unique:staff',
+            'username' => 'required|unique:staff',
+            'password' => 'required|confirmed',
         ];
     }
 

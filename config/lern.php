@@ -18,7 +18,7 @@ return [
             'method'      => true, //When true it will collect GET, POST, DELETE, PUT, etc...
             'data'        => true, //When true it will collect Input data
             'status_code' => true,
-            'user_id'     => true,
+            'staff_id'     => true,
             'url'         => true,
         ],
 
@@ -70,7 +70,7 @@ return [
          */
         'pushover' => [
             'token' => env('PUSHOVER_APP_TOKEN'),
-            'users' => env('PUSHOVER_USER_KEY'),
+            'staff' => env('PUSHOVER_USER_KEY'),
             'sound' => env('PUSHOVER_SOUND_ERROR', 'siren'), // https://pushover.net/api#sounds
         ],
 

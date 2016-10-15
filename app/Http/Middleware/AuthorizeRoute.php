@@ -42,8 +42,8 @@ class AuthorizeRoute
         $method         = null;
         $path           = null;
         $actionName     = null;
-        $user           = null;
-        $username       = null;
+        $staff           = null;
+        $staffname       = null;
         $guest          = false;
 
         // Get current route from Laravel.
@@ -56,10 +56,10 @@ class AuthorizeRoute
             $path       = $laravelRoute->getPath();
             $actionName = $laravelRoute->getActionName();
 
-            // Get current user or set guest to true for unauthenticated users.
+            // Get current staff or set guest to true for unauthenticated staff.
             if ( $this->auth->check() ) {
-                $user       = $this->auth->user();
-                $username   = $user->username;
+                $staff       = $this->auth->user();
+                $staffname   = $staff->username;
             } elseif ( $this->auth->guest() ) {
                 $guest      = true;
             }
@@ -71,18 +71,18 @@ class AuthorizeRoute
             ) {
                 $authorized = true;
             }
-            // User is 'root', all is authorized.
-            // TODO: Get super user name from config, and replace all occurrences.
-            elseif (!$guest && isset($user) && 'root' == $user->username) {
+            // Staff is 'root', all is authorized.
+            // TODO: Get super staff name from config, and replace all occurrences.
+            elseif (!$guest && isset($staff) && 'root' == $staff->username) {
                 $authorized = true;
             }
-            // User has the role 'admins', all is authorized.
+            // Staff has the role 'admins', all is authorized.
             // TODO: Get 'admins' role name from config, and replace all occurrences.
-            elseif (!$guest && isset($user) && $user->hasRole('admins')) {
+            elseif (!$guest && isset($staff) && $staff->hasRole('admins')) {
                 $authorized = true;
             }
             else {
-//                if ($user->enabled)
+//                if ($staff->enabled)
 //                {
                 // Get application route based on info from Laravel route.
                 $appRoute = AppRoute::ofMethod($method)
@@ -102,28 +102,28 @@ class AuthorizeRoute
                             $authorized = true;
                         }
                         // TODO: Get 'guest-only' role name from config, and replace all occurrences.
-                        // User is guest/unauthenticated and the route is restricted to guests.
+                        // Staff is guest/unauthenticated and the route is restricted to guests.
                         elseif ( $guest && 'guest-only' == $appRoute->permission->name ) {
                             $authorized = true;
                         }
                         // TODO: Get 'basic-authenticated' role name from config, and replace all occurrences.
-                        // The route is available to any authenticated user.
-                        elseif ( !$guest && isset($user) && ($user->enabled) && 'basic-authenticated' == $appRoute->permission->name ) {
+                        // The route is available to any authenticated staff.
+                        elseif ( !$guest && isset($staff) && ($staff->enabled) && 'basic-authenticated' == $appRoute->permission->name ) {
                             $authorized = true;
                         }
-                        // The user has the permission required by the route.
-                        elseif ( !$guest && isset($user) && ($user->enabled) && $user->can($appRoute->permission->name) ) {
+                        // The staff has the permission required by the route.
+                        elseif ( !$guest && isset($staff) && ($staff->enabled) && $staff->can($appRoute->permission->name) ) {
                             $authorized = true;
                         }
                         // If all checks fail, abort with an HTTP 403 error.
                         else {
-                            Log::error("Authorization denied for request path [" . $request->path() . "], method [" . $method . "] and action name [" . $actionName . "], guest [" . $guest . "], username [" . $username . "].");
+                            Log::error("Authorization denied for request path [" . $request->path() . "], method [" . $method . "] and action name [" . $actionName . "], guest [" . $guest . "], username [" . $staffname . "].");
                             $errorCode = 403;
                         }
                     }
                     // If all checks fail, abort with an HTTP 403 error.
                     else {
-                        Log::error("No permission set for the requested route, path [" . $request->path() . "], method [" . $method . "] and action name [" . $actionName . "], guest [" . $guest . "], username [" . $username . "].");
+                        Log::error("No permission set for the requested route, path [" . $request->path() . "], method [" . $method . "] and action name [" . $actionName . "], guest [" . $guest . "], username [" . $staffname . "].");
                         $errorCode = 403;
                     }
                 }
@@ -145,8 +145,8 @@ class AuthorizeRoute
             return $next($request);
         // Else if error code was set abort with that.
         } elseif ( 0 != $errorCode ) {
-            if ( !$guest && isset($user) && (!$user->enabled) ) {
-                Log::error("User [" . $user->username . "] disabled, forcing logout.");
+            if ( !$guest && isset($staff) && (!$staff->enabled) ) {
+                Log::error("Staff [" . $staff->username . "] disabled, forcing logout.");
                 return redirect( route('logout') );
             }
             else {

@@ -5,7 +5,7 @@ use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
 use App\Repositories\Criteria\Error\ErrorByCreatedDateDescending;
 use App\Repositories\Criteria\Error\ErrorCreatedBefore;
-use App\Repositories\Criteria\Error\ErrorsWithUsers;
+use App\Repositories\Criteria\Error\ErrorsWithStaff;
 use App\Repositories\ErrorRepository as Error;
 use Auth;
 use Illuminate\Contracts\Foundation\Application;
@@ -38,7 +38,7 @@ class ErrorsController extends Controller {
         $page_description = trans('admin/error/general.page.index.description');
         $purge_retention = (new Setting())->get('errors.purge_retention');
 
-        $lern_errors = $this->error->pushCriteria(new ErrorByCreatedDateDescending())->pushCriteria(new ErrorsWithUsers())->paginate(20);
+        $lern_errors = $this->error->pushCriteria(new ErrorByCreatedDateDescending())->pushCriteria(new ErrorsWithStaff())->paginate(20);
 
         return view('admin.errors.index', compact('lern_errors', 'purge_retention', 'page_title', 'page_description'));
     }

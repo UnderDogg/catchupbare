@@ -10,13 +10,13 @@
         <div class='col-md-12'>
             <div class="box-body">
 
-                {!! Form::open( ['route' => 'admin.users.store', 'id' => 'form_edit_user'] ) !!}
+                {!! Form::open( ['route' => 'admin.staff.store', 'id' => 'form_edit_staff'] ) !!}
 
-                @include('partials._user_form')
+                @include('partials._staff_form')
 
                 <div class="form-group">
                     {!! Form::button( trans('general.button.create'), ['class' => 'btn btn-primary', 'id' => 'btn-submit-edit'] ) !!}
-                    <a href="{!! route('admin.users.index') !!}" title="{{ trans('general.button.cancel') }}" class='btn btn-default'>{{ trans('general.button.cancel') }}</a>
+                    <a href="{!! route('admin.staff.index') !!}" title="{{ trans('general.button.cancel') }}" class='btn btn-default'>{{ trans('general.button.cancel') }}</a>
                 </div>
 
                 {!! Form::close() !!}
@@ -33,6 +33,6 @@
 
     <!-- Select2 js -->
     @include('partials._body_bottom_select2_js_role_search')
-    @include('partials._body_bottom_select2_js_user_settings')
-    @include('partials._body_bottom_submit_user_edit_form_js')
+    @include('partials._body_bottom_select2_js_staff_settings')
+    @include('partials._body_bottom_submit_staff_edit_form_js')
 @endsection

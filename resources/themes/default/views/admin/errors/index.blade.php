@@ -4,7 +4,7 @@
     <div class='row'>
         <div class='col-md-12'>
             <!-- Box -->
-            {!! Form::open( array('route' => 'admin.errors.purge', 'id' => 'frmUserList') ) !!}
+            {!! Form::open( array('route' => 'admin.errors.purge', 'id' => 'frmStaffList') ) !!}
                 <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ trans('admin/error/general.page.index.table-title') }}</h3>
@@ -23,7 +23,7 @@
                                     <th>{{ trans('admin/error/general.columns.class') }}</th>
                                     <th>{{ trans('admin/error/general.columns.url') }}</th>
                                     <th>{{ trans('admin/error/general.columns.message') }}</th>
-                                    <th>{{ trans('admin/error/general.columns.user') }}</th>
+                                    <th>{{ trans('admin/error/general.columns.staff') }}</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -32,20 +32,20 @@
                                     <th>{{ trans('admin/error/general.columns.class') }}</th>
                                     <th>{{ trans('admin/error/general.columns.url') }}</th>
                                     <th>{{ trans('admin/error/general.columns.message') }}</th>
-                                    <th>{{ trans('admin/error/general.columns.user') }}</th>
+                                    <th>{{ trans('admin/error/general.columns.staff') }}</th>
                                 </tr>
                             </tfoot>
                             <tbody>
                                 @foreach($lern_errors as $lern_error)
 
                                         <tr>
-                                            <td><nobr><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@userTimeZone($lern_error->created_at)</a></nobr></td>
+                                            <td><nobr><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@staffTimeZone($lern_error->created_at)</a></nobr></td>
                                             <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@strHeadAndTail($lern_error->class, 50, "...")</a></td>
                                             <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@strTail($lern_error->url, 30, "...")</a></td>
                                             <td><a href="{!! route('admin.errors.show', $lern_error->id) !!}" title="{{ trans('general.button.display') }}">@strHead($lern_error->message, 70, "...")</a></td>
                                             <td>
-                                                @if ($lern_error->user)
-                                                    <a href="{!! route('admin.users.show', $lern_error->user->id) !!}" title="{{ trans('general.button.display') }}"> {{ $lern_error->user->username }} </a>
+                                                @if ($lern_error->staff)
+                                                    <a href="{!! route('admin.staff.show', $lern_error->staff->id) !!}" title="{{ trans('general.button.display') }}"> {{ $lern_error->staff->username }} </a>
                                                 @else
                                                     N/A
                                                 @endif

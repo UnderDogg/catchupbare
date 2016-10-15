@@ -2,12 +2,12 @@
 
 use Illuminate\Support\Facades\Config;
 
-trait UserHasPermissionsTrait
+trait StaffHasPermissionsTrait
 {
     /**
-     * Boot the user model
+     * Boot the staff model
      * Attach event listener to remove the many-to-many records when trying to delete
-     * Will NOT delete any records if the user model uses soft deletes.
+     * Will NOT delete any records if the staff model uses soft deletes.
      *
      * @return void|bool
      */
@@ -15,12 +15,12 @@ trait UserHasPermissionsTrait
     {
         parent::boot();
 
-        static::deleting(function($user) {
+        static::deleting(function($staff) {
             if (!method_exists(Config::get('auth.model'), 'bootSoftDeletingTrait')) {
-                // Repeat role->sync code attached from EntrustUserTrait::boot() as this boot()
+                // Repeat role->sync code attached from EntrustStaffTrait::boot() as this boot()
                 // function overwrites it.
-                $user->roles()->sync([]);
-                $user->permissions()->sync([]);
+                $staff->roles()->sync([]);
+                $staff->permissions()->sync([]);
             }
 
             return true;
@@ -34,11 +34,11 @@ trait UserHasPermissionsTrait
      */
     public function permissions()
     {
-        return $this->belongsToMany(Config::get('entrust.permission'), Config::get('entrust.permission_user_table'));
+        return $this->belongsToMany(Config::get('entrust.permission'), Config::get('entrust.permission_staff_table'));
     }
 
     /**
-     * Checks if the user has a permission by its name.
+     * Checks if the staff has a permission by its name.
      *
      * @param string|array $name       Permission name or array of permission names.
      * @param bool         $requireAll All roles in the array are required.
@@ -63,8 +63,8 @@ trait UserHasPermissionsTrait
             // Return the value of $requireAll;
             return $requireAll;
         } else {
-            // The 'root' user is all powerful.
-            // TODO: Get super user name from config, and replace all occurrences.
+            // The 'root' staff is all powerful.
+            // TODO: Get super staff name from config, and replace all occurrences.
             if ('root' == $this->username) {
                 return true;
             }
@@ -73,7 +73,7 @@ trait UserHasPermissionsTrait
             elseif ( 'open-to-all' == $name ) {
                 return true;
             }
-            // At this stage all users are authenticated so yes...
+            // At this stage all staff are authenticated so yes...
             elseif ( 'basic-authenticated' == $name ) {
                 return true;
             }
@@ -92,9 +92,9 @@ trait UserHasPermissionsTrait
         return false;
     }
 
-    // TODO: Rewrite these with $user->permissions in mind!!
+    // TODO: Rewrite these with $staff->permissions in mind!!
     /**
-     * Code copy of EntrustUserTrait::can(...) with the one addition to check if a role
+     * Code copy of EntrustStaffTrait::can(...) with the one addition to check if a role
      * is enabled first the check if a permission is also enabled before
      * returning true.
      *
@@ -120,7 +120,7 @@ trait UserHasPermissionsTrait
             // Return the value of $requireAll;
             return $requireAll;
         } else {
-            // Users of the 'admin' role cab do it all.
+            // Staff of the 'admin' role cab do it all.
             // TODO: Get 'admins' role name from config, and replace all occurrences.
             if ($this->hasRole('admins')) {
                 return true;
@@ -144,8 +144,8 @@ trait UserHasPermissionsTrait
     }
 
     /**
-     * Overwrites EntrustUserTrait::can(...), first checks if the permission(s) are
-     * directly associated to the user model, using ->hasPermission(), then may if
+     * Overwrites EntrustStaffTrait::can(...), first checks if the permission(s) are
+     * directly associated to the staff model, using ->hasPermission(), then may if
      * required check if permission(s) are associated through the roles, using
      * ->canInRole().
      *
@@ -183,7 +183,7 @@ trait UserHasPermissionsTrait
         return false;
     }
 
-    // TODO: Rewrite with $user->permissions in mind!!
+    // TODO: Rewrite with $staff->permissions in mind!!
 //    /**
 //     * Checks role(s) and permission(s).
 //     *
@@ -291,7 +291,7 @@ trait UserHasPermissionsTrait
     }
 
     /**
-     * Attach multiple permissions to a user
+     * Attach multiple permissions to a staff
      *
      * @param mixed $permissions
      */
@@ -303,7 +303,7 @@ trait UserHasPermissionsTrait
     }
 
     /**
-     * Detach multiple permissions from a user
+     * Detach multiple permissions from a staff
      *
      * @param mixed $permissions
      */

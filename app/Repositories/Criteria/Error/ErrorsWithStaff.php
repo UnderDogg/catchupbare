@@ -1,9 +1,9 @@
-<?php namespace App\Repositories\Criteria\User;
+<?php namespace App\Repositories\Criteria\Error;
 
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 
-class UsersByUsernamesAscending extends Criteria {
+class ErrorsWithStaff extends Criteria {
 
 
     /**
@@ -14,7 +14,7 @@ class UsersByUsernamesAscending extends Criteria {
      */
     public function apply( $model, Repository $repository )
     {
-        $model = $model->orderBy('username', 'ASC');
+        $model = $model->with('staff');
         return $model;
     }
 

@@ -103,7 +103,7 @@ return array(
 
     'options' => array(
         'auth' => array(
-            'show_name' => false,   // Also show the users name/email in the debugbar
+            'show_name' => false,   // Also show the staff name/email in the debugbar
         ),
         'db' => array(
             'with_params'       => true,   // Render SQL with the parameters substituted
