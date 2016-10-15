@@ -29,7 +29,7 @@
         // Get ID.
         var roleID = $('#role_search').val();
         // Build URL based on route and replace "{role}" with ID.
-        var urlShowRole = '{!! route("admin.roles.show") !!}'.replace('%7Broles%7D', roleID);
+
         // Capture CSRF token from meta header.
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 

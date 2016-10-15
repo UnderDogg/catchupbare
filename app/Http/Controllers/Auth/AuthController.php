@@ -79,7 +79,7 @@ class AuthController extends Controller
             return redirect()->intended('admin'); //redirect to admin panel
         }
 
-        return redirect()->intended('/'); //redirect to standard user homepage
+        return redirect()->intended('/'); //redirect to standard staff homepage
     }
 
 

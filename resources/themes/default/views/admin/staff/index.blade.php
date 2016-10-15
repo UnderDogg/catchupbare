@@ -62,34 +62,34 @@
                                 </tr>
                             </tfoot>
                             <tbody>
-                                @foreach($staffs as $staff)
+                                @foreach($staff as $staffmember)
                                     <tr>
                                         <td align="center">
-                                            @if ($staff->canBeDisabled())
-                                                {!! Form::checkbox('chkStaff[]', $staff->id); !!}
+                                            @if ($staffmember->canBeDisabled())
+                                                {!! Form::checkbox('chkStaff[]', $staffmember->id) !!}
                                             @endif
                                         </td>
-                                        <td><img src="{{ Gravatar::get($staff->email , 'tiny') }}" class="staff-image" alt="Staff Image"/></td>
-                                        <td>{!! link_to_route('admin.staff.show', $staff->username, [$staff->id], []) !!}</td>
-                                        <td>{!! link_to_route('admin.staff.show', $staff->full_name, [$staff->id], []) !!}</td>
-                                        <td>{{ $staff->roles->count() }}</td>
-                                        <td>{{ $staff->email }}</td>
-                                        <td>{{ $staff->auth_type }}</td>
+                                        <td><img src="{{ Gravatar::get($staffmember->email , 'tiny') }}" class="staff-image" alt="Staff Image"/></td>
+                                        <td>{!! link_to_route('admin.staff.show', $staffmember->username, [$staffmember->id], []) !!}</td>
+                                        <td>{!! link_to_route('admin.staff.show', $staffmember->full_name, [$staffmember->id], []) !!}</td>
+                                        <td>{{ $staffmember->roles->count() }}</td>
+                                        <td>{{ $staffmember->email }}</td>
+                                        <td>{{ $staffmember->auth_type }}</td>
                                         <td>
-                                            <a href="{!! route('admin.staff.edit', $staff->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
+                                            <a href="{!! route('admin.staff.edit', $staffmember->id) !!}" title="{{ trans('general.button.edit') }}"><i class="fa fa-pencil-square-o"></i></a>
 
-                                            @if ($staff->canBeDisabled())
-                                                @if ( $staff->enabled )
-                                                    <a href="{!! route('admin.staff.disable', $staff->id) !!}" title="{{ trans('general.button.disable') }}"><i class="fa fa-check-circle-o enabled"></i></a>
+                                            @if ($staffmember->canBeDisabled())
+                                                @if ( $staffmember->enabled )
+                                                    <a href="{!! route('admin.staff.disable', $staffmember->id) !!}" title="{{ trans('general.button.disable') }}"><i class="fa fa-check-circle-o enabled"></i></a>
                                                 @else
-                                                    <a href="{!! route('admin.staff.enable', $staff->id) !!}" title="{{ trans('general.button.enable') }}"><i class="fa fa-ban disabled"></i></a>
+                                                    <a href="{!! route('admin.staff.enable', $staffmember->id) !!}" title="{{ trans('general.button.enable') }}"><i class="fa fa-ban disabled"></i></a>
                                                 @endif
                                             @else
                                                     <i class="fa fa-ban text-muted" title="{{ trans('admin/staff/general.error.cant-be-disabled') }}"></i>
                                             @endif
 
-                                            @if ( $staff->isDeletable() )
-                                                <a href="{!! route('admin.staff.confirm-delete', $staff->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
+                                            @if ( $staffmember->isDeletable() )
+                                                <a href="{!! route('admin.staff.confirm-delete', $staffmember->id) !!}" data-toggle="modal" data-target="#modal_dialog" title="{{ trans('general.button.delete') }}"><i class="fa fa-trash-o deletable"></i></a>
                                             @else
                                                 <i class="fa fa-trash-o text-muted" title="{{ trans('admin/staff/general.error.cant-be-deleted') }}"></i>
                                             @endif
@@ -98,7 +98,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {!! $staffs->render() !!}
                     </div> <!-- table-responsive -->
 
                 </div><!-- /.box-body -->

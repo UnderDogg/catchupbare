@@ -60,7 +60,7 @@ class StaffController extends Controller
         $page_title = trans('admin/staff/general.page.index.title'); // "Admin | Staff";
         $page_description = trans('admin/staff/general.page.index.description'); // "List of staff";
 
-        $staffs = $this->staff->pushCriteria(new StaffWithRoles())->pushCriteria(new StaffByUsernamesAscending())->paginate(10);
+        $staff = $this->staff->pushCriteria(new StaffWithRoles())->pushCriteria(new StaffByUsernamesAscending())->paginate(10);
         return view('admin.staff.index', compact('staff', 'page_title', 'page_description'));
     }
 

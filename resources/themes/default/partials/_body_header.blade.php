@@ -42,7 +42,7 @@
                                             <a href="#">
                                                 <div class="pull-left">
                                                     <!-- Staff Image -->
-                                                    <img src="{{ asset("/bower_components/admin-lte/dist/img/generic_staff_160x160.jpg") }}" class="img-circle" alt="Staff Image"/>
+                                                    <img src="{{ asset("/bower_components/admin-lte/dist/img/generic_user_160x160.jpg") }}" class="img-circle" alt="Staff Image"/>
                                                 </div>
                                                 <!-- Message title and timestamp -->
                                                 <h4>

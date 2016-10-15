@@ -50,7 +50,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
      */
     protected $appends = ['full_name'];
     /**
-     * Handle on the users settings class.
+     * Handle on the staff settings class.
      *
      * @var Setting
      */
@@ -125,7 +125,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
      */
     public function isRoot()
     {
-        // Protect the root user from edits.
+        // Protect the root staff from edits.
         if ('root' == $this->username) {
             return true;
         }
@@ -137,11 +137,11 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
      */
     public function isDeletable()
     {
-        // Protect the root user from deletion.
+        // Protect the root staff from deletion.
         if ('root' == $this->username) {
             return false;
         }
-        // Prevent user from deleting his own account.
+        // Prevent staff from deleting his own account.
         if ( Auth::check() && (Auth::user()->id == $this->id) ) {
             return false;
         }
@@ -153,11 +153,11 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
      */
     public function canBeDisabled()
     {
-        // Protect the root user from being disabled.
+        // Protect the root staff from being disabled.
         if ('root' == $this->username) {
             return false;
         }
-        // Prevent user from disabling his own account.
+        // Prevent staff from disabling his own account.
         if ( Auth::check() && (Auth::user()->id == $this->id) ) {
             return false;
         }
@@ -166,15 +166,15 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     }
     /**
      *
-     * Force the user to have the given role.
+     * Force the staff to have the given role.
      *
      * @param $roleName
      */
     public function forceRole($roleName)
     {
-        // If the user is not a member to the given role,
+        // If the staff is not a member to the given role,
         if (null == $this->roles()->where('name', $roleName)->first()) {
-            // Load the given role and attach it to the user.
+            // Load the given role and attach it to the staff.
             $roleToForce = Role::where('name', $roleName)->first();
             $this->roles()->attach($roleToForce->id);
         }
@@ -239,7 +239,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         $staff->assignMembership($attributes);
         // Assign permission(s)
         $staff->assignPermission($attributes);
-        // Force membership to group 'users'
+        // Force membership to group 'staff'
         $staff->forceRole('staff');
         return $staff;
     }
@@ -281,7 +281,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         $this->assignPermission($attributes);
         // Force membership to group 'staff'
         $this->forceRole('staff');
-        // Process user settings
+        // Process staff settings
         $this->processUserSetting('theme', $attributes);
         $tzIdentifiers = \DateTimeZone::listIdentifiers();
         $this->processUserSetting('time_zone', $attributes, $tzIdentifiers);
@@ -289,7 +289,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         $this->processUserSetting('locale', $attributes);
     }
     /**
-     * Overwrite Model::delete() to clear/delete user settings first,
+     * Overwrite Model::delete() to clear/delete staff settings first,
      * then invoke original delete method.
      *
      * @throws \Exception
@@ -327,8 +327,8 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
      */
     public static function getCreateValidationRules()
     {
-        return array( 'username'          => 'required|unique:users',
-            'email'             => 'required|unique:users',
+        return array( 'username'          => 'required|unique:staff',
+            'email'             => 'required|unique:staff',
             'first_name'        => 'required',
             'last_name'         => 'required',
         );
@@ -340,14 +340,14 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
      */
     public static function getUpdateValidationRules($id)
     {
-        return array( 'username'          => 'required|unique:users,username,' . $id,
-            'email'             => 'required|unique:users,email,' . $id,
+        return array( 'username'          => 'required|unique:staff,username,' . $id,
+            'email'             => 'required|unique:staff,email,' . $id,
             'first_name'        => 'required',
             'last_name'         => 'required',
         );
     }
     /**
-     * Return the existing instance of the users settings or create a new one.
+     * Return the existing instance of the staff settings or create a new one.
      *
      * @return Setting
      */
@@ -360,7 +360,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         }
     }
     /**
-     * Save or forget a user setting with the value from the attribute list.
+     * Save or forget a staff setting with the value from the attribute list.
      * If an array of value is provided, the setting value in the attribute
      * list is looked up in the array of values for the actual value to
      * use.
@@ -392,7 +392,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         }
     }
     /**
-     * Scope a query to only include users of a given username
+     * Scope a query to only include staff of a given username
      *
      * @param $query
      * @param $string
@@ -403,7 +403,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         return $query->where('username', $string);
     }
     /**
-     * Scope a query to only include users with a given confirmation_code
+     * Scope a query to only include staff with a given confirmation_code
      *
      * @param $query
      * @param $string
@@ -414,7 +414,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         return $query->where('confirmation_code', $string);
     }
     /**
-     * If option enabled, send an email to the user with email validation link.
+     * If option enabled, send an email to the staff with email validation link.
      */
     public function emailValidation()
     {
@@ -425,21 +425,21 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
             $this->confirmation_code = $confirmation_code;
             $this->save();
             // Send email.
-            Mail::send(['html' => 'emails.html.email_validation', 'text' => 'emails.text.email_validation'], ['user' => $this], function ($message) use ($settings) {
+            Mail::send(['html' => 'emails.html.email_validation', 'text' => 'emails.text.email_validation'], ['staff' => $this], function ($message) use ($settings) {
                 $message->from($settings->get('mail.from.address'), $settings->get('mail.from.name'));
                 $message->to($this->email, $this->full_name)->subject(trans('emails.email_validation.subject', ['first_name' => $this->first_name]));
             });
         }
     }
     /**
-     * If option enabled, send an email to the user to notify him of the password change
+     * If option enabled, send an email to the staff to notify him of the password change
      */
     public function emailPasswordChange()
     {
         $settings = new Setting();
         if ($settings->get('app.email_notifications')) {
-            // Send an email to the user to notify him of the password change.
-            Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['user' => $this], function ($message) use ($settings) {
+            // Send an email to the staff to notify him of the password change.
+            Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['staff' => $this], function ($message) use ($settings) {
                 $message->from($settings->get('mail.from.address'), $settings->get('mail.from.name'));
                 $message->to($this->email, $this->full_name)->subject(trans('emails.password_changed.subject'));
             });
