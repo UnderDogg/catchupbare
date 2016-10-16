@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Staff;
+use Modules\Core\Models\Staff;
 use App\Models\Permission;
 use App\Models\Menu;
 use App\Models\Route;

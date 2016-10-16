@@ -4,7 +4,7 @@ use App\Models\Menu;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\Route;
-use App\Staff;
+use Modules\Core\Models\Staff;
 use Illuminate\Database\Seeder;
 
 class ProductionSeeder extends Seeder

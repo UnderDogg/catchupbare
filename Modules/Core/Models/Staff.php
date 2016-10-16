@@ -1,0 +1,448 @@
+<?php
+
+namespace Modules\Core\Models;
+
+use App\Libraries\Str;
+use App\Models\Error;
+use App\Models\Role;
+use App\Models\Setting;
+use App\Traits\StaffHasPermissionsTrait;
+use Auth;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Model;
+use Mail;
+use Sroutier\EloquentLDAP\Contracts\EloquentLDAPUserInterface;
+use Zizaco\Entrust\Traits\EntrustUserTrait as EntrustUserTrait;
+
+class Staff extends Model implements AuthenticatableContract, CanResetPasswordContract
+{
+    use Authenticatable, CanResetPassword;
+    use EntrustUserTrait, StaffHasPermissionsTrait {
+        EntrustUserTrait::hasRole as entrustUserTraitHasRole;
+        StaffHasPermissionsTrait::can insteadof EntrustUserTrait;
+        StaffHasPermissionsTrait::boot insteadof EntrustUserTrait;
+    }
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'staff';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['first_name', 'last_name', 'username', 'email', 'password', 'auth_type', 'enabled'];
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['password', 'remember_token'];
+    /**
+     * The accessor to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['full_name'];
+    /**
+     * Handle on the staff settings class.
+     *
+     * @var Setting
+     */
+    protected $settings = null;
+    /**
+     * Eloquent hook to HasMany relationship between Staff and Audit
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function audits()
+    {
+        return $this->hasMany('App\Models\Audit');
+    }
+    /**
+     * Eloquent hook to HasMany relationship between Staff and Error
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function errors()
+    {
+        return $this->hasMany(Error::class);
+    }
+    /**
+     * Alias to eloquent many-to-many relation's sync() method.
+     *
+     * @param array $attributes
+     */
+    private function assignMembership(array $attributes = [])
+    {
+        if (array_key_exists('role', $attributes) && ($attributes['role'])) {
+            $this->roles()->sync($attributes['role']);
+        } else {
+            $this->roles()->sync([]);
+        }
+    }
+    /**
+     * Alias to eloquent many-to-many relation's sync() method.
+     *
+     * @param array $attributes
+     */
+    private function assignPermission(array $attributes = [])
+    {
+        if (array_key_exists('perms', $attributes) && ($attributes['perms'])) {
+            $this->permissions()->sync($attributes['perms']);
+        } else {
+            $this->permissions()->sync([]);
+        }
+    }
+    /**
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "$this->first_name $this->last_name";
+    }
+    /**
+     * @return string
+     */
+    public function getFullNameAndUsernameAttribute()
+    {
+        return "$this->first_name $this->last_name ($this->username)";
+    }
+    /**
+     * @param $value
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+    /**
+     * @return bool
+     */
+    public function isRoot()
+    {
+        // Protect the root staff from edits.
+        if ('root' == $this->username) {
+            return true;
+        }
+        // Otherwise
+        return false;
+    }
+    /**
+     * @return bool
+     */
+    public function isDeletable()
+    {
+        // Protect the root staff from deletion.
+        if ('root' == $this->username) {
+            return false;
+        }
+        // Prevent staff from deleting his own account.
+        if ( Auth::check() && (Auth::user()->id == $this->id) ) {
+            return false;
+        }
+        // Otherwise
+        return true;
+    }
+    /**
+     * @return bool
+     */
+    public function canBeDisabled()
+    {
+        // Protect the root staff from being disabled.
+        if ('root' == $this->username) {
+            return false;
+        }
+        // Prevent staff from disabling his own account.
+        if ( Auth::check() && (Auth::user()->id == $this->id) ) {
+            return false;
+        }
+        // Otherwise
+        return true;
+    }
+    /**
+     *
+     * Force the staff to have the given role.
+     *
+     * @param $roleName
+     */
+    public function forceRole($roleName)
+    {
+        // If the staff is not a member to the given role,
+        if (null == $this->roles()->where('name', $roleName)->first()) {
+            // Load the given role and attach it to the staff.
+            $roleToForce = Role::where('name', $roleName)->first();
+            $this->roles()->attach($roleToForce->id);
+        }
+    }
+    /**
+     * Code copy of EntrustUserTrait::hasRole(...) with the one addition to,
+     * optionally, check if a role is enabled before returning true.
+     *
+     * @param $name
+     * @param bool $requireAll
+     * @return bool
+     */
+    public function hasRole($name, $requireAll = false, $mustBeEnabled = true)
+    {
+        if (is_array($name)) {
+            foreach ($name as $roleName) {
+                $hasRole = $this->hasRole($roleName);
+                if ($hasRole && !$requireAll) {
+                    return true;
+                } elseif (!$hasRole && $requireAll) {
+                    return false;
+                }
+            }
+            // If we've made it this far and $requireAll is FALSE, then NONE of the roles were found
+            // If we've made it this far and $requireAll is TRUE, then ALL of the roles were found.
+            // Return the value of $requireAll;
+            return $requireAll;
+        } else {
+            foreach ($this->roles as $role) {
+                if ($role->name == $name) {
+                    if ( $mustBeEnabled ) {
+                        if ($role->enabled) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    /**
+     * Overwrite Model::create(...) to save group membership if included,
+     * or clear it if not. Also force membership to group 'staff'.
+     *
+     * @param array $attributes
+     * @return User
+     */
+    public static function create(array $attributes = [])
+    {
+        // If the auth_type is not explicitly set by the call function or module,
+        // set it to the internal value.
+        if (!array_key_exists('auth_type', $attributes) || ("" == ($attributes['auth_type'])) ) {
+            $attributes['auth_type'] = (new Setting())->get('eloquent-ldap.label_internal');
+        }
+        // Call original create method from parent
+        $staff = parent::create($attributes);
+        // Assign membership(s)
+        $staff->assignMembership($attributes);
+        // Assign permission(s)
+        $staff->assignPermission($attributes);
+        // Force membership to group 'staff'
+        $staff->forceRole('staff');
+        return $staff;
+    }
+
+
+
+
+    /**
+     * Overwrite Model::update(...) to save group membership if included,
+     * or clear it if not. Also force membership to group 'staff'.
+     *
+     * @param array $attributes
+     * @return void
+     */
+    public function update(array $attributes = [], array $options = [])
+    {
+        if ( array_key_exists('first_name', $attributes) ) {
+            $this->first_name = $attributes['first_name'];
+        }
+        if ( array_key_exists('last_name', $attributes) ) {
+            $this->last_name = $attributes['last_name'];
+        }
+        if ( array_key_exists('username', $attributes) ) {
+            $this->username = $attributes['username'];
+        }
+        if ( array_key_exists('email', $attributes) ) {
+            $this->email = $attributes['email'];
+        }
+        if( array_key_exists('password', $attributes) ) {
+            $this->password = $attributes['password'];
+        }
+        if( array_key_exists('enabled', $attributes) ) {
+            $this->enabled = $attributes['enabled'];
+        }
+        $this->save();
+        // Assign membership(s)
+        $this->assignMembership($attributes);
+        // Assign permission(s)
+        $this->assignPermission($attributes);
+        // Force membership to group 'staff'
+        $this->forceRole('staff');
+        // Process staff settings
+        $this->processUserSetting('theme', $attributes);
+        $tzIdentifiers = \DateTimeZone::listIdentifiers();
+        $this->processUserSetting('time_zone', $attributes, $tzIdentifiers);
+        $this->processUserSetting('time_format', $attributes);
+        $this->processUserSetting('locale', $attributes);
+    }
+    /**
+     * Overwrite Model::delete() to clear/delete staff settings first,
+     * then invoke original delete method.
+     *
+     * @throws \Exception
+     */
+    public function delete()
+    {
+        $this->settings()->forget();
+        parent::delete();
+    }
+    /**
+     * Implements the 'isMemberOf(...)' as required by Eloquent-LDAP by using
+     * the hasRole method and ignoring the enable state of the role.
+     *
+     * @param $name
+     * @return bool
+     */
+    public function isMemberOf($name)
+    {
+        return $this->hasRole($name, false, false);
+    }
+    /**
+     * Implements the 'membershipList()' method as required by Eloquent-LDAP.
+     *
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function membershipList()
+    {
+        return $this->roles();
+    }
+    /**
+     * Returns the validation rules required to create a Staff.
+     *
+     * @return array
+     */
+    public static function getCreateValidationRules()
+    {
+        return array( 'username'          => 'required|unique:staff',
+            'email'             => 'required|unique:staff',
+            'first_name'        => 'required',
+            'last_name'         => 'required',
+        );
+    }
+    /**
+     * Returns the validation rules required to update a Staff.
+     *
+     * @return array
+     */
+    public static function getUpdateValidationRules($id)
+    {
+        return array( 'username'          => 'required|unique:staff,username,' . $id,
+            'email'             => 'required|unique:staff,email,' . $id,
+            'first_name'        => 'required',
+            'last_name'         => 'required',
+        );
+    }
+    /**
+     * Return the existing instance of the staff settings or create a new one.
+     *
+     * @return Setting
+     */
+    public function settings()
+    {
+        if (null != $this->settings) {
+            return $this->settings;
+        } else {
+            return new Setting('Staff.' . $this->username);
+        }
+    }
+    /**
+     * Save or forget a staff setting with the value from the attribute list.
+     * If an array of value is provided, the setting value in the attribute
+     * list is looked up in the array of values for the actual value to
+     * use.
+     *
+     * @param $settingKey
+     * @param array $attributes
+     * @param array $valuesArr
+     */
+    private function processUserSetting($settingKey, array $attributes, array $valuesArr = null)
+    {
+        try {
+            // Get the value from the HTTP atributes
+            $setting_selected = $attributes[$settingKey];
+            // If not null set it otherwise forget it.
+            if (!Str::isNullOrEmptyString($setting_selected)) {
+                // If a array of values was provided, look up the real value by using the index.
+                if (!is_null($valuesArr)) {
+                    $setting_value = $valuesArr[$setting_selected];
+                } else {
+                    $setting_value = $setting_selected;
+                }
+                // Set the value.
+                $this->settings()->set($settingKey, $setting_value);
+            } else {
+                $this->settings()->forget($settingKey);
+            }
+        } catch (\Exception $ex) {
+            // Setting [$settingKey] not found in list [$attributes]?!
+        }
+    }
+    /**
+     * Scope a query to only include staff of a given username
+     *
+     * @param $query
+     * @param $string
+     * @return mixed
+     */
+    public function scopeOfUsername($query, $string)
+    {
+        return $query->where('username', $string);
+    }
+    /**
+     * Scope a query to only include staff with a given confirmation_code
+     *
+     * @param $query
+     * @param $string
+     * @return mixed
+     */
+    public function scopeWhereConfirmationCode($query, $string)
+    {
+        return $query->where('confirmation_code', $string);
+    }
+    /**
+     * If option enabled, send an email to the staff with email validation link.
+     */
+    public function emailValidation()
+    {
+        $settings = new Setting();
+        if ($settings->get('auth.email_validation')) {
+            // Set or reset validation code.
+            $confirmation_code = str_random(30);
+            $this->confirmation_code = $confirmation_code;
+            $this->save();
+            // Send email.
+            Mail::send(['html' => 'emails.html.email_validation', 'text' => 'emails.text.email_validation'], ['staff' => $this], function ($message) use ($settings) {
+                $message->from($settings->get('mail.from.address'), $settings->get('mail.from.name'));
+                $message->to($this->email, $this->full_name)->subject(trans('emails.email_validation.subject', ['first_name' => $this->first_name]));
+            });
+        }
+    }
+    /**
+     * If option enabled, send an email to the staff to notify him of the password change
+     */
+    public function emailPasswordChange()
+    {
+        $settings = new Setting();
+        if ($settings->get('app.email_notifications')) {
+            // Send an email to the staff to notify him of the password change.
+            Mail::send(['html' => 'emails.html.password_changed', 'text' => 'emails.text.password_changed'], ['staff' => $this], function ($message) use ($settings) {
+                $message->from($settings->get('mail.from.address'), $settings->get('mail.from.name'));
+                $message->to($this->email, $this->full_name)->subject(trans('emails.password_changed.subject'));
+            });
+        }
+    }
+}

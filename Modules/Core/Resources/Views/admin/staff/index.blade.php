@@ -67,41 +67,35 @@
                 </div>
                 <div class="box-body">
 
+                    {{--
+                    Name	User Name	Role	Status	Group	Department	Created	Action
+                    --}}
+
+
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered table-striped" id="staff-table">
                             <thead>
-                                <tr>
-                                    <th style="text-align: center">
-                                        <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('core::general.button.toggle-select') }}">
-                                            <i class="fa fa-check-square-o"></i>
-                                        </a>
-                                    </th>
-                                    <th>{{ trans('core::admin/staff/general.columns.gravatar') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.username') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.name') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.roles') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.email') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.type') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.actions') }}</th>
-                                </tr>
+                            <tr>
+                                <th>Name</th>
+                                <th>User Name</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Department</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
                             </thead>
                             <tfoot>
-                                <tr>
-                                    <th style="text-align: center">
-                                        <a class="btn" href="#" onclick="toggleCheckbox(); return false;" title="{{ trans('core::general.button.toggle-select') }}">
-                                            <i class="fa fa-check-square-o"></i>
-                                        </a>
-                                    </th>
-                                    <th>{{ trans('core::admin/staff/general.columns.gravatar') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.username') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.name') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.roles') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.email') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.type') }}</th>
-                                    <th>{{ trans('core::admin/staff/general.columns.actions') }}</th>
-                                </tr>
+                            <tr>
+                                <th>Name</th>
+                                <th>User Name</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Department</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
                             </tfoot>
-
                         </table>
                     </div> <!-- table-responsive -->
 
@@ -111,29 +105,32 @@
         </div><!-- /.col -->
 
     </div><!-- /.row -->
-@endsection
 
 
-@push('scripts-footer')
-<script>
-    $(function () {
-        $('#staff-table').DataTable({
-            processing: true,
-            serverSide: true,
-            "pageLength": 50,
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            ajax: '{!! route('api.staff.data') !!}',
-            columns: [
-                {data: 'staffnamelink', name: 'name'},
-                {data: 'staffemaillink', name: 'email'},
-                {data: 'actions', name: 'actions', orderable: false, searchable: false},
-            ]
+    <script type="text/javascript">
+        $(document).ready(function() {
+            oTable = $('#staff-table').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "pageLength": 50,
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                "ajax": '{!! route('api.staff.data') !!}',
+                columns: [
+                    {data: 'staffnamelink', name: 'last_name'},
+                    {data: 'staffusernamelink', name: 'username'},
+                    {data: 'staffrolelink', name: 'role_id'},
+
+                    {data: 'staffstatuslink', name: 'status_id'},
+                    {data: 'staffdepartmentlink', name: 'department_id'},
+                    {data: 'staffcreatedlink', name: 'created_at'},
+
+                    {data: 'actions', name: 'actions', orderable: false, searchable: false},
+                ]
+            });
         });
-    });
-</script>
-@endpush
+    </script>
 
-
+@endsection
 <!-- Optional bottom section for modals etc... -->
 @section('body_bottom')
     <script language="JavaScript">

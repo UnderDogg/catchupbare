@@ -2,7 +2,7 @@
 
 use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
-use App\Staff;
+use Modules\Core\Models\Staff;
 use Auth;
 use DateTime;
 use DateTimeZone;

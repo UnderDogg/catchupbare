@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 
 
 // Routes in this group must be authorized.
-Route::group(['middleware' => ''], function() {
+Route::group([], function() {
     // Site administration section
     Route::group(['prefix' => 'api'], function () {
         Route::get(   'staffdata',                  ['as' => 'api.staff.data',           'uses' => 'StaffController@anyData']);

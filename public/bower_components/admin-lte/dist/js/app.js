@@ -13,21 +13,8 @@
 
 'use strict';
 
-//Make sure jQuery has been loaded before app.js
-if (typeof jQuery === "undefined") {
-  throw new Error("AdminLTE requires jQuery");
-}
 
-/* AdminLTE
- *
- * @type Object
- * @description $.AdminLTE is the main object for the template's app.
- *              It's used for implementing functions and options related
- *              to the template. Keeping everything wrapped in an object
- *              prevents conflict with other plugins and is a better
- *              way to organize our code.
- */
-$.AdminLTE = {};
+
 
 /* --------------------
  * - AdminLTE Options -
@@ -41,7 +28,7 @@ $.AdminLTE.options = {
   navbarMenuSlimscroll: true,
   navbarMenuSlimscrollWidth: "3px", //The width of the scroll bar
   navbarMenuHeight: "200px", //The height of the inner menu
-  //General animation speed for JS animated elements such as box collapse/expand and 
+  //General animation speed for JS animated elements such as box collapse/expand and
   //sidebar treeview slide up/down. This options accepts an integer as milliseconds,
   //'fast', 'normal', or 'slow'
   animationSpeed: 500,
@@ -131,6 +118,30 @@ $.AdminLTE.options = {
     lg: 1200
   }
 };
+
+
+
+
+
+
+
+
+//Make sure jQuery has been loaded before app.js
+if (typeof jQuery === "undefined") {
+  throw new Error("AdminLTE requires jQuery");
+}
+
+/* AdminLTE
+ *
+ * @type Object
+ * @description $.AdminLTE is the main object for the template's app.
+ *              It's used for implementing functions and options related
+ *              to the template. Keeping everything wrapped in an object
+ *              prevents conflict with other plugins and is a better
+ *              way to organize our code.
+ */
+
+
 
 /* ------------------
  * - Implementation -

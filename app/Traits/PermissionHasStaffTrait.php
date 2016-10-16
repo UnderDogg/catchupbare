@@ -35,7 +35,7 @@ trait PermissionHasStaffTrait
      */
     public function user()
     {
-        return $this->belongsToMany(config('auth.model', 'App\Staff'), Config::get('app.permission_staff_table'));
+        return $this->belongsToMany(config('auth.model', 'Modules\Core\Models\Staff'), Config::get('app.permission_staff_table'));
     }
 
     /**

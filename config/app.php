@@ -344,7 +344,7 @@ return [
         Arcanedev\Settings\SettingsServiceProvider::class,
 
         Caffeinated\Modules\ModulesServiceProvider::class,
-
+        Yajra\Datatables\DatatablesServiceProvider::class
 
 
     ],
@@ -407,6 +407,9 @@ return [
         //'GridRender'  => Mgallegos\LaravelJqgrid\Facades\GridRender::class,
         //'GridEncoder' => Mgallegos\LaravelJqgrid\Facades\GridEncoder::class,
         'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
+
+        'Datatables '    =>         Yajra\Datatables\DatatablesServiceProvider::class,
+
         //'LERN'        => Tylercd100\LERN\Facades\LERN::class,
         // Commented out to force the usage of the Setting model located at app/Models/Setting.php
 //        'Setting'     => Arcanedev\Settings\Facades\Setting::class,

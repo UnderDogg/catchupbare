@@ -1,7 +1,7 @@
 <?php namespace app\Models;
 
 use App\Traits\BaseModelTrait;
-use App\Staff;
+use Modules\Core\Models\Staff;
 use Tylercd100\LERN\Models\ExceptionModel;
 
 class Error extends ExceptionModel

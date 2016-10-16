@@ -5,6 +5,9 @@ namespace Modules\Core\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
+use Yajra\Datatables\Datatables;
+
+
 
 use App\Http\Requests\CreateStaffRequest;
 use App\Http\Requests\UpdateStaffRequest;
@@ -19,9 +22,9 @@ use App\Repositories\Criteria\Staff\StaffWhereFirstNameOrLastNameOrStaffnameLike
 use App\Repositories\Criteria\Staff\StaffWithRoles;
 use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\RoleRepository as Role;
-use App\Repositories\StaffRepository as Staff;
+use Modules\Core\Models\Staff;
 
-use Yajra\Datatables\Datatables;
+
 
 
 use Auth;
@@ -61,14 +64,57 @@ class StaffController extends Controller
     }
 
 
-    /**
-     * Process datatables ajax request.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function anyData()
     {
-        return Datatables::of(Staff::query())->make(true);
+        //$canUpdateStaff = auth()->user()->can('update-user');
+        //Auth::guard($guard)->user()->can('update-user');
+        $staff = Staff::select(['id', 'first_name', 'last_name', 'username', 'email', 'password', 'auth_type', 'enabled']);
+        return Datatables::of($staff)
+
+/*
+{data: 'staffnamelink', name: 'last_name'},
+{data: 'staffusernamelink', name: 'username'},
+{data: 'staffrolelink', name: 'role_id'},
+
+{data: 'staffstatuslink', name: 'status_id'},
+{data: 'staffdepartmentlink', name: 'department_id'},
+{data: 'staffcreatedlink', name: 'created_at'},
+ **/
+
+
+            ->addColumn('staffnamelink', function ($staff) {
+                return '<a href="adminpanel/staff/' . $staff->id . '" ">' . $staff->last_name . '</a>';
+            })
+            ->addColumn('staffusernamelink', function ($staff) {
+                return '<a href="adminpanel/staff/' . $staff->id . '" ">' . $staff->username . '</a>';
+            })
+
+            ->addColumn('staffrolelink', function ($staff) {
+                return '<a href="adminpanel/staff/' . $staff->id . '" ">' . $staff->role . '</a>';
+            })
+            ->addColumn('staffstatuslink', function ($staff) {
+                return '<a href="adminpanel/staff/' . $staff->id . '" ">' . $staff->status_id . '</a>';
+            })
+
+            ->addColumn('staffdepartmentlink', function ($staff) {
+                return '<a href="adminpanel/staff/' . $staff->id . '" ">' . $staff->department_id . '</a>';
+            })
+
+            ->addColumn('staffcreatedlink', function ($staff) {
+                return '<a href="adminpanel/staff/' . $staff->id . '" ">' . $staff->created_at . '</a>';
+            })
+
+            ->addColumn('actions', function ($staff) {
+                return '
+                <form action="' . route('admin.staff.destroy', [$staff->id]) .'" method="POST">
+                <div class=\'btn-group\'>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <a href="' . route('admin.staff.edit', [$staff->id]) . '" class=\'btn btn-success btn-xs\'>Edit</a>
+                    <input type="submit" name="submit" value="Delete" class="btn btn-danger btn-xs" onClick="return confirm(\'Are you sure?\')"">
+                </div>
+                </form>';
+            })
+            ->make(true);
     }
 
 
@@ -80,7 +126,7 @@ class StaffController extends Controller
         $page_title = trans('core::admin/staff/general.page.index.title'); // "Admin | Staff";
         $page_description = trans('core::admin/staff/general.page.index.description'); // "List of staff";
 
-        $staff = $this->staff->pushCriteria(new StaffWithRoles())->pushCriteria(new StaffByUsernamesAscending())->paginate(10);
+        //$staff = $this->staff->pushCriteria(new StaffWithRoles())->pushCriteria(new StaffByUsernamesAscending())->paginate(10);
         return view('core::admin.staff.index', compact('staff', 'page_title', 'page_description'));
     }
 
@@ -90,9 +136,6 @@ class StaffController extends Controller
     public function show($id)
     {
         $staff = $this->staff->find($id);
-
-        Audit::log(Auth::user()->id, trans('core::admin/staff/general.audit-log.category'), trans('core::admin/staff/general.audit-log.msg-show', ['username' => $staff->username]));
-
         $page_title = trans('core::admin/staff/general.page.show.title'); // "Admin | Staff | Show";
         $page_description = trans('core::admin/staff/general.page.show.description', ['full_name' => $staff->full_name]); // "Displaying staff";
 
@@ -121,7 +164,7 @@ class StaffController extends Controller
         $page_description = trans('core::admin/staff/general.page.create.description'); // "Creating a new staff";
 
         $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
-        $staff = new \App\Staff();
+        $staff = new \Modules\Core\Models\Staff();
 
         $themes = \Theme::getList();
         $themes = Arr::indexToAssoc($themes, true);
@@ -556,7 +599,7 @@ class StaffController extends Controller
         $skipNumb = $request->input('s');
         $takeNumb = $request->input('t');
 
-        $staffCollection = \App\Staff::skip($skipNumb)->take($takeNumb)
+        $staffCollection = \Modules\Core\Models\Staff::skip($skipNumb)->take($takeNumb)
             ->get(['id', 'first_name', 'last_name', 'username'])
             ->lists('full_name_and_staffname', 'id');
         $staffList = $staffCollection->all();

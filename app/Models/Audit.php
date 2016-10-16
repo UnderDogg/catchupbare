@@ -14,7 +14,7 @@ class Audit extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Staff');
+        return $this->belongsTo('Modules\Core\Models\Staff');
     }
 
 }

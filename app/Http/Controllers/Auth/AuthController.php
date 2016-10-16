@@ -4,7 +4,7 @@ use App\Exceptions\InvalidConfirmationCodeException;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
-use App\Staff;
+use Modules\Core\Models\Staff;
 use Auth;
 use Flash;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;

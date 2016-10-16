@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(App\Staff::class, function ($faker) {
+$factory->define(Modules\Core\Models\Staff::class, function ($faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,

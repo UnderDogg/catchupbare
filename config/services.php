@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model'  => App\Staff::class,
+        'model'  => Modules\Core\Models\Staff::class,
         'key' => '',
         'secret' => '',
     ],

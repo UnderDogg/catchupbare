@@ -6,7 +6,7 @@ class StaffRepository extends Repository
 {
     public function model()
     {
-        return 'App\Staff';
+        return 'Modules\Core\Models\Staff';
     }
 
 }

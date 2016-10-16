@@ -20,6 +20,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link href="{{ asset("/bower_components/admin-lte/dist/css/AdminLTE.min.css") }}" rel="stylesheet" type="text/css" />
 
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,300|Open+Sans:400,600,700,800' rel='stylesheet'
+          type='text/css'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet'
+          type='text/css'>
+
+
+
     <!-- Application CSS-->
     <link href="{{ asset(elixir('css/all.css')) }}" rel="stylesheet" type="text/css" />
 
@@ -28,16 +36,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
       <!-- REQUIRED JS SCRIPTS -->
 
-      <!-- jQuery 2.1.4 -->
-      <script src="{{ asset ("/bower_components/admin-lte/plugins/jQuery/jQuery-2.1.4.min.js") }}"></script>
-      <!-- Bootstrap 3.3.2 JS -->
-      <script src="{{ asset ("/bower_components/admin-lte/bootstrap/js/bootstrap.min.js") }}" type="text/javascript"></script>
-      <!-- AdminLTE App -->
-      <script src="{{ asset ("/bower_components/admin-lte/dist/js/app.js") }}" type="text/javascript"></script>
+
+    <link href="http://faveohelpdesk.local/lb-faveo/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" >
+
+    <script src="http://faveohelpdesk.local/lb-faveo/js/jquery-2.1.4.js" type="text/javascript"></script>
+    <script src="http://faveohelpdesk.local/lb-faveo/js/jquery2.1.1.min.js" type="text/javascript"></script>
+
 
       <!-- Optionally, you can add Slimscroll and FastClick plugins.
             Both of these plugins are recommended to enhance the
-            staff experience. Slimscroll is required when using the
+            user experience. Slimscroll is required when using the
             fixed layout. -->
 
       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

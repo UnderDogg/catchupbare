@@ -72,14 +72,14 @@ return [
     'providers' => [
         'staff' => [
             'driver' => 'eloquent',
-            'model' => App\Staff::class,
+            'model' => Modules\Core\Models\Staff::class,
             'table' => 'staff',
 
         ],
 
         // 'staff' => [
         //     'driver' => 'eloquent',
-        //    'model' => App\Staff::class,
+        //    'model' => Modules\Core\Models\Staff::class,
         //     'table' => 'staff',
         // ],
     ],

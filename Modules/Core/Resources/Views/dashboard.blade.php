@@ -1,4 +1,4 @@
-@extends('core::layouts.adminmaster')
+@extends('core::adminlayouts.adminmaster')
 
 @section('head_extra')
     <!-- jVectorMap 1.2.2 -->
