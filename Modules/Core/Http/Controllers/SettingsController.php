@@ -1,4 +1,9 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace Modules\Core\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+
 
 use App\Libraries\SettingDotEnv;
 use App\Libraries\Utils;

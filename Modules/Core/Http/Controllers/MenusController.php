@@ -1,4 +1,10 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+
+namespace Modules\Core\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+
 
 use App\Models\Menu;
 use App\Models\Permission;
@@ -19,7 +25,6 @@ class MenusController extends Controller
     public function index()
     {
         // Log action by staff.
-        Audit::log(Auth::user()->id, trans('admin/menu-builder/menu-builder.audit-log.category'), trans('admin/menu-builder/menu-builder.audit-log.msg-index'));
 
         // Set page title and description.
         $page_title = trans('admin/menu-builder/menu-builder.page.index.title');

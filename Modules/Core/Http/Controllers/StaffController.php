@@ -1,4 +1,10 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+
+namespace Modules\Core\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+
 
 use App\Http\Requests\CreateStaffRequest;
 use App\Http\Requests\UpdateStaffRequest;
@@ -14,6 +20,10 @@ use App\Repositories\Criteria\Staff\StaffWithRoles;
 use App\Repositories\PermissionRepository as Permission;
 use App\Repositories\RoleRepository as Role;
 use App\Repositories\StaffRepository as Staff;
+
+use Yajra\Datatables\Datatables;
+
+
 use Auth;
 use Flash;
 use Illuminate\Contracts\Foundation\Application;
@@ -50,18 +60,28 @@ class StaffController extends Controller
         $this->perm  = $perm;
     }
 
+
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function anyData()
+    {
+        return Datatables::of(Staff::query())->make(true);
+    }
+
+
     /**
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        Audit::log(Auth::user()->id, trans('admin/staff/general.audit-log.category'), trans('admin/staff/general.audit-log.msg-index'));
-
-        $page_title = trans('admin/staff/general.page.index.title'); // "Admin | Staff";
-        $page_description = trans('admin/staff/general.page.index.description'); // "List of staff";
+        $page_title = trans('core::admin/staff/general.page.index.title'); // "Admin | Staff";
+        $page_description = trans('core::admin/staff/general.page.index.description'); // "List of staff";
 
         $staff = $this->staff->pushCriteria(new StaffWithRoles())->pushCriteria(new StaffByUsernamesAscending())->paginate(10);
-        return view('admin.staff.index', compact('staff', 'page_title', 'page_description'));
+        return view('core::admin.staff.index', compact('staff', 'page_title', 'page_description'));
     }
 
     /**
@@ -71,10 +91,10 @@ class StaffController extends Controller
     {
         $staff = $this->staff->find($id);
 
-        Audit::log(Auth::user()->id, trans('admin/staff/general.audit-log.category'), trans('admin/staff/general.audit-log.msg-show', ['username' => $staff->username]));
+        Audit::log(Auth::user()->id, trans('core::admin/staff/general.audit-log.category'), trans('core::admin/staff/general.audit-log.msg-show', ['username' => $staff->username]));
 
-        $page_title = trans('admin/staff/general.page.show.title'); // "Admin | Staff | Show";
-        $page_description = trans('admin/staff/general.page.show.description', ['full_name' => $staff->full_name]); // "Displaying staff";
+        $page_title = trans('core::admin/staff/general.page.show.title'); // "Admin | Staff | Show";
+        $page_description = trans('core::admin/staff/general.page.show.description', ['full_name' => $staff->full_name]); // "Displaying staff";
 
         $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
 
@@ -89,7 +109,7 @@ class StaffController extends Controller
             $locale = "";
         }
 
-        return view('admin.staff.show', compact('staff', 'perms', 'theme', 'time_zone', 'time_format', 'locale', 'page_title', 'page_description'));
+        return view('core::admin.staff.show', compact('staff', 'perms', 'theme', 'time_zone', 'time_format', 'locale', 'page_title', 'page_description'));
     }
 
     /**
@@ -97,8 +117,8 @@ class StaffController extends Controller
      */
     public function create()
     {
-        $page_title = trans('admin/staff/general.page.create.title'); // "Admin | Staff | Create";
-        $page_description = trans('admin/staff/general.page.create.description'); // "Creating a new staff";
+        $page_title = trans('core::admin/staff/general.page.create.title'); // "Admin | Staff | Create";
+        $page_description = trans('core::admin/staff/general.page.create.description'); // "Creating a new staff";
 
         $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
         $staff = new \App\Staff();
@@ -116,7 +136,7 @@ class StaffController extends Controller
         $locales = (new Setting())->get('app.supportedLocales');
         $locale = $staff->settings()->get('locale', null);
 
-        return view('admin.staff.create', compact('staff', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'page_title', 'page_description'));
+        return view('core::admin.staff.create', compact('staff', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'page_title', 'page_description'));
     }
 
     /**
@@ -130,7 +150,7 @@ class StaffController extends Controller
 
         $attributes = $request->all();
 
-        Audit::log(Auth::user()->id, trans('admin/staff/general.audit-log.category'), trans('admin/staff/general.audit-log.msg-store', ['username' => $attributes['username']]));
+        Audit::log(Auth::user()->id, trans('core::admin/staff/general.audit-log.category'), trans('core::admin/staff/general.audit-log.msg-store', ['username' => $attributes['username']]));
 
         if ( (array_key_exists('selected_roles', $attributes)) && (!empty($attributes['selected_roles'])) ) {
             $attributes['role'] = explode(",", $attributes['selected_roles']);
@@ -143,7 +163,7 @@ class StaffController extends Controller
         // Run the update method to set enabled status and roles membership.
         $staff->update($attributes);
 
-        Flash::success( trans('admin/staff/general.status.created') ); // 'Staff successfully created');
+        Flash::success( trans('core::admin/staff/general.status.created') ); // 'Staff successfully created');
 
         return redirect('/admin/staff');
     }
@@ -157,10 +177,10 @@ class StaffController extends Controller
     {
         $staff = $this->staff->find($id);
 
-        Audit::log(Auth::user()->id, trans('admin/staff/general.audit-log.category'), trans('admin/staff/general.audit-log.msg-edit', ['username' => $staff->username]));
+        Audit::log(Auth::user()->id, trans('core::admin/staff/general.audit-log.category'), trans('core::admin/staff/general.audit-log.msg-edit', ['username' => $staff->username]));
 
-        $page_title = trans('admin/staff/general.page.edit.title'); // "Admin | Staff | Edit";
-        $page_description = trans('admin/staff/general.page.edit.description', ['full_name' => $staff->full_name]); // "Editing staff";
+        $page_title = trans('core::admin/staff/general.page.edit.title'); // "Admin | Staff | Edit";
+        $page_description = trans('core::admin/staff/general.page.edit.description', ['full_name' => $staff->full_name]); // "Editing staff";
 
         $roles = $this->role->pushCriteria(new RolesByNamesAscending())->all();
         $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
@@ -178,7 +198,7 @@ class StaffController extends Controller
         $locales = (new Setting())->get('app.supportedLocales');
         $locale = $staff->settings()->get('locale', null);
 
-        return view('admin.staff.edit', compact('staff', 'roles', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'page_title', 'page_description'));
+        return view('core::admin.staff.edit', compact('staff', 'roles', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'page_title', 'page_description'));
     }
 
     static public function ParseUpdateAuditLog($id)
@@ -199,7 +219,7 @@ class StaffController extends Controller
                     $permsObj[] = $perm;
                 }
                 else {
-                    $permsNoFound[] = trans('admin/staff/general.error.perm_not_found', ['id' => $id]);
+                    $permsNoFound[] = trans('core::admin/staff/general.error.perm_not_found', ['id' => $id]);
                 }
             }
         }
@@ -215,7 +235,7 @@ class StaffController extends Controller
                     $rolesObj[] = $role;
                 }
                 else {
-                    $rolesNotFound[] = trans('admin/staff/general.error.perm_not_found', ['id' => $id]);
+                    $rolesNotFound[] = trans('core::admin/staff/general.error.perm_not_found', ['id' => $id]);
                 }
             }
         }
@@ -248,14 +268,14 @@ class StaffController extends Controller
         $staff = $this->staff->find($att['id']);
 
         if (null == $staff) {
-            Flash::warning( trans('admin/staff/general.error.staff_not_found', [ 'id' => $att['id'] ]) );
+            Flash::warning( trans('core::admin/staff/general.error.staff_not_found', [ 'id' => $att['id'] ]) );
             return \Redirect::route('admin.audit.index');
         }
 
-        Audit::log(Auth::user()->id, trans('admin/staff/general.audit-log.category'), trans('admin/staff/general.audit-log.msg-replay-edit', ['username' => $staff->username]));
+        Audit::log(Auth::user()->id, trans('core::admin/staff/general.audit-log.category'), trans('core::admin/staff/general.audit-log.msg-replay-edit', ['username' => $staff->username]));
 
-        $page_title = trans('admin/staff/general.page.edit.title'); // "Admin | Staff | Edit";
-        $page_description = trans('admin/staff/general.page.edit.description', ['full_name' => $staff->full_name]); // "Editing staff";
+        $page_title = trans('core::admin/staff/general.page.edit.title'); // "Admin | Staff | Edit";
+        $page_description = trans('core::admin/staff/general.page.edit.description', ['full_name' => $staff->full_name]); // "Editing staff";
 
         if (!$staff->isEditable())
         {
@@ -282,7 +302,7 @@ class StaffController extends Controller
         $roles = $this->role->all();
         $perms = $this->perm->all();
 
-        return view('admin.staff.edit', compact('staff', 'roles', 'perms', 'page_title', 'page_description'));
+        return view('core::admin.staff.edit', compact('staff', 'roles', 'perms', 'page_title', 'page_description'));
     }
 
     /**
@@ -322,7 +342,7 @@ class StaffController extends Controller
         // Add the id of the current staff for the replay action.
         $replayAtt["id"] = $id;
         // Create log entry with replay data.
-        $tmp = Audit::log( Auth::user()->id, trans('admin/staff/general.audit-log.category'), trans('admin/staff/general.audit-log.msg-update', ['username' => $staff->username]),
+        $tmp = Audit::log( Auth::user()->id, trans('core::admin/staff/general.audit-log.category'), trans('core::admin/staff/general.audit-log.msg-update', ['username' => $staff->username]),
             $replayAtt, "App\Http\Controllers\StaffController::ParseUpdateAuditLog", "admin.staff.replay-edit" );
 
 
@@ -349,7 +369,7 @@ class StaffController extends Controller
             $staff->emailPasswordChange();
         }
 
-        Flash::success( trans('admin/staff/general.status.updated') );
+        Flash::success( trans('core::admin/staff/general.status.updated') );
 
         return redirect('/admin/staff');
     }
@@ -367,11 +387,11 @@ class StaffController extends Controller
             abort(403);
         }
 
-        Audit::log(Auth::user()->id, trans('admin/staff/general.audit-log.category'), trans('admin/staff/general.audit-log.msg-destroy', ['username' => $staff->username]));
+        Audit::log(Auth::user()->id, trans('core::admin/staff/general.audit-log.category'), trans('core::admin/staff/general.audit-log.msg-destroy', ['username' => $staff->username]));
 
         $this->staff->delete($id);
 
-        Flash::success( trans('admin/staff/general.status.deleted') );
+        Flash::success( trans('core::admin/staff/general.status.deleted') );
 
         return redirect('/admin/staff');
     }
@@ -393,19 +413,19 @@ class StaffController extends Controller
             abort(403);
         }
 
-        $modal_title = trans('admin/staff/dialog.delete-confirm.title');
+        $modal_title = trans('core::admin/staff/dialog.delete-confirm.title');
 
         if (Auth::user()->id !== $id) {
             $staff = $this->staff->find($id);
             $modal_route = route('admin.staff.delete', array('id' => $staff->id));
 
-            $modal_body = trans('admin/staff/dialog.delete-confirm.body', ['id' => $staff->id, 'full_name' => $staff->full_name]);
+            $modal_body = trans('core::admin/staff/dialog.delete-confirm.body', ['id' => $staff->id, 'full_name' => $staff->full_name]);
         }
         else
         {
-            $error = trans('admin/staff/general.error.cant-delete-yourself');
+            $error = trans('core::admin/staff/general.error.cant-delete-yourself');
         }
-        return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
+        return view('core::modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
 
     }
 
@@ -417,12 +437,12 @@ class StaffController extends Controller
     {
         $staff = $this->staff->find($id);
 
-        Audit::log(Auth::user()->id, trans('admin/staff/general.audit-log.category'), trans('admin/staff/general.audit-log.msg-enable', ['username' => $staff->username]));
+        Audit::log(Auth::user()->id, trans('core::admin/staff/general.audit-log.category'), trans('core::admin/staff/general.audit-log.msg-enable', ['username' => $staff->username]));
 
         $staff->enabled = true;
         $staff->save();
 
-        Flash::success(trans('admin/staff/general.status.enabled'));
+        Flash::success(trans('core::admin/staff/general.status.enabled'));
 
         return redirect('/admin/staff');
     }
@@ -437,15 +457,15 @@ class StaffController extends Controller
 
         if (!$staff->canBeDisabled())
         {
-            Flash::error(trans('admin/staff/general.error.cant-be-disabled'));
+            Flash::error(trans('core::admin/staff/general.error.cant-be-disabled'));
         }
         else
         {
-            Audit::log(Auth::user()->id, trans('admin/staff/general.audit-log.category'), trans('admin/staff/general.audit-log.msg-disabled', ['username' => $staff->username]));
+            Audit::log(Auth::user()->id, trans('core::admin/staff/general.audit-log.category'), trans('core::admin/staff/general.audit-log.msg-disabled', ['username' => $staff->username]));
 
             $staff->enabled = false;
             $staff->save();
-            Flash::success(trans('admin/staff/general.status.disabled'));
+            Flash::success(trans('core::admin/staff/general.status.disabled'));
         }
 
         return redirect('/admin/staff');
@@ -458,7 +478,7 @@ class StaffController extends Controller
     {
         $chkStaff = $request->input('chkStaff');
 
-        Audit::log(Auth::user()->id, trans('admin/staff/general.audit-log.category'), trans('admin/staff/general.audit-log.msg-enabled-selected'), $chkStaff);
+        Audit::log(Auth::user()->id, trans('core::admin/staff/general.audit-log.category'), trans('core::admin/staff/general.audit-log.msg-enabled-selected'), $chkStaff);
 
         if (isset($chkStaff))
         {
@@ -468,11 +488,11 @@ class StaffController extends Controller
                 $staff->enabled = true;
                 $staff->save();
             }
-            Flash::success(trans('admin/staff/general.status.global-enabled'));
+            Flash::success(trans('core::admin/staff/general.status.global-enabled'));
         }
         else
         {
-            Flash::warning(trans('admin/staff/general.status.no-staff-selected'));
+            Flash::warning(trans('core::admin/staff/general.status.no-staff-selected'));
         }
         return redirect('/admin/staff');
     }
@@ -484,7 +504,7 @@ class StaffController extends Controller
     {
         $chkStaff = $request->input('chkStaff');
 
-        Audit::log(Auth::user()->id, trans('admin/staff/general.audit-log.category'), trans('admin/staff/general.audit-log.msg-disabled-selected'), $chkStaff);
+        Audit::log(Auth::user()->id, trans('core::admin/staff/general.audit-log.category'), trans('core::admin/staff/general.audit-log.msg-disabled-selected'), $chkStaff);
 
         if (isset($chkStaff))
         {
@@ -493,7 +513,7 @@ class StaffController extends Controller
                 $staff = $this->staff->find($staff_id);
                 if (!$staff->canBeDisabled())
                 {
-                    Flash::error(trans('admin/staff/general.error.cant-be-disabled'));
+                    Flash::error(trans('core::admin/staff/general.error.cant-be-disabled'));
                 }
                 else
                 {
@@ -501,11 +521,11 @@ class StaffController extends Controller
                     $staff->save();
                 }
             }
-            Flash::success(trans('admin/staff/general.status.global-disabled'));
+            Flash::success(trans('core::admin/staff/general.status.global-disabled'));
         }
         else
         {
-            Flash::warning(trans('admin/staff/general.status.no-staff-selected'));
+            Flash::warning(trans('core::admin/staff/general.status.no-staff-selected'));
         }
         return redirect('/admin/staff');
     }
@@ -563,10 +583,10 @@ class StaffController extends Controller
     {
         $staff = Auth::user();
 
-        Audit::log(Auth::user()->id, trans('general.audit-log.category-profile'), trans('general.audit-log.msg-profile-show', ['username' => $staff->username]));
+        Audit::log(Auth::user()->id, trans('core::general.audit-log.category-profile'), trans('core::general.audit-log.msg-profile-show', ['username' => $staff->username]));
 
-        $page_title = trans('general.page.profile.title');
-        $page_description = trans('general.page.profile.description', ['full_name' => $staff->full_name]);
+        $page_title = trans('core::general.page.profile.title');
+        $page_description = trans('core::general.page.profile.description', ['full_name' => $staff->full_name]);
         $readOnlyIfLDAP = ('ldap' == $staff->auth_type) ? 'readonly' : '';
         $perms = $this->perm->pushCriteria(new PermissionsByNamesAscending())->all();
 
@@ -583,7 +603,7 @@ class StaffController extends Controller
         $locales = (new Setting())->get('app.supportedLocales');
         $locale = $staff->settings()->get('locale');
 
-        return view('staff.profile', compact('staff', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'readOnlyIfLDAP', 'page_title', 'page_description'));
+        return view('core::staff.profile', compact('staff', 'perms', 'themes', 'theme', 'time_zones', 'tzKey', 'time_format', 'locale', 'locales', 'readOnlyIfLDAP', 'page_title', 'page_description'));
     }
 
     /**
@@ -597,7 +617,7 @@ class StaffController extends Controller
 
         $this->validate($request, \app\Staff::getUpdateValidationRules($staff->id));
 
-        Audit::log(Auth::user()->id, trans('general.audit-log.category-profile'), trans('general.audit-log.msg-profile-update', ['username' => $staff->username]));
+        Audit::log(Auth::user()->id, trans('core::general.audit-log.category-profile'), trans('core::general.audit-log.msg-profile-update', ['username' => $staff->username]));
 
         // Get all attribute from the request.
         $attributes = $request->all();
@@ -649,7 +669,7 @@ class StaffController extends Controller
             $staff->emailPasswordChange();
         }
 
-        Flash::success( trans('general.status.profile.updated') );
+        Flash::success( trans('core::general.status.profile.updated') );
 
         return redirect()->route('staff.profile');
     }

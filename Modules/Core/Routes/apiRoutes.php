@@ -12,7 +12,14 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//auth:api
+//authorize
 
-Route::get('/core', function (Request $request) {
-    // return $request->core();
-})->middleware('auth:api');
+
+// Routes in this group must be authorized.
+Route::group(['middleware' => ''], function() {
+    // Site administration section
+    Route::group(['prefix' => 'api'], function () {
+        Route::get(   'staffdata',                  ['as' => 'api.staff.data',           'uses' => 'StaffController@anyData']);
+    }); // End of ADMIN group
+});

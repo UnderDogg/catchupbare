@@ -21,7 +21,7 @@ Route::group(['middleware' => 'authorize'], function() {
     Route::patch( 'staff/profile',   ['as' => 'staff.profile.patch', 'uses' => 'StaffController@profileUpdate']);
 
     // Site administration section
-    Route::group(['prefix' => 'admin'], function () {
+    Route::group(['prefix' => 'adminpanel'], function () {
 
         Route::get(   '',      ['as' => 'adminpanel',          'uses' => 'DashboardController@index']);
 
@@ -34,6 +34,7 @@ Route::group(['middleware' => 'authorize'], function() {
         Route::post(  'staff/getInfo',                 ['as' => 'admin.staff.get-info',         'uses' => 'StaffController@getInfo']);
         Route::post(  'staff',                         ['as' => 'admin.staff.store',            'uses' => 'StaffController@store']);
         Route::get(   'staff',                         ['as' => 'admin.staff.index',            'uses' => 'StaffController@index']);
+        Route::get(   'staff/manage',                  ['as' => 'admin.staff.manage',            'uses' => 'StaffController@index']);
         Route::get(   'staff/create',                  ['as' => 'admin.staff.create',           'uses' => 'StaffController@create']);
         Route::get(   'staff/{staffId}',                ['as' => 'admin.staff.show',             'uses' => 'StaffController@show']);
         Route::patch( 'staff/{staffId}',                ['as' => 'admin.staff.patch',            'uses' => 'StaffController@update']);

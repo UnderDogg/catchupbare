@@ -37,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes();
 
-        $this->mapApiRoutes();
+        //$this->mapApiRoutes();
 
         //
     }
@@ -73,7 +73,7 @@ class RouteServiceProvider extends ServiceProvider
             'namespace'  => $this->namespace,
             'prefix'     => 'api',
         ], function ($router) {
-            require module_path('invoices', 'Routes/api.php');
+            require module_path('invoices', 'Routes/apiRoutes.php');
         });
     }
 }
