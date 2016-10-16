@@ -339,7 +339,7 @@ return [
         Baum\Providers\BaumServiceProvider::class,
         //Sroutier\LESKModules\ModulesServiceProvider::class,
         //Mgallegos\LaravelJqgrid\LaravelJqgridServiceProvider::class,
-        //Creativeorange\Gravatar\GravatarServiceProvider::class,
+        Creativeorange\Gravatar\GravatarServiceProvider::class,
         //Tylercd100\LERN\LERNServiceProvider::class,
         Arcanedev\Settings\SettingsServiceProvider::class,
 
@@ -406,7 +406,7 @@ return [
         //'Module'      => Sroutier\LESKModules\Facades\Module::class,
         //'GridRender'  => Mgallegos\LaravelJqgrid\Facades\GridRender::class,
         //'GridEncoder' => Mgallegos\LaravelJqgrid\Facades\GridEncoder::class,
-        //'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
+        'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
         //'LERN'        => Tylercd100\LERN\Facades\LERN::class,
         // Commented out to force the usage of the Setting model located at app/Models/Setting.php
 //        'Setting'     => Arcanedev\Settings\Facades\Setting::class,
