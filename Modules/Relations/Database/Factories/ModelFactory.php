@@ -11,16 +11,6 @@
 |
 */
 
-$factory->define(Modules\Core\Models\Staff::class, function ($faker) {
-    return [
-        'name' => $faker->name,
-        'email' => $faker->email,
-        'password' => str_random(10),
-        'remember_token' => str_random(10),
-    ];
-});
-
-
 
 
 $factory->define(Modules\Relations\Models\Relation::class, function (Faker\Generator $faker) {
@@ -44,4 +34,26 @@ $factory->define(Modules\Relations\Models\RelationAddress::class, function (Fake
         'country_id' =>  $faker->numberBetween($min = 1, $max = 100)
     ];
 });
+
+
+
+$factory->define(Modules\Relations\Models\RelationCommunication::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'email' => $faker->email,
+        'vat' => $faker->randomNumber(8),
+        'company_name' => $faker->company(),
+        'shortname' => $faker->company(),
+        'address' => $faker->secondaryAddress(),
+        'city' => $faker->city(),
+        'zipcode' => $faker->postcode(),
+        'primary_number' => $faker->randomNumber(8),
+        'secondary_number' => $faker->randomNumber(8),
+        'industry_id' => $faker->numberBetween($min = 1, $max = 25),
+        'fk_staff_id' => $faker->numberBetween($min = 1, $max = 3),
+        'company_type' => 'ApS',
+    ];
+});
+
+
 

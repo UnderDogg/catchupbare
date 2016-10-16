@@ -7,3 +7,4 @@
     <!-- Default to the left -->
     {!! config('app.copyright_line') !!}
 </footer>
+
