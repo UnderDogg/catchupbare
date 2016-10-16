@@ -45,7 +45,25 @@ Route::group(['middleware' => 'authorize'], function() {
         Route::get(   'staff/{staffId}/delete',         ['as' => 'admin.staff.delete',           'uses' => 'StaffController@destroy']);
         Route::get(   'staff/{staffId}/enable',         ['as' => 'admin.staff.enable',           'uses' => 'StaffController@enable']);
         Route::get(   'staff/{staffId}/disable',        ['as' => 'admin.staff.disable',          'uses' => 'StaffController@disable']);
-        Route::get(   'staff/{staffId}/replayEdit',      ['as' => 'admin.staff.replay-edit',      'uses' => 'StaffController@replayEdit']);
+
+
+        Route::post(  'department',                         ['as' => 'admin.departments.store',            'uses' => 'DepartmentsController@store']);
+        Route::get(   'departments',                         ['as' => 'admin.departments.index',            'uses' => 'DepartmentsController@index']);
+        Route::get(   'departments/manage',                  ['as' => 'admin.departments.manage',            'uses' => 'DepartmentsController@index']);
+        Route::get(   'department/create',                  ['as' => 'admin.departments.create',           'uses' => 'DepartmentsController@create']);
+        Route::get(   'department/{departmentId}',                ['as' => 'admin.departments.show',             'uses' => 'DepartmentsController@show']);
+        Route::patch( 'department/{departmentId}',                ['as' => 'admin.departments.patch',            'uses' => 'DepartmentsController@update']);
+        Route::put(   'department/{departmentId}',                ['as' => 'admin.departments.update',           'uses' => 'DepartmentsController@update']);
+        Route::delete('department/{departmentId}',                ['as' => 'admin.departments.destroy',          'uses' => 'DepartmentsController@destroy']);
+        Route::get(   'department/{departmentId}/edit',           ['as' => 'admin.departments.edit',             'uses' => 'DepartmentsController@edit']);
+        Route::get(   'department/{departmentId}/confirm-delete', ['as' => 'admin.departments.confirm-delete',   'uses' => 'DepartmentsController@getModalDelete']);
+        Route::get(   'department/{departmentId}/delete',         ['as' => 'admin.departments.delete',           'uses' => 'DepartmentsController@destroy']);
+
+
+
+
+
+
         // Role routes
         Route::post(  'roles/enableSelected',          ['as' => 'admin.roles.enable-selected',  'uses' => 'RolesController@enableSelected']);
         Route::post(  'roles/disableSelected',         ['as' => 'admin.roles.disable-selected', 'uses' => 'RolesController@disableSelected']);
