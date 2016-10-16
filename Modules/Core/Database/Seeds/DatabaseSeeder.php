@@ -1,5 +1,8 @@
 <?php
 
+namespace Modules\Core\Database\Seeds;
+
+
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +18,8 @@ class DatabaseSeeder extends Seeder
         //Model::unguard();
 
         //$this->call('DepartmentsSeeder');
-        $this->call('ProductionSeeder');
+        $this->call('TeamsSeeder');
+        //$this->call('ProductionSeeder');
 
         // Example of how to call a seeder script for a given environment.
 //        if( App::environment() === 'development' )

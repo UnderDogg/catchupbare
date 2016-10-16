@@ -24,7 +24,7 @@ class DepartmentsController extends Controller
         $page_description = trans('core::admin/departments/general.page.index.description'); // "List of staff";
 
         //$departments = $this->staff->pushCriteria(new StaffWithRoles())->pushCriteria(new StaffByUsernamesAscending())->paginate(10);
-        return view('core::admin.departments.index', compact('departments', 'page_title', 'page_description'));
+        //return view('core::admin.departments.index', compact('departments', 'page_title', 'page_description'));
     }
 
 

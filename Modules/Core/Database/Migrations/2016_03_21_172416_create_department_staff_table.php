@@ -12,7 +12,7 @@ class CreateDepartmentStaffTable extends Migration
      */
     public function up()
     {
-        Schema::create('department_staff', function (Blueprint $table) {
+        Schema::create('department_assign_staff', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('department_id')->unsigned();
             $table->foreign('department_id', 'depstaff_dept')->references('id')->on('departments')->onDelete('cascade');
@@ -34,7 +34,7 @@ class CreateDepartmentStaffTable extends Migration
             $table->dropForeign('depstaff_dept');
             $table->dropForeign('depstaff_staff');
         });
-        Schema::drop('department_staff');
+        Schema::drop('department_assign_staff');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

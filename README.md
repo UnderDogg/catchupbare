@@ -75,6 +75,19 @@ To run the migration scripts run this command
  ./artisan db:seed
  ```
 
+
+ ```
+php artisan db:seed --class=Modules\Core\Database\Seeds\DepartmentsSeeder
+php artisan db:seed --class=Modules\Core\Database\Seeds\TeamsSeeder
+ ``` 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 ### First login and test
 You should now be able to launch a Web browser and see your new Web application. To log in using the *root* account
 the default password is *Password1*. Please change it ASAP.

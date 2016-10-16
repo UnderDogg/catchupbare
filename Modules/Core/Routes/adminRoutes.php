@@ -60,7 +60,17 @@ Route::group(['middleware' => 'authorize'], function() {
         Route::get(   'department/{departmentId}/delete',         ['as' => 'admin.departments.delete',           'uses' => 'DepartmentsController@destroy']);
 
 
-
+        Route::post(  'team',                         ['as' => 'admin.teams.store',            'uses' => 'TeamsController@store']);
+        Route::get(   'teams',                         ['as' => 'admin.teams.index',            'uses' => 'TeamsController@index']);
+        Route::get(   'teams/manage',                  ['as' => 'admin.teams.manage',            'uses' => 'TeamsController@index']);
+        Route::get(   'team/create',                  ['as' => 'admin.teams.create',           'uses' => 'TeamsController@create']);
+        Route::get(   'team/{teamId}',                ['as' => 'admin.teams.show',             'uses' => 'TeamsController@show']);
+        Route::patch( 'team/{teamId}',                ['as' => 'admin.teams.patch',            'uses' => 'TeamsController@update']);
+        Route::put(   'team/{teamId}',                ['as' => 'admin.teams.update',           'uses' => 'TeamsController@update']);
+        Route::delete('team/{teamId}',                ['as' => 'admin.teams.destroy',          'uses' => 'TeamsController@destroy']);
+        Route::get(   'team/{teamId}/edit',           ['as' => 'admin.teams.edit',             'uses' => 'TeamsController@edit']);
+        Route::get(   'team/{teamId}/confirm-delete', ['as' => 'admin.teams.confirm-delete',   'uses' => 'TeamsController@getModalDelete']);
+        Route::get(   'team/{teamId}/delete',         ['as' => 'admin.teams.delete',           'uses' => 'TeamsController@destroy']);
 
 
 
