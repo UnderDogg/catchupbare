@@ -93,42 +93,42 @@
                 <div class="box-body no-padding">
                     <ul class="staff-list clearfix">
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff1-128x128.jpg") }}" alt="Staff Image">
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user1-128x128.jpg") }}" alt="Staff Image">
                             <a class="staff-list-name" href="#">Alexander Pierce</a>
                             <span class="staff-list-date">Today</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff8-128x128.jpg") }}" alt="Staff Image">
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user8-128x128.jpg") }}" alt="Staff Image">
                             <a class="staff-list-name" href="#">Norman</a>
                             <span class="staff-list-date">Yesterday</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff7-128x128.jpg") }}" alt="Staff Image">
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user7-128x128.jpg") }}" alt="Staff Image">
                             <a class="staff-list-name" href="#">Jane</a>
                             <span class="staff-list-date">12 Jan</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff6-128x128.jpg") }}" alt="Staff Image">
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user6-128x128.jpg") }}" alt="Staff Image">
                             <a class="staff-list-name" href="#">John</a>
                             <span class="staff-list-date">12 Jan</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff2-160x160.jpg") }}" alt="Staff Image">
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user2-160x160.jpg") }}" alt="Staff Image">
                             <a class="staff-list-name" href="#">Alexander</a>
                             <span class="staff-list-date">13 Jan</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff5-128x128.jpg") }}" alt="Staff Image">
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user5-128x128.jpg") }}" alt="Staff Image">
                             <a class="staff-list-name" href="#">Sarah</a>
                             <span class="staff-list-date">14 Jan</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff4-128x128.jpg") }}" alt="Staff Image">
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user4-128x128.jpg") }}" alt="Staff Image">
                             <a class="staff-list-name" href="#">Nora</a>
                             <span class="staff-list-date">15 Jan</span>
                         </li>
                         <li>
-                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/staff3-128x128.jpg") }}" alt="Staff Image">
+                            <img src="{{ asset ("/bower_components/admin-lte/dist/img/user3-128x128.jpg") }}" alt="Staff Image">
                             <a class="staff-list-name" href="#">Nadia</a>
                             <span class="staff-list-date">15 Jan</span>
                         </li>
