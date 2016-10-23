@@ -9,12 +9,7 @@ return [
       | customize your views to better match your application.
       |
      */
-    'adminpanel' => 'AdminPanel',
-    'dashboard' => 'DashBoard',
-    'staffpanel' => 'StaffPanel',
-    'ticketspanel' => 'TicketsPanel',
-    'mailpanel' => 'MailPanel',
-    'kbpanel' => 'KB',
+    'relationspanel' => 'Relations',
     'supportcenter' => 'Support Center',
     'adminsettings' => 'Admin Settings',
     'system-settings' => 'System Settings',
