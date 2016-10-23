@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Exception;
@@ -12,7 +14,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $homeRouteName = 'welcome';
+        $homeRouteName = 'guestindex';
 
         try {
             $homeCandidateName = (new Setting())->get('app.home_route');
@@ -23,6 +25,22 @@ class HomeController extends Controller
         $request->session()->reflash();
         return Redirect::route($homeRouteName);
     }
+
+
+
+    /**
+     * Display The main index.
+     *
+     * @return Response
+     */
+    public function guestindex()
+    {
+        return view('helpdesk::helpdesk.guest-user.index');
+    }
+
+
+
+
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

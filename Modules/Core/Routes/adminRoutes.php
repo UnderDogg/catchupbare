@@ -81,6 +81,7 @@ Route::group(['middleware' => 'authorize'], function() {
         Route::post(  'roles/getInfo',                 ['as' => 'admin.roles.get-info',         'uses' => 'RolesController@getInfo']);
         Route::post(  'roles',                         ['as' => 'admin.roles.store',            'uses' => 'RolesController@store']);
         Route::get(   'roles',                         ['as' => 'admin.roles.index',            'uses' => 'RolesController@index']);
+        Route::get(   'roles/manage',                  ['as' => 'admin.roles.manage',           'uses' => 'RolesController@index']);
         Route::get(   'roles/create',                  ['as' => 'admin.roles.create',           'uses' => 'RolesController@create']);
         Route::get(   'roles/{roleId}',                ['as' => 'admin.roles.show',             'uses' => 'RolesController@show']);
         Route::patch( 'roles/{roleId}',                ['as' => 'admin.roles.patch',            'uses' => 'RolesController@update']);

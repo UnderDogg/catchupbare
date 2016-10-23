@@ -55,8 +55,6 @@ class RolesController extends Controller
      */
     public function index()
     {
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-index'));
-
         $page_title = trans('admin/roles/general.page.index.title'); // "Admin | Roles";
         $page_description = trans('admin/roles/general.page.index.description'); // "List of roles";
 
@@ -72,8 +70,6 @@ class RolesController extends Controller
     public function show($id)
     {
         $role = $this->role->find($id);
-
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-show', ['name' => $role->name]));
 
         $page_title = trans('admin/roles/general.page.show.title'); // "Admin | Role | Show";
         $page_description = trans('admin/roles/general.page.show.description', ['name' => $role->name]); // "Displaying role";

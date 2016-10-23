@@ -31,9 +31,19 @@ Route::post('password/reset',           ['as' => 'reset_passwordPost',      'use
 // Registration terms
 Route::get( 'faust',                    ['as' => 'faust',                   'uses' => 'FaustController@index']);
 
+
+
+
+
+
+
+
+
+
 // Application routes...
 Route::get( '/',       ['as' => 'backslash',   'uses' => 'HomeController@index']);
 Route::get( 'home',    ['as' => 'home',        'uses' => 'HomeController@index']);
+Route::get( 'guestindex', ['as' => 'guestindex',     'uses' => 'HomeController@guestindex']);
 Route::get( 'welcome', ['as' => 'welcome',     'uses' => 'HomeController@welcome']);
 
 

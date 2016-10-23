@@ -158,7 +158,7 @@ return [
     | route will be selected.
     |
     */
-    'home_route' => env('APP.HOME_ROUTE', 'welcome'),
+    'home_route' => env('APP.HOME_ROUTE', 'guestindex'),
 
     /*
     |--------------------------------------------------------------------------
