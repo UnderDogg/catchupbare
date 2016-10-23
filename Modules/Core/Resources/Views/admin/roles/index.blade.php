@@ -15,22 +15,27 @@
 
 @section('HeadInclude')
 @stop
-            <!-- header -->
+
+
+
+<!-- header -->
 @section('PageHeader')
     <h1>{{Lang::get('core::lang.roles')}}</h1>
 
     @stop
-            <!-- /header -->
-    <!-- breadcrumbs -->
+<!-- /header -->
+
+
+<!-- breadcrumbs -->
 @section('breadcrumbs')
     <ol class="breadcrumb">
 
     </ol>
     @stop
-            <!-- /breadcrumbs -->
-    <!-- content -->
+<!-- /breadcrumbs -->
 
 
+<!-- content -->
 @section('content')
     <div class='row'>
 

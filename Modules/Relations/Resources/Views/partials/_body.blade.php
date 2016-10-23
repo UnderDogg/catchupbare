@@ -1,31 +1,11 @@
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
 <body class="skin-blue sidebar-mini">
 
     <!-- Main body content -->
-    @include('core::partials._body_content')
+    @include('relations::partials._body_content')
 
 
     <!-- Footer -->
-    @include('core::partials._footer')
+    @include('relations::partials._footer')
 
     <!-- Optional bottom section for modals etc... -->
     @yield('body_bottom')

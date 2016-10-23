@@ -21,10 +21,41 @@
 
                 @if (Auth::check())
 
+
+
+
+
+                    <ul class="tabs tabs-horizontal nav navbar-nav navbar-left">
+
+                        <li @yield('Dashboard')><a data-target="#tabA" href="{{url('/adminpanel')}}">{!! Lang::get('core::lang.adminpanel') !!}</a></li>
+                        <li @yield('Users')><a data-target="#tabB" href="#">users</a></li>
+                        <li @yield('Tickets')><a data-target="#tabC" href="#">tickets</a></li>
+                        <li @yield('Tools')><a data-target="#tabD" href="#">tools</a></li>
+                        <li @yield('Settings')><a data-target="#tabE" href="{!! url('/adminpanel/settings') !!}">{!! Lang::get('core::lang.settings') !!}</a>
+                        </li>
+                    </ul>
+
+
+
+
+                    <ul class="tabs tabs-horizontal nav navbar-nav navbar-left">
+                        <li @yield('Dashboard')><a data-target="#tabAdminPanel" href="{{url('/adminpanel')}}">{!! Lang::get('core::lang.adminpanel') !!}</a></li>
+                        <li @yield('Staff')><a data-target="#tabStaffPanel" href="{{url('/staffpanel')}}">{!! Lang::get('core::lang.staffpanel') !!}</a></li>
+                        <li @yield('Tickets')><a data-target="#tabTicketsPanel" href="{{url('/ticketspanel')}}">{!! Lang::get('tickets::lang.ticketspanel') !!}</a></li>
+                        <li @yield('Email')><a data-target="#tabMailPanel" href="{{url('/mailpanel')}}">{!! Lang::get('email::lang.mailpanel') !!}</a></li>
+                        <li @yield('Relations')><a data-target="#tabRelPanel" href="{{url('/relationspanel')}}">{!! Lang::get('relations::lang.relationspanel') !!}</a>
+                        <li @yield('KnowledgeBase')><a data-target="#tabKbPanel" href="{{url('/kbpanel')}}">{!! Lang::get('kb::lang.kbpanel') !!}</a></li>
+                    </ul>
+
+
+
+
                     @if ( config('app.context_help_area') && (isset($context_help_area)))
-                        {!! $context_help_area   !!}
+                    {!! $context_help_area   !!}
                     @endif
 
+
+                    <ul class="nav navbar-nav navbar-right">
                     @if ( config('app.notification_area') )
                         <!-- Messages: style can be found in dropdown.less-->
                         <li class="dropdown messages-menu">
@@ -42,7 +73,8 @@
                                             <a href="#">
                                                 <div class="pull-left">
                                                     <!-- Staff Image -->
-                                                    <img src="{{ asset("/bower_components/admin-lte/dist/img/generic_user_160x160.jpg") }}" class="img-circle" alt="Staff Image"/>
+                                                    <img src="{{ asset("/bower_components/admin-lte/dist/img/generic_user_160x160.jpg") }}"
+                                                         class="img-circle" alt="Staff Image"/>
                                                 </div>
                                                 <!-- Message title and timestamp -->
                                                 <h4>
@@ -96,8 +128,7 @@
                                             <a href="#">
                                                 <!-- Task title and progress text -->
                                                 <h3>
-                                                    Design some buttons
-                                                    <small class="pull-right">20%</small>
+                                                    Task Header <small class="pull-right">20%</small>
                                                 </h3>
                                                 <!-- The progress bar -->
                                                 <div class="progress xs">
@@ -115,29 +146,31 @@
                                 </li>
                             </ul>
                         </li>
-                    @endif
+                    @endif  {{--app.notification_area--}}
 
-                    <!-- Staff Account Menu -->
-                    <li class="dropdown staff staff-menu">
-                        <!-- Menu Toggle Button -->
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <!-- The staff image in the navbar-->
-                            <img src="{{ Gravatar::get(Auth::user()->email , 'tiny') }}" class="staff-image" alt="Staff Image"/>
-                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">{{ Auth::user()->username }}</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <!-- The staff image in the menu -->
-                            <li class="staff-header">
-                                <img src="{{ Gravatar::get(Auth::user()->email , 'medium') }}" class="img-circle" alt="Staff Image" />
-                                <p>
-                                    {{ Auth::user()->full_name }}
-                                    <small>Member since {{ Auth::user()->created_at->format("F, Y") }}</small>
-                                </p>
-                            </li>
+                        <!-- Staff Account Menu -->
+                        <li class="dropdown staff staff-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The staff image in the navbar-->
+                                <img src="{{ Gravatar::get(Auth::user()->email , 'tiny') }}" class="staff-image"
+                                     alt="Staff Image"/>
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs">{{ Auth::user()->username }}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- The staff image in the menu -->
+                                <li class="staff-header">
+                                    <img src="{{ Gravatar::get(Auth::user()->email , 'medium') }}" class="img-circle"
+                                         alt="Staff Image"/>
+                                    <p>
+                                        {{ Auth::user()->full_name }}
+                                        <small>Member since {{ Auth::user()->created_at->format("F, Y") }}</small>
+                                    </p>
+                                </li>
 
-                            @if ( config('app.extended_staff_menu') )
-                                <!-- Menu Body -->
+                                @if ( config('app.extended_staff_menu') )
+                                        <!-- Menu Body -->
                                 <li class="staff-body">
                                     <div class="col-xs-4 text-center">
                                         <a href="#">Followers</a>
@@ -149,36 +182,38 @@
                                         <a href="#">Friends</a>
                                     </div>
                                 </li>
-                            @endif
-
-                            <!-- Menu Footer-->
-                            <li class="staff-footer">
-
-                                @if ( config('app.staff_profile_link') )
-                                    <div class="pull-left">
-                                        {!! link_to_route('staff.profile', 'Profile', [], ['class' => "btn btn-default btn-flat"]) !!}
-                                    </div>
                                 @endif
 
-                                <div class="pull-right">
-                                    {!! link_to_route('logout', 'Sign out', [], ['class' => "btn btn-default btn-flat"]) !!}
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
+                                        <!-- Menu Footer-->
+                                <li class="staff-footer">
 
-                    @if ( config('app.right_sidebar') )
-                        <!-- Control Sidebar Toggle Button -->
+                                    @if ( config('app.staff_profile_link') )
+                                        <div class="pull-left">
+                                            {!! link_to_route('staff.profile', 'Profile', [], ['class' => "btn btn-default btn-flat"]) !!}
+                                        </div>
+                                    @endif
+
+                                    <div class="pull-right">
+                                        {!! link_to_route('logout', 'Sign out', [], ['class' => "btn btn-default btn-flat"]) !!}
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+
+                        @if ( config('app.right_sidebar') )
+                                <!-- Control Sidebar Toggle Button -->
                         <li>
                             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                         </li>
-                    @endif
-                @else
+                        @endif
+                    </ul>
+                @else   {{--Auth::check()--}}
                     <li>{!! link_to_route('login', 'Sign in') !!}</li>
                     @if (config('app.allow_registration'))
                         <li>{!! link_to_route('register', 'Register') !!}</li>
                     @endif
-                @endif
+                @endif  {{--Auth::check()--}}
+
             </ul>
         </div>
     </nav>

@@ -170,7 +170,7 @@ return [
     |
     | NOTE: The long name supports HTML markup for styling.
     */
-    'long_name' => env('APP.LONG_NAME', '<b>Laravel 5.1 </b>ESK'),
+    'long_name' => env('APP.LONG_NAME', '<b>CatchUp </b>BASE'),
 
     /*
     |--------------------------------------------------------------------------
@@ -182,7 +182,7 @@ return [
     |
     | NOTE: The short name does not support any HTML markup.
     */
-    'short_name' => env('APP.SHORT_NAME', 'LESK'),
+    'short_name' => env('APP.SHORT_NAME', 'L.ENT.KIT'),
 
     /*
     |--------------------------------------------------------------------------
@@ -267,7 +267,7 @@ return [
     | Boolean flag that shows the right sidebar area boilerplate, defaults to true.
     |
     */
-    'right_sidebar' => env('APP.RIGHT_SIDEBAR', true),
+    'right_sidebar' => env('APP.RIGHT_SIDEBAR', false),
 
     /*
     |--------------------------------------------------------------------------
