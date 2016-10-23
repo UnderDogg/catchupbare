@@ -96,11 +96,11 @@
                     <table class="table table-hover" id="tbl-roles">
                         <tbody>
                         <tr>
-                            <th class="hidden" rowname="id">{!! trans('admin/roles/general.columns.id')  !!}</th>
-                            <th>{!! trans('admin/roles/general.columns.name')  !!}</th>
-                            <th>{!! trans('admin/roles/general.columns.description')  !!}</th>
-                            <th>{!! trans('admin/roles/general.columns.enabled')  !!}</th>
-                            <th style="text-align: right">{!! trans('admin/roles/general.columns.actions')  !!}</th>
+                            <th class="hidden" rowname="id">{!! trans('core::admin/roles/general.columns.id')  !!}</th>
+                            <th>{!! trans('core::admin/roles/general.columns.name')  !!}</th>
+                            <th>{!! trans('core::admin/roles/general.columns.description')  !!}</th>
+                            <th>{!! trans('core::admin/roles/general.columns.enabled')  !!}</th>
+                            <th style="text-align: right">{!! trans('core::admin/roles/general.columns.actions')  !!}</th>
                         </tr>
                         @foreach($perm->roles as $role)
                             <tr>

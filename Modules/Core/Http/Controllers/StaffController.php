@@ -64,7 +64,7 @@ class StaffController extends Controller
     }
 
 
-    public function anyData()
+    public function anyDate()
     {
         //$canUpdateStaff = auth()->user()->can('update-user');
         //Auth::guard($guard)->user()->can('update-user');

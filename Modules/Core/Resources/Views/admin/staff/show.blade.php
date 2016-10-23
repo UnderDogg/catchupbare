@@ -106,10 +106,10 @@
                                     <table class="table table-hover">
                                         <tbody>
                                         <tr>
-                                            <th>{!! trans('admin/roles/general.columns.name')  !!}</th>
-                                            <th>{!! trans('admin/roles/general.columns.description')  !!}</th>
-                                            <th>{!! trans('admin/roles/general.columns.enabled')  !!}</th>
-                                            <th style="text-align: right">{!! trans('admin/roles/general.columns.actions')  !!}</th>
+                                            <th>{!! trans('core::admin/roles/general.columns.name')  !!}</th>
+                                            <th>{!! trans('core::admin/roles/general.columns.description')  !!}</th>
+                                            <th>{!! trans('core::admin/roles/general.columns.enabled')  !!}</th>
+                                            <th style="text-align: right">{!! trans('core::admin/roles/general.columns.actions')  !!}</th>
                                         </tr>
                                         @foreach($staff->roles as $role)
                                             <tr>

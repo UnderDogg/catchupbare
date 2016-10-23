@@ -1,10 +1,10 @@
 <div class="wrapper">
 
     <!-- Header -->
-    @include('partials._body_header')
+    @include('core::partials._body_header')
 
     <!-- Sidebar -->
-    @include('partials._body_left_sidebar')
+    @include('core::partials._body_left_sidebar')
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -32,11 +32,11 @@
     </div><!-- /.content-wrapper -->
 
     <!-- Body Footer -->
-    @include('partials._body_footer')
+    @include('core::partials._body_footer')
 
     @if ( config('app.right_sidebar') )
         <!-- Body right sidebar -->
-        @include('partials._body_right_sidebar')
+        @include('core::partials._body_right_sidebar')
     @endif
 
 </div><!-- ./wrapper -->

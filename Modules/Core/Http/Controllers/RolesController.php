@@ -4,14 +4,24 @@ namespace Modules\Core\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
+use Yajra\Datatables\Datatables;
 
+
+use App\Http\Requests\CreateStaffRequest;
+use App\Http\Requests\UpdateStaffRequest;
+use App\Libraries\Arr;
+use App\Libraries\Str;
+use App\Models\Setting;
 use App\Repositories\AuditRepository as Audit;
+use App\Repositories\Criteria\Permission\PermissionsByNamesAscending;
 use App\Repositories\Criteria\Role\RolesByNamesAscending;
 use App\Repositories\Criteria\Role\RolesWhereDisplayNameOrDescriptionLike;
 use App\Repositories\Criteria\Role\RolesWithPermissions;
-use App\Repositories\PermissionRepository as Permission;
-use App\Repositories\RoleRepository as Role;
-use App\Repositories\StaffRepository as Staff;
+
+use Modules\Core\Models\Staff;
+use Modules\Core\Models\Permission;
+use Modules\Core\Models\Role;
+
 use Auth;
 use Flash;
 use Illuminate\Contracts\Foundation\Application;
@@ -50,16 +60,47 @@ class RolesController extends Controller
         $this->staff = $staff;
     }
 
+
+    public function anyData()
+    {
+        $roles = Role::select(['id', 'name', 'display_name',]);
+        return Datatables::of($roles)
+
+            ->addColumn('rolenamelink', function ($roles) {
+                return '<a href="adminpanel/roles/' . $roles->id . '" ">' . $roles->name . '</a>';
+            })
+            ->addColumn('permissionslink', function ($roles) {
+                return '<a href="adminpanel/roles/' . $roles->id . '" ">' . $roles->display_name . '</a>';
+            })
+
+            ->addColumn('stafflink', function ($roles) {
+                return '<a href="adminpanel/roles/' . $roles->id . '" ">' . $roles->display_name . '</a>';
+            })
+
+            ->addColumn('actions', function ($roles) {
+                return '
+                <form action="' . route('admin.roles.destroy', [$roles->id]) .'" method="POST">
+                <div class=\'btn-group\'>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <a href="' . route('admin.roles.edit', [$roles->id]) . '" class=\'btn btn-success btn-xs\'>Edit</a>
+                    <input type="submit" name="submit" value="Delete" class="btn btn-danger btn-xs" onClick="return confirm(\'Are you sure?\')"">
+                </div>
+                </form>';
+            })
+            ->make(true);
+    }
+
+
+
     /**
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        $page_title = trans('admin/roles/general.page.index.title'); // "Admin | Roles";
-        $page_description = trans('admin/roles/general.page.index.description'); // "List of roles";
+        $page_title = trans('core::admin/roles/general.page.index.title'); // "Admin | Roles";
+        $page_description = trans('core::admin/roles/general.page.index.description'); // "List of roles";
 
-        $roles = $this->role->pushCriteria(new RolesWithPermissions())->pushCriteria(new RolesByNamesAscending())->paginate(10);
-        return view('admin.roles.index', compact('roles', 'page_title', 'page_description'));
+        return view('core::admin.roles.index', compact('roles', 'page_title', 'page_description'));
     }
 
     /**
@@ -71,8 +112,8 @@ class RolesController extends Controller
     {
         $role = $this->role->find($id);
 
-        $page_title = trans('admin/roles/general.page.show.title'); // "Admin | Role | Show";
-        $page_description = trans('admin/roles/general.page.show.description', ['name' => $role->name]); // "Displaying role";
+        $page_title = trans('core::admin/roles/general.page.show.title'); // "Admin | Role | Show";
+        $page_description = trans('core::admin/roles/general.page.show.description', ['name' => $role->name]); // "Displaying role";
 
         $perms = $this->permission->all();
 
@@ -84,8 +125,8 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $page_title = trans('admin/roles/general.page.create.title'); // "Admin | Role | Create";
-        $page_description = trans('admin/roles/general.page.create.description'); // "Creating a new role";
+        $page_title = trans('core::admin/roles/general.page.create.title'); // "Admin | Role | Create";
+        $page_description = trans('core::admin/roles/general.page.create.description'); // "Creating a new role";
 
         $role = new \App\Models\Role();
         $perms = $this->permission->all();
@@ -101,18 +142,17 @@ class RolesController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request, array(    'name'          => 'required|unique:roles',
-                                            'display_name'  => 'required'
+        $this->validate($request, array('name' => 'required|unique:roles',
+            'display_name' => 'required'
         ));
 
         $attributes = $request->all();
 
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-store', ['name' => $attributes['name']]));
+        Audit::log(Auth::user()->id, trans('core::admin/roles/general.audit-log.category'), trans('core::admin/roles/general.audit-log.msg-store', ['name' => $attributes['name']]));
 
-        if ( (array_key_exists('selected_staffs', $attributes)) && (!empty($attributes['selected_staffs'])) ) {
+        if ((array_key_exists('selected_staffs', $attributes)) && (!empty($attributes['selected_staffs']))) {
             $attributes['staff'] = explode(",", $attributes['selected_staffs']);
-        }
-        else {
+        } else {
             $attributes['staff'] = null;
         }
 
@@ -122,7 +162,7 @@ class RolesController extends Controller
         $role->forcePermission('basic-authenticated');
         $role->saveStaff($attributes['staff']);
 
-        Flash::success( trans('admin/roles/general.status.created') ); // 'Role successfully created');
+        Flash::success(trans('core::admin/roles/general.status.created')); // 'Role successfully created');
 
         return redirect('/admin/roles');
     }
@@ -136,12 +176,12 @@ class RolesController extends Controller
     {
         $role = $this->role->find($id);
 
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-edit', ['name' => $role->name]));
+        Audit::log(Auth::user()->id, trans('core::admin/roles/general.audit-log.category'), trans('core::admin/roles/general.audit-log.msg-edit', ['name' => $role->name]));
 
-        $page_title = trans('admin/roles/general.page.edit.title'); // "Admin | Role | Edit";
-        $page_description = trans('admin/roles/general.page.edit.description', ['name' => $role->name]); // "Editing role";
+        $page_title = trans('core::admin/roles/general.page.edit.title'); // "Admin | Role | Edit";
+        $page_description = trans('core::admin/roles/general.page.edit.description', ['name' => $role->name]); // "Editing role";
 
-        if( !$role->isEditable() &&  !$role->canChangePermissions() ) {
+        if (!$role->isEditable() && !$role->canChangePermissions()) {
             abort(403);
         }
 
@@ -158,17 +198,17 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, array(    'name'          => 'required|unique:roles,name,' . $id,
-                                            'display_name'  => 'required',
+        $this->validate($request, array('name' => 'required|unique:roles,name,' . $id,
+            'display_name' => 'required',
         ));
 
         $role = $this->role->find($id);
 
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-update', ['name' => $role->name]));
+        Audit::log(Auth::user()->id, trans('core::admin/roles/general.audit-log.category'), trans('core::admin/roles/general.audit-log.msg-update', ['name' => $role->name]));
 
         $attributes = $request->all();
 
-        if ( (array_key_exists('selected_staffs', $attributes)) && (!empty($attributes['selected_staffs'])) ) {
+        if ((array_key_exists('selected_staffs', $attributes)) && (!empty($attributes['selected_staffs']))) {
             $attributes['staff'] = explode(",", $attributes['selected_staffs']);
         } else {
             $attributes['staff'] = [];
@@ -188,7 +228,7 @@ class RolesController extends Controller
             $role->saveStaff($attributes['staff']);
         }
 
-        Flash::success( trans('admin/roles/general.status.updated') ); // 'Role successfully updated');
+        Flash::success(trans('core::admin/roles/general.status.updated')); // 'Role successfully updated');
 
         return redirect('/admin/roles');
     }
@@ -206,11 +246,11 @@ class RolesController extends Controller
             abort(403);
         }
 
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-destroy', ['name' => $role->name]));
+        Audit::log(Auth::user()->id, trans('core::admin/roles/general.audit-log.category'), trans('core::admin/roles/general.audit-log.msg-destroy', ['name' => $role->name]));
 
         $this->role->delete($id);
 
-        Flash::success( trans('admin/roles/general.status.deleted') ); // 'Role successfully deleted');
+        Flash::success(trans('core::admin/roles/general.status.deleted')); // 'Role successfully deleted');
 
         return redirect('/admin/roles');
     }
@@ -218,7 +258,7 @@ class RolesController extends Controller
     /**
      * Delete Confirm
      *
-     * @param   int   $id
+     * @param   int $id
      *
      * @return  View
      */
@@ -232,12 +272,12 @@ class RolesController extends Controller
             abort(403);
         }
 
-        $modal_title = trans('admin/roles/dialog.delete-confirm.title');
+        $modal_title = trans('core::admin/roles/dialog.delete-confirm.title');
 
         $role = $this->role->find($id);
         $modal_route = route('admin.roles.delete', array('id' => $role->id));
 
-        $modal_body = trans('admin/roles/dialog.delete-confirm.body', ['id' => $role->id, 'name' => $role->name]);
+        $modal_body = trans('core::admin/roles/dialog.delete-confirm.body', ['id' => $role->id, 'name' => $role->name]);
 
         return view('modal_confirmation', compact('error', 'modal_route', 'modal_title', 'modal_body'));
     }
@@ -251,12 +291,12 @@ class RolesController extends Controller
     {
         $role = $this->role->find($id);
 
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-enable', ['name' => $role->name]));
+        Audit::log(Auth::user()->id, trans('core::admin/roles/general.audit-log.category'), trans('core::admin/roles/general.audit-log.msg-enable', ['name' => $role->name]));
 
         $role->enabled = true;
         $role->save();
 
-        Flash::success(trans('admin/roles/general.status.enabled'));
+        Flash::success(trans('core::admin/roles/general.status.enabled'));
 
         return redirect('/admin/roles');
     }
@@ -272,12 +312,12 @@ class RolesController extends Controller
 
         $role = $this->role->find($id);
 
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-disabled', ['name' => $role->name]));
+        Audit::log(Auth::user()->id, trans('core::admin/roles/general.audit-log.category'), trans('core::admin/roles/general.audit-log.msg-disabled', ['name' => $role->name]));
 
         $role->enabled = false;
         $role->save();
 
-        Flash::success(trans('admin/roles/general.status.disabled'));
+        Flash::success(trans('core::admin/roles/general.status.disabled'));
 
         return redirect('/admin/roles');
     }
@@ -291,7 +331,7 @@ class RolesController extends Controller
     {
         $chkRoles = $request->input('chkRole');
 
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-enabled-selected'), $chkRoles);
+        Audit::log(Auth::user()->id, trans('core::admin/roles/general.audit-log.category'), trans('core::admin/roles/general.audit-log.msg-enabled-selected'), $chkRoles);
 
         if (isset($chkRoles)) {
             foreach ($chkRoles as $role_id) {
@@ -299,9 +339,9 @@ class RolesController extends Controller
                 $role->enabled = true;
                 $role->save();
             }
-            Flash::success(trans('admin/roles/general.status.global-enabled'));
+            Flash::success(trans('core::admin/roles/general.status.global-enabled'));
         } else {
-            Flash::warning(trans('admin/roles/general.status.no-role-selected'));
+            Flash::warning(trans('core::admin/roles/general.status.no-role-selected'));
         }
         return redirect('/admin/roles');
     }
@@ -317,7 +357,7 @@ class RolesController extends Controller
 
         $chkRoles = $request->input('chkRole');
 
-        Audit::log(Auth::user()->id, trans('admin/roles/general.audit-log.category'), trans('admin/roles/general.audit-log.msg-disabled-selected'), $chkRoles);
+        Audit::log(Auth::user()->id, trans('core::admin/roles/general.audit-log.category'), trans('core::admin/roles/general.audit-log.msg-disabled-selected'), $chkRoles);
 
         if (isset($chkRoles)) {
             foreach ($chkRoles as $role_id) {
@@ -325,9 +365,9 @@ class RolesController extends Controller
                 $role->enabled = false;
                 $role->save();
             }
-            Flash::success(trans('admin/roles/general.status.global-disabled'));
+            Flash::success(trans('core::admin/roles/general.status.global-disabled'));
         } else {
-            Flash::warning(trans('admin/roles/general.status.no-role-selected'));
+            Flash::warning(trans('core::admin/roles/general.status.no-role-selected'));
         }
         return redirect('/admin/roles');
     }
@@ -350,7 +390,7 @@ class RolesController extends Controller
             $display_name = $role->display_name;
             $description = $role->description;
 
-            $entry_arr = [ 'id' => $id, 'text' => "$display_name ($description)"];
+            $entry_arr = ['id' => $id, 'text' => "$display_name ($description)"];
             $return_arr[] = $entry_arr;
         }
 

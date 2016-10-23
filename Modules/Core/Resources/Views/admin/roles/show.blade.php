@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('core::adminlayouts.adminmaster')
 
 @section('head_extra')
     <!-- Select2 css -->
@@ -6,6 +6,34 @@
 
 @endsection
 
+@section('Dashboard')
+    active
+@stop
+
+@section('dashboard-bar')
+    active
+@stop
+
+@section('Dashboard')
+    class="active"
+@stop
+
+@section('HeadInclude')
+@stop
+            <!-- header -->
+@section('PageHeader')
+    <h1>{{Lang::get('core::lang.staff')}}</h1>
+
+    @stop
+            <!-- /header -->
+    <!-- breadcrumbs -->
+@section('breadcrumbs')
+    <ol class="breadcrumb">
+
+    </ol>
+    @stop
+            <!-- /breadcrumbs -->
+    <!-- content -->
 @section('content')
     <div class='row'>
         <div class='col-md-12'>
@@ -24,15 +52,15 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_details">
                             <div class="form-group">
-                                {!! Form::label('name', trans('admin/roles/general.columns.name')) !!}
+                                {!! Form::label('name', trans('core::admin/roles/general.columns.name')) !!}
                                 {!! Form::text('name', null, ['class' => 'form-control', 'readonly']) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('display_name', trans('admin/roles/general.columns.display_name')) !!}
+                                {!! Form::label('display_name', trans('core::admin/roles/general.columns.display_name')) !!}
                                 {!! Form::text('display_name', null, ['class' => 'form-control', 'readonly']) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::label('description', trans('admin/roles/general.columns.description')) !!}
+                                {!! Form::label('description', trans('core::admin/roles/general.columns.description')) !!}
                                 {!! Form::text('description', null, ['class' => 'form-control', 'readonly']) !!}
                             </div>
                         </div><!-- /.tab-pane -->
@@ -41,7 +69,7 @@
                             <div class="form-group">
                                 <div class="checkbox">
                                     <label>
-                                        {!! Form::checkbox('resync_on_login', '1', $role->resync_on_login, ['disabled']) !!} {!! trans('admin/roles/general.columns.resync_on_login') !!}
+                                        {!! Form::checkbox('resync_on_login', '1', $role->resync_on_login, ['disabled']) !!} {!! trans('core::admin/roles/general.columns.resync_on_login') !!}
                                     </label>
                                 </div>
                                 <div class="checkbox">

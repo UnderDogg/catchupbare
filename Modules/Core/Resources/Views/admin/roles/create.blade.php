@@ -1,10 +1,38 @@
-@extends('layouts.master')
+@extends('core::adminlayouts.adminmaster')
 
 @section('head_extra')
     <!-- Select2 css -->
     @include('partials._head_extra_select2_css')
 @endsection
 
+@section('Dashboard')
+    active
+@stop
+
+@section('dashboard-bar')
+    active
+@stop
+
+@section('Dashboard')
+    class="active"
+@stop
+
+@section('HeadInclude')
+@stop
+            <!-- header -->
+@section('PageHeader')
+    <h1>{{Lang::get('core::lang.staff')}}</h1>
+
+    @stop
+            <!-- /header -->
+    <!-- breadcrumbs -->
+@section('breadcrumbs')
+    <ol class="breadcrumb">
+
+    </ol>
+    @stop
+            <!-- /breadcrumbs -->
+    <!-- content -->
 @section('content')
     <div class='row'>
         <div class='col-md-12'>

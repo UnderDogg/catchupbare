@@ -38,16 +38,6 @@ class DepartmentsController extends Controller
         $departments = Department::select(['id', 'name', 'departmenttype', 'isdefault', 'slaplan_id', 'manager_id']);
         return Datatables::of($departments)
 
-/*
-department_name
-{data: 'departmentsnamelink', name: 'department_name'},
-{data: 'departmentstypelink', name: 'department_type'},
-{data: 'slaplanlink', name: 'slaplan_id'},
-
-{data: 'departmentmanagerlink', name: 'manager_id'},
-
-{data: 'actions', name: 'actions', orderable: false, searchable: false},
- **/
             ->addColumn('departmentsnamelink', function ($departments) {
                 return '<a href="adminpanel/departments/' . $departments->id . '" ">' . $departments->name . '</a>';
             })

@@ -3,7 +3,7 @@ namespace Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Permissions extends Model
+class Permission extends Model
 {
     public function roles()
     {

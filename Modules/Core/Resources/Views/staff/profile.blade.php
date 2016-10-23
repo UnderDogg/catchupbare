@@ -94,9 +94,9 @@
                                         <table class="table table-hover">
                                             <tbody>
                                             <tr>
-                                                <th>{!! trans('admin/roles/general.columns.name')  !!}</th>
-                                                <th>{!! trans('admin/roles/general.columns.description')  !!}</th>
-                                                <th>{!! trans('admin/roles/general.columns.enabled')  !!}</th>
+                                                <th>{!! trans('core::admin/roles/general.columns.name')  !!}</th>
+                                                <th>{!! trans('core::admin/roles/general.columns.description')  !!}</th>
+                                                <th>{!! trans('core::admin/roles/general.columns.enabled')  !!}</th>
                                             </tr>
                                             @foreach($staff->roles as $role)
                                                 <tr>
@@ -125,8 +125,8 @@
                                             <tbody>
                                                 <tr>
                                                     <th>{!! trans('admin/staff/general.columns.name')  !!}</th>
-                                                    <th>{!! trans('admin/roles/general.columns.description')  !!}</th>
-                                                    <th>{!! trans('admin/roles/general.columns.enabled')  !!}</th>
+                                                    <th>{!! trans('core::admin/roles/general.columns.description')  !!}</th>
+                                                    <th>{!! trans('core::admin/roles/general.columns.enabled')  !!}</th>
                                                 </tr>
                                                 @foreach($perms as $perm)
                                                     @if($staff->can($perm->name))

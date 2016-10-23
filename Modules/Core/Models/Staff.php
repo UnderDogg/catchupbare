@@ -55,6 +55,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
      * @var Setting
      */
     protected $settings = null;
+
     /**
      * Eloquent hook to HasMany relationship between Staff and Audit
      *
@@ -64,6 +65,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     {
         return $this->hasMany('App\Models\Audit');
     }
+
     /**
      * Eloquent hook to HasMany relationship between Staff and Error
      *
@@ -73,6 +75,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     {
         return $this->hasMany(Error::class);
     }
+
     /**
      * Alias to eloquent many-to-many relation's sync() method.
      *
@@ -86,6 +89,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
             $this->roles()->sync([]);
         }
     }
+
     /**
      * Alias to eloquent many-to-many relation's sync() method.
      *
@@ -99,6 +103,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
             $this->permissions()->sync([]);
         }
     }
+
     /**
      * @return string
      */
@@ -106,6 +111,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     {
         return "$this->first_name $this->last_name";
     }
+
     /**
      * @return string
      */
@@ -113,6 +119,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     {
         return "$this->first_name $this->last_name ($this->username)";
     }
+
     /**
      * @param $value
      */
@@ -120,6 +127,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
     /**
      * @return bool
      */
@@ -132,6 +140,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         // Otherwise
         return false;
     }
+
     /**
      * @return bool
      */
@@ -142,12 +151,13 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
             return false;
         }
         // Prevent staff from deleting his own account.
-        if ( Auth::check() && (Auth::user()->id == $this->id) ) {
+        if (Auth::check() && (Auth::user()->id == $this->id)) {
             return false;
         }
         // Otherwise
         return true;
     }
+
     /**
      * @return bool
      */
@@ -158,12 +168,13 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
             return false;
         }
         // Prevent staff from disabling his own account.
-        if ( Auth::check() && (Auth::user()->id == $this->id) ) {
+        if (Auth::check() && (Auth::user()->id == $this->id)) {
             return false;
         }
         // Otherwise
         return true;
     }
+
     /**
      *
      * Force the staff to have the given role.
@@ -179,6 +190,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
             $this->roles()->attach($roleToForce->id);
         }
     }
+
     /**
      * Code copy of EntrustUserTrait::hasRole(...) with the one addition to,
      * optionally, check if a role is enabled before returning true.
@@ -205,7 +217,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         } else {
             foreach ($this->roles as $role) {
                 if ($role->name == $name) {
-                    if ( $mustBeEnabled ) {
+                    if ($mustBeEnabled) {
                         if ($role->enabled) {
                             return true;
                         } else {
@@ -219,6 +231,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         }
         return false;
     }
+
     /**
      * Overwrite Model::create(...) to save group membership if included,
      * or clear it if not. Also force membership to group 'staff'.
@@ -230,7 +243,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     {
         // If the auth_type is not explicitly set by the call function or module,
         // set it to the internal value.
-        if (!array_key_exists('auth_type', $attributes) || ("" == ($attributes['auth_type'])) ) {
+        if (!array_key_exists('auth_type', $attributes) || ("" == ($attributes['auth_type']))) {
             $attributes['auth_type'] = (new Setting())->get('eloquent-ldap.label_internal');
         }
         // Call original create method from parent
@@ -245,8 +258,6 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     }
 
 
-
-
     /**
      * Overwrite Model::update(...) to save group membership if included,
      * or clear it if not. Also force membership to group 'staff'.
@@ -256,22 +267,22 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
      */
     public function update(array $attributes = [], array $options = [])
     {
-        if ( array_key_exists('first_name', $attributes) ) {
+        if (array_key_exists('first_name', $attributes)) {
             $this->first_name = $attributes['first_name'];
         }
-        if ( array_key_exists('last_name', $attributes) ) {
+        if (array_key_exists('last_name', $attributes)) {
             $this->last_name = $attributes['last_name'];
         }
-        if ( array_key_exists('username', $attributes) ) {
+        if (array_key_exists('username', $attributes)) {
             $this->username = $attributes['username'];
         }
-        if ( array_key_exists('email', $attributes) ) {
+        if (array_key_exists('email', $attributes)) {
             $this->email = $attributes['email'];
         }
-        if( array_key_exists('password', $attributes) ) {
+        if (array_key_exists('password', $attributes)) {
             $this->password = $attributes['password'];
         }
-        if( array_key_exists('enabled', $attributes) ) {
+        if (array_key_exists('enabled', $attributes)) {
             $this->enabled = $attributes['enabled'];
         }
         $this->save();
@@ -288,6 +299,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         $this->processUserSetting('time_format', $attributes);
         $this->processUserSetting('locale', $attributes);
     }
+
     /**
      * Overwrite Model::delete() to clear/delete staff settings first,
      * then invoke original delete method.
@@ -299,6 +311,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
         $this->settings()->forget();
         parent::delete();
     }
+
     /**
      * Implements the 'isMemberOf(...)' as required by Eloquent-LDAP by using
      * the hasRole method and ignoring the enable state of the role.
@@ -310,6 +323,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     {
         return $this->hasRole($name, false, false);
     }
+
     /**
      * Implements the 'membershipList()' method as required by Eloquent-LDAP.
      *
@@ -320,6 +334,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     {
         return $this->roles();
     }
+
     /**
      * Returns the validation rules required to create a Staff.
      *
@@ -327,12 +342,13 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
      */
     public static function getCreateValidationRules()
     {
-        return array( 'username'          => 'required|unique:staff',
-            'email'             => 'required|unique:staff',
-            'first_name'        => 'required',
-            'last_name'         => 'required',
+        return array('username' => 'required|unique:staff',
+            'email' => 'required|unique:staff',
+            'first_name' => 'required',
+            'last_name' => 'required',
         );
     }
+
     /**
      * Returns the validation rules required to update a Staff.
      *
@@ -340,12 +356,13 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
      */
     public static function getUpdateValidationRules($id)
     {
-        return array( 'username'          => 'required|unique:staff,username,' . $id,
-            'email'             => 'required|unique:staff,email,' . $id,
-            'first_name'        => 'required',
-            'last_name'         => 'required',
+        return array('username' => 'required|unique:staff,username,' . $id,
+            'email' => 'required|unique:staff,email,' . $id,
+            'first_name' => 'required',
+            'last_name' => 'required',
         );
     }
+
     /**
      * Return the existing instance of the staff settings or create a new one.
      *
@@ -359,6 +376,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
             return new Setting('Staff.' . $this->username);
         }
     }
+
     /**
      * Save or forget a staff setting with the value from the attribute list.
      * If an array of value is provided, the setting value in the attribute
@@ -391,6 +409,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
             // Setting [$settingKey] not found in list [$attributes]?!
         }
     }
+
     /**
      * Scope a query to only include staff of a given username
      *
@@ -402,6 +421,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     {
         return $query->where('username', $string);
     }
+
     /**
      * Scope a query to only include staff with a given confirmation_code
      *
@@ -413,6 +433,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
     {
         return $query->where('confirmation_code', $string);
     }
+
     /**
      * If option enabled, send an email to the staff with email validation link.
      */
@@ -431,6 +452,7 @@ class Staff extends Model implements AuthenticatableContract, CanResetPasswordCo
             });
         }
     }
+
     /**
      * If option enabled, send an email to the staff to notify him of the password change
      */
