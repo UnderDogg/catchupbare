@@ -46,8 +46,8 @@ return [
     'users' => 'Users',
     'tickets' => 'Tickets',
     'tools' => 'Tools',
-
-
+    'create' => 'Create',
+    'update' => 'Update',
 
 
 
