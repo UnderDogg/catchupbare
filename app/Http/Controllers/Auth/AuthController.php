@@ -7,7 +7,9 @@ use App\Repositories\AuditRepository as Audit;
 use Modules\Core\Models\Staff;
 use Auth;
 use Flash;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+/*use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;*/
 use Illuminate\Http\Request;
 use Redirect;
 use Validator;
@@ -22,20 +24,10 @@ class AuthController extends Controller
     | This controller handles the registration of new staff, as well as the
     | authentication of existing staff. By default, this controller uses
     | a simple trait to add these behaviors. Why don't you explore it?
-    |
+    |RegistersUsers, ThrottlesLogins
     */
-
-    use AuthenticatesAndRegistersUsers;
-
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest', ['except' => 'getLogout']);
-    }
+    use AuthenticatesUsers;
+    public function __construct(){$this->middleware('guest', ['except' => 'getLogout']);}
 
     /**
      * Get a validator for an incoming registration request.
@@ -100,7 +92,7 @@ class AuthController extends Controller
         $credentials = $request->only('username', 'password');
 
 
-        if (Auth::attempt($credentials, $request->has('remember'))) {
+        if (Auth::attempt($credentials)) {
 
             $staff = Auth::user();
             // Allow only if staff is root or enabled.
@@ -108,13 +100,11 @@ class AuthController extends Controller
             if ( $staff->enabled )
             {
                 Flash::success("Welcome " . Auth::user()->first_name);
-                return redirect()->intended($this->redirectPath());
+                return redirect()->intended('/adminpanel');
 
             }
             else
             {
-                Audit::log(null, trans('general.audit-log.category-login'), trans('general.audit-log.msg-forcing-logout', ['username' => $credentials['username']]));
-
                 Auth::logout();
                 return redirect(route('login'))
                     ->withInput($request->only('username', 'remember'))
@@ -124,12 +114,13 @@ class AuthController extends Controller
             }
         }
 
-        return redirect('/')
+        return redirect('/auth/login')
             ->withInput($request->only('username', 'remember'))
             ->withErrors([
                 'username' => $this->getFailedLoginMessage(),
             ]);
     }
+
 
     /**
      * Show the application login form.
@@ -142,6 +133,12 @@ class AuthController extends Controller
 
         return view('auth.login', compact('page_title'));
     }
+
+    protected function getFailedLoginMessage()
+    {
+        return 'Usuário e senha inválidos.';
+    }
+
 
     /**
      * Show the application registration form.

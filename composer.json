@@ -13,7 +13,7 @@
     "yaap/theme": "^2.0",
     "barryvdh/laravel-ide-helper": "^2.0@dev",
     "barryvdh/laravel-debugbar": "^2.0@dev",
-    "zizaco/entrust": "5.2.x-dev",
+    "zizaco/entrust": "dev-master#6a0fd8c3b73037b4855c6c4eaf1060788c0df1e9",
     "caffeinated/modules": "^4.0",
     "caffeinated/menus": "^3.0",
     "caffeinated/themes": "^3.0",

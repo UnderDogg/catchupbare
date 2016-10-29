@@ -14,7 +14,8 @@
 
 
 // Routes in this group must be authorized.
-Route::group(['middleware' => 'authorize'], function() {
+//'middleware' => 'authorize'
+Route::group([], function() {
 
     Route::get(   'dashboard',      ['as' => 'dashboard',          'uses' => 'DashboardController@index']);
     Route::get(   'staff/profile',   ['as' => 'staff.profile',       'uses' => 'StaffController@profile']);

@@ -8,7 +8,7 @@ use Route as LaravelRoute;
 use App\Models\Route as AppRoute;
 use Log;
 
-class AuthorizeRoute
+class AuthorizeRote
 {
     /**
      * The Guard implementation.
