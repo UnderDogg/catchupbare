@@ -23,9 +23,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
-        parent::boot();
     }
 
     /**
@@ -35,11 +32,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapWebRoutes();
-
-        //$this->mapApiRoutes();
-
-        //
+        $this->mapAdminRoutes();
+        $this->mapApiRoutes();
     }
 
     /**
@@ -49,13 +43,13 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapWebRoutes()
+    protected function mapAdminRoutes()
     {
         Route::group([
-            'middleware' => 'web',
+            //'middleware' => 'staff',
             'namespace'  => $this->namespace,
         ], function ($router) {
-            require module_path('helpdesk', 'Routes/web.php');
+            require module_path('helpdesk', 'Routes/adminRoutes.php');
         });
     }
 
@@ -71,7 +65,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::group([
             'middleware' => 'api',
             'namespace'  => $this->namespace,
-            'prefix'     => 'api',
+            //'prefix'     => 'api',
         ], function ($router) {
             require module_path('helpdesk', 'Routes/apiRoutes.php');
         });

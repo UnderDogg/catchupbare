@@ -1,28 +1,6 @@
 <?php
 use Illuminate\Routing\Router;
 
-Route::get('mailboxesdata', [
-    'as' => 'mailboxes.data',
-    'uses' => 'MailboxesController@anyData',
-    //'middleware' => 'can:mailboxes.mailboxes.index'
-]);
-
-Route::get('breaklinesdata', [
-    'as' => 'breaklines.data',
-    'uses' => 'BreakLinesController@anyData',
-    //'middleware' => 'can:mailboxes.mailboxes.index'
-]);
-
-Route::get('mailrulesdata', [
-    'as' => 'mailrules.data',
-    'uses' => 'MailRulesController@anyData',
-    //'middleware' => 'can:mailboxes.mailboxes.index'
-]);
-
-
-
-
-
 
 Route::post('validating-email-settings', ['as' => 'validating.email.settings', 'uses' => 'MailboxesController@validatingMailboxSettings']); // route to check email input validation
 Route::post('validating-email-settings-on-update/{id}', ['as' => 'validating.email.settings.update', 'uses' => 'MailboxesController@validatingMailboxSettingsUpdate']); // route to check email input validation
@@ -56,8 +34,7 @@ Route::get('readmails', ['as' => 'readmails', 'uses' => 'EMailController@readmai
   |
  */
 
-
-Route::group(['prefix' => '/mailpanel'], function () {
+Route::group(['prefix' => 'mailpanel'], function () {
     //Route::resource('mailboxes', 'MailboxesController');
 
 
@@ -228,4 +205,4 @@ Route::group(['prefix' => '/mailpanel'], function () {
     });
 
     // append
-});
+}); // End of MailPanel group

@@ -36,11 +36,27 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapAdminRoutes();
-
+        $this->mapStaffRoutes();
         $this->mapApiRoutes();
-
-        //
     }
+
+    /**
+     * Define the "web" routes for the module.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapStaffRoutes()
+    {
+        Route::group([
+            //'middleware' => 'staff',
+            'namespace'  => $this->namespace,
+        ], function ($router) {
+            require module_path('core', 'Routes/staffRoutes.php');
+        });
+    }
+
 
     /**
      * Define the "web" routes for the module.
@@ -58,6 +74,7 @@ class RouteServiceProvider extends ServiceProvider
             require module_path('core', 'Routes/adminRoutes.php');
         });
     }
+
 
     /**
      * Define the "api" routes for the module.
