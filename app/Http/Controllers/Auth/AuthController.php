@@ -134,6 +134,13 @@ class AuthController extends Controller
         return view('auth.login', compact('page_title'));
     }
 
+    public function getLogout()
+    {
+        Auth::logout();
+        return redirect()->intended('/');
+    }
+
+
     protected function getFailedLoginMessage()
     {
         return 'Usuário e senha inválidos.';

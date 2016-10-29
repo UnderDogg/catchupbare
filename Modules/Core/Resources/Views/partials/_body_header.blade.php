@@ -28,9 +28,9 @@
                     <ul class="tabs tabs-horizontal nav navbar-nav navbar-left">
 
                         <li @yield('Dashboard')><a data-target="#tabA" href="{{url('/adminpanel')}}">{!! Lang::get('core::lang.adminpanel') !!}</a></li>
-                        <li @yield('Staff')><a data-target="#tabB" href="#">{!! Lang::get('core::lang.staffpanel') !!}</a></li>
-                        <li @yield('Tickets')><a data-target="#tabC" href="#">{!! Lang::get('tickets::lang.ticketspanel') !!}</a></li>
-                        <li @yield('Tools')><a data-target="#tabD" href="#">{!! Lang::get('core::lang.tools') !!}</a></li>
+                        <li @yield('Staff')><a data-target="#tabB" href="{{url('/staffpanel')}}">{!! Lang::get('core::lang.staffpanel') !!}</a></li>
+                        <li @yield('Tickets')><a data-target="#tabC" href="{{url('/ticketspanel')}}">{!! Lang::get('tickets::lang.ticketspanel') !!}</a></li>
+                        <li @yield('Tools')><a data-target="#tabD" href="{{url('/mailpanel')}}">{!! Lang::get('email::lang.mailpanel') !!}</a></li>
                         <li @yield('Settings')><a data-target="#tabE" href="{!! url('/adminpanel/settings') !!}">{!! Lang::get('core::lang.settings') !!}</a>
                         </li>
                     </ul>
