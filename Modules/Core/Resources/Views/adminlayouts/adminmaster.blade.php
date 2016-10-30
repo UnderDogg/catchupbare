@@ -3,14 +3,16 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <title>{{ config('app.short_name') }} | {{ $page_title or "Page Title" }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, staff-scalable=no' name='viewport'>
     <!-- Set a meta reference to the CSRF token for use in AJAX request -->
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="_token" content="{!! csrf_token() !!}"/>
+  <!-- faveo favicon -->
+  <link rel="shortcut icon" href="{{asset("lb-faveo/media/images/favicon.ico")}}">
     <!-- Bootstrap 3.3.4 -->
     <link href="{{ asset("/bower_components/admin-lte/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons 4.4.0 -->
@@ -19,7 +21,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="{{ asset("/bower_components/admin-lte/ionicons/css/ionicons.min.css") }}" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="{{ asset("/bower_components/admin-lte/dist/css/AdminLTE.min.css") }}" rel="stylesheet" type="text/css" />
+  <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+    <link href="{{asset("lb-faveo/css/AdminLTE.css")}}" rel="stylesheet" type="text/css" />
 
+  <link href="{{asset("lb-faveo/css/skins/_all-skins.min.css")}}" rel="stylesheet" type="text/css"/>
+
+  <link href="{{asset("lb-faveo/css/tabby.css")}}" type="text/css" rel="stylesheet">
 
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700,300|Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'>

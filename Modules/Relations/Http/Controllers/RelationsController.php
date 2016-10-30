@@ -44,6 +44,10 @@ class RelationsController extends Controller
      */
     public function index()
     {
+        //echo "guard staff (relations index)";
+        //dd(Auth::guard('staff'));
+        //dd(Auth::guard($guard));
+        //dd(Auth::guard());
         return view('relations::relations.index');
     }
 

@@ -25,5 +25,15 @@ class ModuleServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->registerBindings();
     }
+
+
+    private function registerBindings()
+    {
+        $this->app->bind('Modules\Tickets\Services\Ticket\TicketServiceContract', 'Modules\Tickets\Services\Ticket\TicketService');
+        // add bindings
+    }
+
+
 }

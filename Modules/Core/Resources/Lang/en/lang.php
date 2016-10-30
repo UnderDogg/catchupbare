@@ -14,12 +14,17 @@ return [
     'staffpanel' => 'StaffPanel',
     'ticketspanel' => 'TicketsPanel',
     'mailpanel' => 'MailPanel',
+    'staffmembers' => 'Staff Members',
     'kbpanel' => 'KB',
     'supportcenter' => 'Support Center',
     'adminsettings' => 'Admin Settings',
     'system-settings' => 'System Settings',
     'settings' => 'Settings',
     'settingsindex' => 'Settings',
+    'slasettings' => 'SLA Settings',
+    'scheduledtasks' => 'Scheduled Tasks',
+    'importexport' => 'Import Export',
+    'diagnostics' => 'Diagnostics',
     'company' => 'Company',
     'system' => 'System',
     'ticket' => 'Ticket Settings',
@@ -49,7 +54,14 @@ return [
     'create' => 'Create',
     'update' => 'Update',
 
-
+    'templates'              => [
+        'manage'   => 'Manage Templates',
+        'templates' => 'Templates',
+        'groupsmanage' => 'Template Groups',
+        'impex' => 'Import Export',
+        'restore' => 'Restore',
+        'diagnostics' => 'Diagnostics',
+    ],
 
 
 

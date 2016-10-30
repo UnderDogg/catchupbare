@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers\Auth;
+<?php
+
+namespace App\Http\Controllers\Auth;
 
 use App\Exceptions\InvalidConfirmationCodeException;
 use App\Http\Controllers\Controller;
@@ -7,10 +9,19 @@ use App\Repositories\AuditRepository as Audit;
 use Modules\Core\Models\Staff;
 use Auth;
 use Flash;
+
+
+use Illuminate\Http\Request;
+use Illuminate\Contracts\Auth\Guard;
+
+
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 /*use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;*/
-use Illuminate\Http\Request;
+
+//use Illuminate\Support\Facades\Auth;
+
+
 use Redirect;
 use Validator;
 
@@ -27,7 +38,33 @@ class AuthController extends Controller
     |RegistersUsers, ThrottlesLogins
     */
     use AuthenticatesUsers;
-    public function __construct(){$this->middleware('guest', ['except' => 'getLogout']);}
+
+
+
+    /**
+     * Where to redirect users after login / registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/staffpanel';
+
+    // if auth is user
+    protected $redirectToUser = '/profile';
+    /* Direct After Logout */
+    protected $redirectAfterLogout = '/';
+    protected $loginPath = '/login';
+
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+      $this->auth = $auth;
+      $this->middleware('guest', ['except' => 'getLogout']);
+    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -47,32 +84,19 @@ class AuthController extends Controller
     }
 
     /**
-     * Create a new staff instance after a valid registration.
+     * Show the application's login form.
      *
-     * @param  array  $data
-     * @return User
+     * @return \Illuminate\Http\Response
      */
-    protected function create(array $data)
+    public function getLogin()
     {
-        $staff = Staff::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => $data['password'],
-        ]);
-
-        return $staff;
+        $page_title = "Login";
+        //return view('staff.auth.login');
+        return view('auth.login', compact('page_title'));
     }
 
 
-    protected function authenticated($request,$user){
-        if($user->role === 'admin'){
-            return redirect()->intended('admin'); //redirect to admin panel
-        }
 
-        return redirect()->intended('/'); //redirect to standard staff homepage
-    }
 
 
     /**
@@ -122,142 +146,54 @@ class AuthController extends Controller
     }
 
 
+
     /**
-     * Show the application login form.
+     * Log the user out of the application.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function getLogin()
-    {
-        $page_title = "Login";
-
-        return view('auth.login', compact('page_title'));
-    }
-
     public function getLogout()
     {
         Auth::logout();
+        //$this->auth->logout();
         return redirect()->intended('/');
     }
 
 
+
+    /**
+     * Failed Login Message
+     *
+     *
+     */
     protected function getFailedLoginMessage()
     {
-        return 'Usuário e senha inválidos.';
+        return 'Username or Password are just wrong';
     }
+
+
+
+
+
+    protected function authenticated($request,$user){
+        if($user->role === 'admin'){
+            return redirect()->intended('adminpanel'); //redirect to admin panel
+        }
+
+        return redirect()->intended('/'); //redirect to standard staff homepage
+    }
+
+
+
 
 
     /**
-     * Show the application registration form.
+     * Get the guard to be used during authentication.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
-    public function getRegister()
+    protected function guard()
     {
-        $page_title = "Register";
-
-        return view('auth.register', compact('page_title'));
+        return Auth::guard('staff');
     }
-
-    /**
-     * Handle a registration request for the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function postRegister(Request $request)
-    {
-        $staffname = "N/A";
-        if ($request->has('username')) {
-            $staffname = $request['username'];
-        }
-        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-registration-attempt', ['username' => $staffname]));
-
-        $validator = $this->validator($request->all());
-
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
-
-        $staff = $this->create($request->all());
-        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-created', ['username' => $staff->username]));
-
-        if ((new Setting())->get('auth.enable_user_on_create')) {
-            $staff->enabled = true;
-            $staff->save();
-            Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-enabled', ['username' => $staff->username]));
-        }
-
-        $staff->emailValidation();
-
-        if ($staff->enabled) {
-            Flash::success("Welcome " . $staff->first_name . ", your account has been created");
-            Auth::login($staff);
-            $request->flashExcept(['password', 'password_confirmation']);
-            return redirect($this->redirectPath());
-        } else {
-            if ((new Setting())->get('auth.email_validation')) {
-                Flash::success("Welcome " . $staff->first_name . ", your account has been created, an email has been sent to your address to complete the registration process.");
-                $request->flashExcept(['password', 'password_confirmation']);
-                return redirect(route('confirm_emailPost'));
-            } else {
-                Flash::success("Welcome " . $staff->first_name . ", your account has been created, and will soon be enabled.");
-                $request->flashExcept(['password', 'password_confirmation']);
-                return redirect(route('home'));
-            }
-        }
-
-    }
-
-    public function verify($confirmation_code, Request $request)
-    {
-        if( ! $confirmation_code)
-        {
-            throw new InvalidConfirmationCodeException;
-        }
-
-        $staff = Staff::whereConfirmationCode($confirmation_code)->first();
-
-        if ( ! $staff)
-        {
-            throw new InvalidConfirmationCodeException;
-        }
-
-        $staff->confirmed = 1;
-        $staff->confirmation_code = null;
-        Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-email-validated', ['username' => $staff->username]));
-
-        if ((new Setting())->get('auth.enable_user_on_validation')) {
-            $staff->enabled = true;
-            Audit::log(null, trans('general.audit-log.category-register'), trans('general.audit-log.msg-account-enabled', ['username' => $staff->username]));
-        }
-
-        $staff->save();
-
-        Flash::message(trans('general.status.email-validated'));
-
-        $request->session()->reflash();
-        return Redirect::route('home');
-    }
-
-    public function getVerify()
-    {
-        $page_title = "Verify email";
-
-        return view('auth.verify', compact('page_title'));
-    }
-
-    public function postVerify(Request $request)
-    {
-        $this->validate($request, [
-            'token' => 'required|size:30',
-        ]);
-
-        $token = $request['token'];
-
-        return $this->verify($token, $request);
-    }
-
 }

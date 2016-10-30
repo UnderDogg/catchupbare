@@ -10,7 +10,7 @@ return [
       |
      */
     'kbpanel' => 'KB',
-
+    'knowledge_base' => 'Knowledge Base',
     'system-settings' => 'System Settings',
     'settings' => 'Settings',
     'settingsindex' => 'Settings',
@@ -19,6 +19,7 @@ return [
     'ticket' => 'Ticket Settings',
     'auto_response' => 'Auto Response Settings',
     'alert_notices' => 'Alert Notices',
+    'troubleshooter' => 'Troubleshooter',
     'language' => 'Language',
     'cron' => 'Cron Jobs',
     'cronjobs' => 'Cron Jobs',

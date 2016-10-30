@@ -1,17 +1,11 @@
 @extends('core::adminlayouts.adminmaster')
 
-@section('Staff')
-    active
-@stop
-
-@section('staff-bar')
-    active
-@stop
-
-@section('Staff')
+@section('AdminPanel')
     class="active"
 @stop
-
+@section('adminpanel-bar')
+    active
+@stop
 
 @section('teams')
     class="active"

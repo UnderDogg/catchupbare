@@ -33,8 +33,8 @@ class MailTemplatesController extends Controller
      */
     public function __construct(PhpMailController $PhpMailController)
     {
-        $this->PhpMailController = $PhpMailController;
-        SettingsController::smtp();
+        //$this->PhpMailController = $PhpMailController;
+        //SettingsController::smtp();
         //$this->middleware('auth');
         //$this->middleware('roles');
     }

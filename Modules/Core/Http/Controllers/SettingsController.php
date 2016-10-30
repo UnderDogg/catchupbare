@@ -15,6 +15,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Laracasts\Flash\Flash;
 
+
+/**
+ * CompaniesController.
+ *
+ * @author      Ladybird <info@ladybirdweb.com>
+ */
 class SettingsController extends Controller
 {
 
@@ -25,8 +31,6 @@ class SettingsController extends Controller
 
     public function index()
     {
-        Audit::log(Auth::user()->id, trans('admin/settings/general.audit-log.category'), trans('admin/settings/general.audit-log.msg-index'));
-
         $page_title = trans('admin/settings/general.page.index.title'); // "Admin | Settings";
         $page_description = trans('admin/settings/general.page.index.description'); // "List of Settings";
 

@@ -14,7 +14,7 @@ class DashboardController extends Controller
         $page_title = "Dashboard";
         $page_description = "This is the dashboard";
 
-        return view('core::dashboard', compact('page_title', 'page_description'));
+        return view('core::admin.admindashboard', compact('page_title', 'page_description'));
     }
 
 }
