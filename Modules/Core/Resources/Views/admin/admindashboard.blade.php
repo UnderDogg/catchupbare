@@ -96,18 +96,6 @@ class="active"
           </div>
           <!--/.col-md-2-->
 
-          <!--/.col-md-2-->
-          <div class="col-md-2 col-sm-6">
-            <div class="settingiconblue">
-              <div class="settingdivblue">
-                <a href="{{url('/adminpanel/languages')}}"><span class="fa-stack fa-2x">
-                 <i class="fa fa-language fa-stack-1x"></i>
-                 </span></a>
-              </div>
-              <center class="box-title">{!! Lang::get('core::lang.language') !!}</center>
-            </div>
-          </div>
-          <!--/.col-md-2-->
           <div class="col-md-2 col-sm-6">
             <div class="settingiconblue">
               <div class="settingdivblue">

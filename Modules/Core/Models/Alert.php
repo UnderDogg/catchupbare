@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Tickets\Models;
+namespace App\Model\helpdesk\Settings;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +11,7 @@ class Alert extends Model
     protected $table = 'settings_alert_notice';
     /* Set fillable fields in table */
     protected $fillable = [
+
         'id', 'ticket_status', 'ticket_admin_email', 'ticket_department_manager',
         'ticket_organization_accmanager', 'message_status', 'message_last_responder', 'message_assigned_agent',
         'message_department_manager', 'message_organization_accmanager', 'internal_status', 'internal_last_responder',

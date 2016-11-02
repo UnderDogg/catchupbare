@@ -18,6 +18,7 @@ return [
     'kbpanel' => 'KB',
     'supportcenter' => 'Support Center',
     'adminsettings' => 'Admin Settings',
+    'company_settings' => 'Company Settings',
     'system-settings' => 'System Settings',
     'settings' => 'Settings',
     'settingsindex' => 'Settings',
@@ -53,6 +54,12 @@ return [
     'tools' => 'Tools',
     'create' => 'Create',
     'update' => 'Update',
+    'submit' => 'Submit',
+    'website' => 'Website',
+    'phone' => 'Phone',
+    'name' => 'Company Name',
+    'address' => 'Company Address',
+    'logo' => 'Company Logo',
 
     'templates'              => [
         'manage'   => 'Manage Templates',

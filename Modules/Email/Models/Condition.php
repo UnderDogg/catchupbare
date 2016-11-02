@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\MailJob;
+namespace Modules\Email\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,7 +39,7 @@ class Condition extends Model
     public function checkActiveJob()
     {
         $result = ['fetching' => '', 'notification' => '', 'work' => '', 'message' => ''];
-        $emails = new \App\Model\helpdesk\Settings\Email();
+        $emails = new \Modules\Email\Models\EmailSetting();
         $email = $emails->find(1);
         if ($email) {
             if ($email->email_fetching == 1) {
@@ -49,7 +49,7 @@ class Condition extends Model
                 $result['notification'] = true;
             }
         }
-        $works = new \App\Model\helpdesk\Workflow\WorkflowClose();
+        $works = new \Modules\Tickets\Models\WorkflowClose();
         $work = $works->find(1);
         //dd($work);
         if ($work) {

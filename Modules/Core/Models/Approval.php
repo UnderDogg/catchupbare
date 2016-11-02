@@ -2,9 +2,9 @@
 
 namespace App\Model\helpdesk\Settings;
 
-use App\BaseModel;
+use Illuminate\Database\Eloquent\Model;
 
-class Approval extends BaseModel
+class Approval extends Model
 {
     /* Using Ticket table  */
 

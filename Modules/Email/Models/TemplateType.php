@@ -2,9 +2,9 @@
 
 namespace App\Model\Common;
 
-use App\BaseModel;
+use Illuminate\Database\Eloquent\Model;
 
-class TemplateType extends BaseModel
+class TemplateType extends Model
 {
     protected $table = 'template_types';
 }

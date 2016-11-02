@@ -2,9 +2,9 @@
 
 namespace App\Model\helpdesk\Settings;
 
-use App\BaseModel;
+use Illuminate\Database\Eloquent\Model;
 
-class System extends BaseModel
+class System extends Model
 {
     /* Using System Table */
 

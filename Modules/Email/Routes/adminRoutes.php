@@ -6,7 +6,111 @@ Route::post('validating-email-settings', ['as' => 'validating.email.settings', '
 Route::post('validating-email-settings-on-update/{id}', ['as' => 'validating.email.settings.update', 'uses' => 'MailboxesController@validatingMailboxSettingsUpdate']); // route to check email input validation
 
 Route::get('getemail', 'Admin\helpdesk\SettingsController@getemail'); // direct to email setting page
+
+
+/*
+        Route::resource('emails', 'Admin\helpdesk\EmailsController'); // in emails module, for CRUD
+        Breadcrumbs::register('emails.index', function ($breadcrumbs) {
+            $breadcrumbs->parent('setting');
+            $breadcrumbs->push(Lang::get('lang.emails'), route('emails.index'));
+        });
+        Breadcrumbs::register('emails.create', function ($breadcrumbs) {
+            $breadcrumbs->parent('emails.index');
+            $breadcrumbs->push(Lang::get('lang.create'), route('emails.create'));
+        });
+        Breadcrumbs::register('emails.edit', function ($breadcrumbs) {
+            $breadcrumbs->parent('emails.index');
+            $breadcrumbs->push(Lang::get('lang.edit'), url('emails/{emails}/edit'));
+        });
+        Route::resource('banlist', 'Admin\helpdesk\BanlistController'); // in banlist module, for CRUD
+        Breadcrumbs::register('banlist.index', function ($breadcrumbs) {
+            $breadcrumbs->parent('setting');
+            $breadcrumbs->push(Lang::get('lang.banlists'), route('banlist.index'));
+        });
+        Breadcrumbs::register('banlist.create', function ($breadcrumbs) {
+            $breadcrumbs->parent('banlist.index');
+            $breadcrumbs->push(Lang::get('lang.add'), route('banlist.create'));
+        });
+        Breadcrumbs::register('banlist.edit', function ($breadcrumbs) {
+            $breadcrumbs->parent('banlist.index');
+            $breadcrumbs->push(Lang::get('lang.edit'), url('agents/{agents}/edit'));
+        });
+        Route::get('banlist/delete/{id}', ['as' => 'banlist.delete', 'uses' => 'Admin\helpdesk\BanlistController@delete']); // in banlist module, for CRUD
+*/
+
+/*
+ * Templates
+ *  /
+Breadcrumbs::register('template-sets.index', function ($breadcrumbs) {
+    $breadcrumbs->parent('setting');
+    $breadcrumbs->push('All Template sets', route('template-sets.index'));
+});
+Breadcrumbs::register('show.templates', function ($breadcrumbs) {
+    $page = App\Model\Common\Template::whereId(1)->first();
+    $breadcrumbs->parent('template-sets.index');
+    $breadcrumbs->push('All Templates', route('show.templates', $page->id));
+});
+Breadcrumbs::register('templates.edit', function ($breadcrumbs) {
+    $page = App\Model\Common\Template::whereId(1)->first();
+    $breadcrumbs->parent('show.templates');
+    $breadcrumbs->push('Edit Template', route('templates.edit', $page->id));
+});
+Route::resource('templates', 'Common\TemplateController');
+Route::get('get-templates', 'Common\TemplateController@GetTemplates');
+Route::get('templates-delete', 'Common\TemplateController@destroy');
+Route::get('testmail/{id}', 'Common\TemplateController@mailtest');
+Route::resource('template-sets', 'Common\TemplateSetController'); // in template module, for CRUD
+Route::get('delete-sets/{id}', ['as' => 'sets.delete', 'uses' => 'Common\TemplateSetController@deleteSet']);
+Route::get('show-template/{id}', ['as' => 'show.templates', 'uses' => 'Common\TemplateController@showTemplate']);
+Route::get('activate-templateset/{name}', ['as' => 'active.template-set', 'uses' => 'Common\TemplateSetController@activateSet']);
+Route::resource('template', 'Admin\helpdesk\TemplateController'); // in template module, for CRUD
+Route::get('list-directories', 'Admin\helpdesk\TemplateController@listdirectories');
+Route::get('activate-set/{dir}', ['as' => 'active.set', 'uses' => 'Admin\helpdesk\TemplateController@activateset']);
+Route::get('list-templates/{template}/{directory}', ['as' => 'template.list', 'uses' => 'Admin\helpdesk\TemplateController@listtemplates']);
+Route::get('read-templates/{template}/{directory}', ['as' => 'template.read', 'uses' => 'Admin\helpdesk\TemplateController@readtemplate']);
+Route::patch('write-templates/{contents}/{directory}', ['as' => 'template.write', 'uses' => 'Admin\helpdesk\TemplateController@writetemplate']);
+Route::post('create-templates', ['as' => 'template.createnew', 'uses' => 'Admin\helpdesk\TemplateController@createtemplate']);
+Route::get('delete-template/{template}/{path}', ['as' => 'templates.delete', 'uses' => 'Admin\helpdesk\TemplateController@deletetemplate']);
+Route::get('getdiagno', ['as' => 'getdiagno', 'uses' => 'Admin\helpdesk\TemplateController@formDiagno']); // for getting form for diagnostic
+Breadcrumbs::register('getdiagno', function ($breadcrumbs) {
+    $breadcrumbs->parent('setting');
+    $breadcrumbs->push(Lang::get('lang.email_diagnostic'), route('getdiagno'));
+});
+Route::post('postdiagno', ['as' => 'postdiagno', 'uses' => 'Admin\helpdesk\TemplateController@postDiagno']); // for getting form for diagnostic
+*/
 Route::patch('postemail/{id}', 'Admin\helpdesk\SettingsController@postemail'); // Updating the Email table with requests
+
+// Route::get('getaccess', 'Admin\helpdesk\SettingsController@getaccess'); // direct to access setting page
+// Route::patch('postaccess/{id}', 'Admin\helpdesk\SettingsController@postaccess'); // Updating the Access table with requests
+Route::get('getresponder', ['as' => 'getresponder', 'uses' => 'Admin\helpdesk\SettingsController@getresponder']); // direct to responder setting page
+/*
+Breadcrumbs::register('getresponder', function ($breadcrumbs) {
+   $breadcrumbs->parent('setting');
+   $breadcrumbs->push(Lang::get('lang.auto_responce'), route('getresponder'));
+});*/
+Route::patch('postresponder/{id}', 'Admin\helpdesk\SettingsController@postresponder'); // Updating the Responder table with requests
+
+
+// Templates
+/*Breadcrumbs::register('security.index', function ($breadcrumbs) {
+    $breadcrumbs->parent('setting');
+    $breadcrumbs->push(Lang::get('lang.security_settings'), route('security.index'));
+});
+// Templates > Upload Templates
+Breadcrumbs::register('security.create', function ($breadcrumbs) {
+    $breadcrumbs->parent('security.index');
+    $breadcrumbs->push('Upload security', route('security.create'));
+});
+// Templates > [Templates Name]
+Breadcrumbs::register('security.show', function ($breadcrumbs, $photo) {
+    $breadcrumbs->parent('security.index');
+    $breadcrumbs->push($photo->title, route('security.show', $photo->id));
+});
+// Templates > [Templates Name] > Edit Templates
+Breadcrumbs::register('security.edit', function ($breadcrumbs, $photo) {
+    $breadcrumbs->parent('security.show', $photo);
+    $breadcrumbs->push('Edit security', route('security.edit', $photo->id));
+});*/
 
 
 Route::get('/test', ['as' => 'thr', 'uses' => 'MailController@fetchdata']); /*  Fetch Emails */
@@ -14,8 +118,8 @@ Route::get('/test', ['as' => 'thr', 'uses' => 'MailController@fetchdata']); /*  
 Route::get('/email/ban/{id}', ['as' => 'ban.email', 'uses' => 'TicketController@ban']); /*  Get Ban Email */
 
 
-Route::get('/getMail/{id}',  ['as' => 'getmail', 'uses' => 'EMailController@getMail']);
-Route::get('/connectexchange/{id}',  ['as' => 'connectexchange', 'uses' => 'EMailController@connectexchange']);
+Route::get('/getMail/{id}', ['as' => 'getmail', 'uses' => 'EMailController@getMail']);
+Route::get('/connectexchange/{id}', ['as' => 'connectexchange', 'uses' => 'EMailController@connectexchange']);
 
 /*
   |=============================================================

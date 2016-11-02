@@ -15,12 +15,12 @@ class CreateTicketTypesTable extends Migration
     {
         Schema::create('tickettypes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('ispublic', 10);
+            $table->boolean('ismaster');
+            $table->boolean('ispublic')->default(1);
             $table->string('title', 100);
             $table->string('displayicon');
-            $table->integer('departmentid');
-            $table->boolean('ismaster');
-            $table->integer('displayorder', 5);
+            $table->integer('department_id')->unsigned();
+            $table->integer('displayorder');
             $table->timestamps();
         });
     }

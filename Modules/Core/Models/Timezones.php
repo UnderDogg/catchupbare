@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Core\Models;
+namespace App\Model\helpdesk\Utility;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Timezones extends Model
 {
     public $timestamps = false;
-    protected $table = 'timezones';
+    protected $table = 'timezone';
     protected $fillable = ['name', 'location'];
 }

@@ -62,7 +62,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-      $this->auth = $auth;
+      //$this->auth = $auth;
       $this->middleware('guest', ['except' => 'getLogout']);
     }
 

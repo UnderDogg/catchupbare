@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Tickets\Models;
+namespace App\Model\helpdesk\Workflow;
 
-use Illuminate\Database\Eloquent\Model;
+use App\BaseModel;
 
-class WorkflowAction extends Model
+class WorkflowAction extends BaseModel
 {
     public $timestamps = false;
     protected $table = 'workflow_action';

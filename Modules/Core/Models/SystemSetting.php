@@ -4,7 +4,7 @@ namespace Modules\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class System extends Model
+class SystemSetting extends Model
 {
     /* Using System Table */
 
