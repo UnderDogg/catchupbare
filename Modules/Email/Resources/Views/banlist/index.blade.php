@@ -1,26 +1,29 @@
 @extends('email::maillayouts.mailmaster')
 
 
-@section('Dashboard')
+@section('Mailboxes')
+    active
+@stop
+
+@section('mailboxes-bar')
+    active
+@stop
+
+@section('Mailboxes')
     class="active"
 @stop
 
-@section('dashboard-bar')
-    {{--active --}}
-@stop
 
 @section('ban')
     class="active"
 @stop
 
 
-
-
-
     @section('HeadInclude')
     @stop
             <!-- header -->
-    @section('PageHeader')
+@section('PageHeader')
+    <h1>{{Lang::get('email::lang.banlists')}}</h1>
 
     @stop
             <!-- /header -->
@@ -33,63 +36,77 @@
             <!-- /breadcrumbs -->
     <!-- content -->
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
+
             <div class="box box-primary">
                 <div class="box-header">
-                    <h2 class="box-title">{{Lang::get('core::lang.banlists')}}</h2><a href="{{route('banlist.create')}}"
-                                                                                      class="pull-right btn btn-primary">{{Lang::get('core::lang.ban_email')}}</a>
+                    <h2 class="box-title">{{Lang::get('email::lang.banlists')}}</h2><a
+                            href="{{route('banlist.create')}}"
+                            class="pull-right btn btn-primary">{{Lang::get('email::lang.ban_email')}}</a>
                 </div>
-                <div class="box-body table-responsive">
 
+                <!-- check whether success or not -->
 
-                    <!-- check whether success or not -->
-
-                    @if(Session::has('success'))
-                        <div class="alert alert-success alert-dismissable">
-                            <i class="fa  fa-check-circle"></i>
-                            <b>Success!</b>
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            {{Session::get('success')}}
+                @if(Session::has('success'))
+                    <div class="alert alert-success alert-dismissable">
+                        <i class="fa  fa-check-circle"></i>
+                        <b>Success!</b>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{Session::get('success')}}
+                    </div>
+                 @endif
+                            <!-- failure message -->
+                 @if(Session::has('fails'))
+                        <div class="alert alert-danger alert-dismissable">
+                            <i class="fa fa-ban"></i>
+                            <b>Fail!</b>
+                            <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">&times;</button>
+                            {{Session::get('fails')}}
                         </div>
-                        @endif
-                                <!-- failure message -->
-                        @if(Session::has('fails'))
-                            <div class="alert alert-danger alert-dismissable">
-                                <i class="fa fa-ban"></i>
-                                <b>Fail!</b>
-                                <button type="button" class="close" data-dismiss="alert"
-                                        aria-hidden="true">&times;</button>
-                                {{Session::get('fails')}}
-                            </div>
-                        @endif
-                        <table class="table table-bordered table-striped dataTable" style="overflow:hidden;">
-                            <tr>
-                                <th width="100px">{{Lang::get('core::lang.email_address')}}</th>
-                                <th width="100px">{{Lang::get('core::lang.last_updated')}}</th>
-                                <th width="100px">{{Lang::get('core::lang.action')}}</th>
-                            </tr>
-                            <!-- Foreach @var bans as @var ban -->
-                            @foreach($bans as $ban)
-                                <tr>
+                 @endif
 
-                                    <!-- Email Address with Link to Edit page along Id -->
-                                    <td><a href="{{route('banlist.edit',$ban->id)}}">{!! $ban->email !!}</a></td>
-                                    <!-- Last Updated -->
-                                    <td> {!! $ban->updated_at !!} </td>
-                                    <!-- Deleting Fields -->
-                                    <td>
-                                        <a href="{{route('banlist.edit',$ban->id)}}"
-                                           class="btn btn-info btn-xs btn-flat"><i class="fa fa-edit"
-                                                                                   style="color:black;"> </i> Edit</a>
-                                    </td>
-                                    @endforeach
+
+                    <div class="box-body table-responsive">
+                        <table class="table table-hover table-bordered table-striped dataTable" id="banlist-table" style="overflow:hidden;">
+                                <thead>
+                                <tr>
+                                    <th width="100px">{{Lang::get('email::lang.email_address')}}</th>
+                                    <th width="100px">{{Lang::get('email::lang.last_updated')}}</th>
+                                    <th width="100px">{{Lang::get('email::lang.action')}}</th>
                                 </tr>
-                                <!-- Set a link to Create Page -->
-                        </table>
-                </div>
+                                </thead>
+
+
+                                <tfoot>
+                                    <tr>
+                                        <th width="100px">{{Lang::get('email::lang.email_address')}}</th>
+                                        <th width="100px">{{Lang::get('email::lang.last_updated')}}</th>
+                                        <th width="100px">{{Lang::get('email::lang.action')}}</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                    </div>
             </div>
-        </div>
-    </div>
+
 
 @stop
+
+@push('scripts')
+<script>
+    $(function () {
+        $('#banlist-table').DataTable({
+            processing: true,
+            serverSide: true,
+            "pageLength": 50,
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            ajax: '{!! route('banlist.data') !!}',
+            columns: [
+                {data: 'email_address', name: 'email_address'},
+                {data: 'last_updated', name: 'last_updated'},
+
+                {data: 'actions', name: 'actions', orderable: false, searchable: false},
+            ]
+        });
+    });
+</script>
+@endpush

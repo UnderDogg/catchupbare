@@ -35,6 +35,9 @@ return [
     'new_ticket_by_agent' => 'New Ticket by Agent',
 
 
+    'banlists' => 'Ban List',
+
+
 
     /*
       |--------------------------------------

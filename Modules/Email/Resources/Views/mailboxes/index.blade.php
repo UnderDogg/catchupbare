@@ -35,6 +35,53 @@
             <!-- /breadcrumbs -->
     <!-- content -->
 @section('content')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h2 class="box-title">{{Lang::get('email::lang.banlists')}}</h2><a href="{{route('banlist.create')}}"
+                                                                                      class="pull-right btn btn-primary">{{Lang::get('email::lang.ban_email')}}</a>
+                </div>
+
+                <!-- check whether success or not -->
+
+                @if(Session::has('success'))
+                    <div class="alert alert-success alert-dismissable">
+                        <i class="fa  fa-check-circle"></i>
+                        <b>Success!</b>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{Session::get('success')}}
+                    </div>
+                @endif
+                            <!-- failure message -->
+                @if(Session::has('fails'))
+                        <div class="alert alert-danger alert-dismissable">
+                            <i class="fa fa-ban"></i>
+                            <b>Fail!</b>
+                            <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">&times;</button>
+                            {{Session::get('fails')}}
+                        </div>
+                @endif
+
+
+                <div class="box-body table-responsive">
+                        <table class="table table-bordered table-striped dataTable" style="overflow:hidden;">
+                            <tr>
+                                <th width="100px">{{Lang::get('email::lang.email_address')}}</th>
+                                <th width="100px">{{Lang::get('email::lang.last_updated')}}</th>
+                                <th width="100px">{{Lang::get('email::lang.action')}}</th>
+                            </tr>
+                            <tr>
+                                <th width="100px">{{Lang::get('email::lang.email_address')}}</th>
+                                <th width="100px">{{Lang::get('email::lang.last_updated')}}</th>
+                                <th width="100px">{{Lang::get('email::lang.action')}}</th>
+                            </tr>
+                        </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <h2>{!! Lang::get('email::lang.mailboxes') !!}<a href="{{route('admin.mailboxes.mailbox.create')}}" class="btn btn-primary pull-right">{{Lang::get('email::lang.create_mailbox')}}</a></h2>

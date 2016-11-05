@@ -72,22 +72,22 @@ class BanlistController extends Controller
     {
         //$canUpdateStaff = auth()->user()->can('update-user');
         //Auth::guard($guard)->user()->can('update-user');
-        $breaklines = BreakLine::select(['id', 'breakline', 'isregexp', 'sortorder', 'updated_at']);
-        return Datatables::of($breaklines)
+        $mailbanlist = Banlist::select(['id', 'ban_status', 'email_address', 'internal_notes', 'updated_at']);
+        return Datatables::of($mailbanlist)
 
-            ->addColumn('breakline', function ($breaklines) {
-                return '<a href="/mailpanel/breaklines/' . $breaklines->id . '" ">' . $breaklines->breakline . '</a>';
+            ->addColumn('email_address', function ($mailbanlist) {
+                return '<a href="/mailpanel/mailbanlist/' . $mailbanlist->id . '" ">' . $mailbanlist->email_address . '</a>';
             })
-            ->addColumn('lastupdate', function ($breaklines) {
-                return '<a href="/mailpanel/breaklines/' . $breaklines->id . '" ">' . $breaklines->updated_at . '</a>';
+            ->addColumn('last_updated', function ($mailbanlist) {
+                return '<a href="/mailpanel/mailbanlist/' . $mailbanlist->id . '" ">' . $mailbanlist->updated_at . '</a>';
             })
 
-            ->addColumn('actions', function ($breaklines) {
+            ->addColumn('actions', function ($mailbanlist) {
                 return '
-                <form action="' . route('breaklines.destroy', [$breaklines->id]) .'" method="POST">
+                <form action="' . route('breaklines.destroy', [$mailbanlist->id]) .'" method="POST">
                 <div class=\'btn-group\'>
                     <input type="hidden" name="_method" value="DELETE">
-                    <a href="' . route('breaklines.edit', [$breaklines->id]) . '" class=\'btn btn-success btn-xs\'>Edit</a>
+                    <a href="' . route('breaklines.edit', [$mailbanlist->id]) . '" class=\'btn btn-success btn-xs\'>Edit</a>
                     <input type="submit" name="submit" value="Delete" class="btn btn-danger btn-xs" onClick="return confirm(\'Are you sure?\')"">
                 </div>
                 </form>';

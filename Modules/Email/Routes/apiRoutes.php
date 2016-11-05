@@ -12,6 +12,14 @@ Route::group(['prefix' => 'api'], function () {
         //'middleware' => 'can:mailboxes.mailboxes.index'
     ]);
 
+
+    Route::get('banlistdata', [
+        'as' => 'banlist.data',
+        'uses' => 'BanlistController@anyData',
+        //'middleware' => 'can:mailboxes.mailboxes.index'
+    ]);
+
+
     Route::get('breaklinesdata', [
         'as' => 'breaklines.data',
         'uses' => 'BreakLinesController@anyData',
