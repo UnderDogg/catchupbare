@@ -35,16 +35,8 @@ abstract class Controller extends BaseController
         $this->context = $context;
         $this->context_help_area = '';
 
-        if ( (new Setting())->get('app.context_help_area') ) {
-            try {
-                $routeName = $this->app->request->route()->getName();
-                $helpViewName = (($this->context) ? $this->context . "::" : '') . "context_help." . $routeName;
-                $this->context_help_area = View::make($helpViewName)->render();
-            }
-            catch (\Exception $ex)
-            {
-                $this->context_help_area = View::make('context_help.disabled', ['exMessage' => $ex->getMessage()])->render();
-            }
+        if ((new Setting())->get('app.context_help_area')) {
+            $this->context_help_area = View::make('core::context_help.disabled')->render();
         }
         View::share('context_help_area', $this->context_help_area);
     }
