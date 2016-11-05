@@ -66,7 +66,8 @@
 
 
 
-                        <table class="table table-bordered table-striped dataTable" style="overflow:hidden;">
+                        <table class="table table-bordered table-striped dataTable" style="overflow:hidden;" id = "mailtemplates-table">
+                            <thead>
                             <tr>
                                 <th width="100px">{{Lang::get('email::lang.name')}}</th>
                                 <th width="100px">{{Lang::get('email::lang.status')}}</th>
@@ -75,6 +76,7 @@
                                 <th width="100px">{{Lang::get('email::lang.last_updated')}}</th>
                                 <th width="100px">{{Lang::get('email::lang.action')}}</th>
                             </tr>
+                            </thead>
                             <!-- Foreach @var templates as @var template -->
                             @foreach($templates as $template)
                                 <tr>
@@ -112,10 +114,16 @@
                                     </td>
                                     @endforeach
                                 </tr>
-
                                 <!-- Set a link to Create Page -->
-
-
+                                <tfoot>
+                                <tr>
+                                    <th width="100px">{{Lang::get('email::lang.name')}}</th>
+                                    <th width="100px">{{Lang::get('email::lang.status')}}</th>
+                                    <th width="100px">{{Lang::get('email::lang.in_use')}}</th>
+                                    <th width="100px">{{Lang::get('email::lang.created')}}</th>
+                                    <th width="100px">{{Lang::get('email::lang.last_updated')}}</th>
+                                    <th width="100px">{{Lang::get('email::lang.action')}}</th>
+                                </tr>
+                                </tfoot>
                         </table>
-
 @stop
