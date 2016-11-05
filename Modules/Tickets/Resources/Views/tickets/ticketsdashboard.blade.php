@@ -121,7 +121,7 @@ class="active"
           <div class="col-md-2 col-sm-6">
             <div class="settingiconblue">
               <div class="settingdivblue">
-                <a href="{{url('/mailpanel/getresponder')}}"><span class="fa-stack fa-2x">
+                <a href="{{url('/mailpanel/autoresponder')}}"><span class="fa-stack fa-2x">
 
                  <i class="fa fa-reply-all fa-stack-1x"></i>
                  </span></a>

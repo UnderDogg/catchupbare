@@ -82,13 +82,7 @@ Route::patch('postemail/{id}', 'Admin\helpdesk\SettingsController@postemail'); /
 
 // Route::get('getaccess', 'Admin\helpdesk\SettingsController@getaccess'); // direct to access setting page
 // Route::patch('postaccess/{id}', 'Admin\helpdesk\SettingsController@postaccess'); // Updating the Access table with requests
-Route::get('getresponder', ['as' => 'getresponder', 'uses' => 'Admin\helpdesk\SettingsController@getresponder']); // direct to responder setting page
-/*
-Breadcrumbs::register('getresponder', function ($breadcrumbs) {
-   $breadcrumbs->parent('setting');
-   $breadcrumbs->push(Lang::get('lang.auto_responce'), route('getresponder'));
-});*/
-Route::patch('postresponder/{id}', 'Admin\helpdesk\SettingsController@postresponder'); // Updating the Responder table with requests
+
 
 
 // Templates
@@ -147,6 +141,16 @@ Route::group(['prefix' => 'mailpanel'], function () {
         'uses' => 'MailboxesController@maildashboard',
         //'middleware' => 'can:mailboxes.mailboxes.index'
     ]);
+
+
+    Route::get('autoresponder', ['as' => 'autoresponder', 'uses' => 'AutoResponsesController@getresponder']); // direct to responder setting page
+    /*
+    Breadcrumbs::register('getresponder', function ($breadcrumbs) {
+       $breadcrumbs->parent('setting');
+       $breadcrumbs->push(Lang::get('lang.auto_responce'), route('getresponder'));
+    });*/
+    Route::patch('postresponder/{id}', 'AutoResponsesController@postresponder'); // Updating the Responder table with requests
+
 
 
     Route::group(['prefix' => '/inbox'], function () {

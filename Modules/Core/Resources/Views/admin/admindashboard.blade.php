@@ -34,6 +34,31 @@ class="active"
 
 
 
+
+  @if(Session::has('success'))
+    <div class="alert alert-success alert-dismissable">
+      <i class="fa fa-ban"></i>
+      <b>Alert!</b> Success.
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      {{Session::get('success')}}
+    </div>
+    @endif
+            <!-- fail message -->
+    @if(Session::has('fails'))
+      <div class="alert alert-danger alert-dismissable">
+        <i class="fa fa-ban"></i>
+        <b>Alert!</b> Failed.
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{Session::get('fails')}}
+      </div>
+    @endif
+
+
+
+
+
+
+
   <div class="box">
     <div class="box-header with-border">
       <h3 class="box-title">{!! Lang::get('core::lang.settings') !!}</h3>
@@ -65,20 +90,6 @@ class="active"
                  </span></a>
               </div>
               <center class="box-title" >{!! Lang::get('core::lang.system') !!}</center>
-            </div>
-          </div>
-          <!--/.col-md-2-->
-
-          <!--/.col-md-2-->
-          <div class="col-md-2 col-sm-6">
-            <div class="settingiconblue">
-              <div class="settingdivblue">
-                <a href="{{url('/mailpanel/getresponder')}}"><span class="fa-stack fa-2x">
-
-                 <i class="fa fa-reply-all fa-stack-1x"></i>
-                 </span></a>
-              </div>
-              <center class="box-title" >{!! Lang::get('tickets::lang.auto_response') !!}</center>
             </div>
           </div>
           <!--/.col-md-2-->
@@ -217,6 +228,20 @@ class="active"
                  </span></a>
              </div>
              <center class="box-title" >{!! Lang::get('email::lang.getmail') !!}</center>
+           </div>
+         </div>
+         <!--/.col-md-2-->
+
+         <!--/.col-md-2-->
+         <div class="col-md-2 col-sm-6">
+           <div class="settingiconblue">
+             <div class="settingdivblue">
+               <a href="{{url('/mailpanel/autoresponder')}}"><span class="fa-stack fa-2x">
+
+                 <i class="fa fa-reply-all fa-stack-1x"></i>
+                 </span></a>
+             </div>
+             <center class="box-title" >{!! Lang::get('tickets::lang.auto_response') !!}</center>
            </div>
          </div>
          <!--/.col-md-2-->

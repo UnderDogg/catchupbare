@@ -30,6 +30,11 @@ return [
 
     'add_a_mailbox' => 'Add a Mailbox',
 
+    'auto_response-settings' => 'Auto Response Settings',
+    'new_ticket' => 'New Ticket',
+    'new_ticket_by_agent' => 'New Ticket by Agent',
+
+
 
     /*
       |--------------------------------------
