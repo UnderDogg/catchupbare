@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         //Model::unguard();
 
         //$this->call('ProductionSeeder');
-        $this->call('ResponderSeeder');
+        $this->call('MailTemplatesSeeder');
 
         // Example of how to call a seeder script for a given environment.
 //        if( App::environment() === 'development' )

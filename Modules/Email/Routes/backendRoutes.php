@@ -1,24 +1,6 @@
 <?php
 use Illuminate\Routing\Router;
 
-Route::get('mailboxesdata', [
-    'as' => 'mailboxes.data',
-    'uses' => 'MailboxesController@anyData',
-    //'middleware' => 'can:mailboxes.mailboxes.index'
-]);
-
-Route::get('breaklinesdata', [
-    'as' => 'breaklines.data',
-    'uses' => 'BreakLinesController@anyData',
-    //'middleware' => 'can:mailboxes.mailboxes.index'
-]);
-
-Route::get('mailrulesdata', [
-    'as' => 'mailrules.data',
-    'uses' => 'MailRulesController@anyData',
-    //'middleware' => 'can:mailboxes.mailboxes.index'
-]);
-
 
 
 
@@ -29,6 +11,20 @@ Route::post('validating-email-settings-on-update/{id}', ['as' => 'validating.ema
 
 Route::get('getemail', 'Admin\helpdesk\SettingsController@getemail'); // direct to email setting page
 Route::patch('postemail/{id}', 'Admin\helpdesk\SettingsController@postemail'); // Updating the Email table with requests
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Route::get('/test', ['as' => 'thr', 'uses' => 'MailController@fetchdata']); /*  Fetch Emails */

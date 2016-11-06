@@ -45,7 +45,8 @@
     "garethp/php-ews": "^0.9.0",
     "php-mime-mail-parser/php-mime-mail-parser": "^2.5",
     "arcanedev/settings": "^1.2",
-    "creativeorange/gravatar": "^1.0"
+    "creativeorange/gravatar": "^1.0",
+    "nesbot/carbon": "^1.21"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

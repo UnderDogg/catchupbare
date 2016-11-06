@@ -6,6 +6,7 @@ Route::post('validating-email-settings', ['as' => 'validating.email.settings', '
 Route::post('validating-email-settings-on-update/{id}', ['as' => 'validating.email.settings.update', 'uses' => 'MailboxesController@validatingMailboxSettingsUpdate']); // route to check email input validation
 
 Route::get('getemail', 'Admin\helpdesk\SettingsController@getemail'); // direct to email setting page
+Route::patch('postemail/{id}', 'Admin\helpdesk\SettingsController@postemail'); // Updating the Email table with requests
 
 
 /*
@@ -212,6 +213,13 @@ Route::group(['prefix' => 'mailpanel'], function () {
             'uses' => 'MailTemplatesController@create',
             //'middleware' => 'can:mailboxes.mailboxes.index'
         ]);
+
+        Route::delete('/{mailtemplate}', [
+            'as' => 'mailpanel.mailtemplates.destroy',
+            'uses' => 'MailTemplatesController@destroy',
+            //'middleware' => 'can:mailboxes.mailboxes.destroy'
+        ]);
+
 
     });
 

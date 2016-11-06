@@ -6,9 +6,12 @@ namespace Modules\Email\Http\Controllers;
 use Modules\Core\Http\Controllers\PhpMailController;
 use Modules\Core\Http\Controllers\SettingsController;
 use App\Http\Controllers\Controller;
+use Yajra\Datatables\Datatables;
+use Carbon\Carbon;
+
 // requests
 use Modules\Core\Requests\TemplateRequest;
-use Modules\Core\Requests\TemplateUdate;
+use Modules\Core\Requests\TemplateUpdate;
 // models
 use Modules\Email\Models\Mailbox;
 use Modules\Email\Models\MailTemplate;
@@ -39,6 +42,65 @@ class MailTemplatesController extends Controller
         //$this->middleware('auth');
         //$this->middleware('roles');
     }
+
+    public function anyData()
+    {
+        $mailtemplates = MailTemplate::select([
+            'id', 'name', 'is_active', 'type_id', 'set_id', 'subject', 'message', 'variable', 'created_at', 'updated_at'
+        ]);
+
+        return Datatables::of($mailtemplates)
+
+            /*
+             * I'm leaving generating the set in, but not showing that set. It's better to let the user select the set first
+             * and then just show those templates from that specific set
+             **/
+            ->addColumn('set_id', function ($mailtemplates) {
+                return $mailtemplates->set_id;
+            })
+
+            ->addColumn('templatenamelink', function ($mailtemplates) {
+                return '<a href="/mailpanel/mailtemplates/' . $mailtemplates->id . '">' . $mailtemplates->name . '</a>';
+            })
+            ->addColumn('templatestatuslink', function ($mailtemplates) {
+                return $mailtemplates->is_active;
+            })
+
+            ->addColumn('type_id', function ($mailtemplates) {
+                return $mailtemplates->type_id;
+            })
+
+            ->addColumn('subject', function ($mailtemplates) {
+                return $mailtemplates->subject;
+            })
+
+            ->addColumn('created_at', function ($mailtemplates) {
+                return $mailtemplates->created_at;
+            })
+
+            ->addColumn('last_updated', function ($mailtemplates) {
+                $dt = Carbon::now();
+                $updated_date = $mailtemplates->updated_at;
+                $carbon_update_date =  $dt->diffForHumans($updated_date);
+                return $carbon_update_date;
+            })
+
+            ->addColumn('actions', function ($mailtemplates) {
+                return '
+                <form action="' . route('mailpanel.mailtemplates.destroy', [$mailtemplates->id]) . '" method="POST">
+                <div class=\'btn-group\'>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <a href="' . route('admin.mailboxes.mailbox.edit', [$mailtemplates->id]) . '" class=\'btn btn-success btn-xs\'>Edit</a>
+                    <input type="submit" name="submit" value="Delete" class="btn btn-danger btn-xs" onClick="return confirm(\'Are you sure?\')"">
+                </div>
+                </form>';
+            })
+            ->make(true);
+    }
+
+
+
+
 
     /**
      * Display a listing of the resource.

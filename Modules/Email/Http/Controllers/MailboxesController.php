@@ -95,9 +95,6 @@ class MailboxesController extends Controller
 
     public function index()
     {
-        echo "guard staff (mailboxes controller index function)";
-        //dd(Auth::guard('staff')->user());
-        dd(Auth::guard('staff')->user());
         return view('mailboxes.index');
     }
 

@@ -28,18 +28,46 @@
     <!-- content -->
 
 
+
+
 @section('content')
+    <div class="row">
 
-  <div class="col-lg-12 departments">
 
-    <h2>{!! Lang::get('core::lang.departments') !!}</h2><a href="{{route('admin.departments.create')}}"
+        <!-- check whether success or not -->
+        @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissable">
+                <i class="fa  fa-check-circle"></i>
+                <b>Success!</b>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{Session::get('success')}}
+            </div>
+        @endif
+        <!-- failure message -->
+        @if(Session::has('fails'))
+                <div class="alert alert-danger alert-dismissable">
+                    <i class="fa fa-ban"></i>
+                    <b>Fail!</b>
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">&times;</button>
+                    {{Session::get('fails')}}
+                </div>
+        @endif
+
+
+
+  <div class="col-md-12 departments">
+            <div class="box box-primary">
+                <div class="box-header">
+    <h2 class="box-title">{!! Lang::get('core::lang.departments') !!}</h2><a href="{{route('admin.departments.create')}}"
                                                           class="btn btn-primary pull-right">{{Lang::get('core::lang.create_department')}}</a></h2>
+                </div>
 
 {{--
 Name	Type	SLA Plan	Department Manager	Action
 --}}
-                    <div class="table-responsive">
-                        <table class="table table-hover table-bordered table-striped" id="departments-table">
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover table-bordered table-striped dataTable" style="overflow:hidden;" id="departments-table">
                             <thead>
                             <tr>
                                 <th>Name</th>

@@ -155,9 +155,6 @@
                                         class="fa fa-ban"></i>{!! Lang::get('email::lang.ban_lists') !!}</a></li>
                         <li @yield('inbox')><a href="{{url('/mailpanel/inbox/1')}}"><i
                                         class="fa fa-at"></i>{!! Lang::get('email::lang.getmail') !!}</a></li>
-                        <li @yield('mailtemplate')><a href="{{ url('/mailpanel/mailtemplates') }}"><i
-                                        class="fa fa-mail-forward"></i>{!! Lang::get('email::lang.mailtemplates') !!}</a>
-                        </li>
                         <li @yield('maildiagnostics')><a href="{{ url('/mailpanel/maildiagno/getmaildiagno') }}"><i
                                         class="fa fa-plus"></i>{!! Lang::get('email::lang.maildiagnostics') !!}</a></li>
                         <li @yield('autoresponses')><a href="{{ url('/mailpanel/autoresponses') }}"><i
@@ -312,7 +309,7 @@
                     </div>
                     <div class="tabs-pane @yield('templates-bar')" id="tabD">
                         <ul class="nav navbar-nav">
-                            <li id="bar" @yield('mailtemplate')><a href="{{ url('/mailpanel/mailtemplates') }}"
+                            <li id="bar" @yield('mailtemplates')><a href="{{ url('/mailpanel/mailtemplates') }}"
                                                                    id="load-open">{!! Lang::get('email::lang.mailtemplates') !!}</a>
                             </li>
                             <li id="bar" @yield('newtemplate')><a

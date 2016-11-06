@@ -57,7 +57,7 @@ class CreateMailboxesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('emailqueues');
+        Schema::drop('mailboxes');
     }
 
 }

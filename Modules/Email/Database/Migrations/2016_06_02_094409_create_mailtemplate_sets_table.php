@@ -15,7 +15,7 @@ class CreateMailTemplateSetsTable extends Migration
         Schema::create('mailtemplates__sets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('active');
+            $table->boolean('isactive');
             $table->timestamps();
         });
     }

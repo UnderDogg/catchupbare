@@ -32,4 +32,11 @@ Route::group(['prefix' => 'api'], function () {
         //'middleware' => 'can:mailboxes.mailboxes.index'
     ]);
 
+    Route::get('mailtemplatesdata', [
+        'as' => 'api.mailtemplates.data',
+        'uses' => 'MailTemplatesController@anyData',
+        //'middleware' => 'can:mailboxes.mailboxes.index'
+    ]);
+
+
 }); // End of ADMIN group

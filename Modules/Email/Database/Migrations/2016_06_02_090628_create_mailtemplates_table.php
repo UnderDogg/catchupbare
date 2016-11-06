@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateMailTemplatesContentsTable extends Migration
+class CreateMailTemplatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,16 @@ class CreateMailTemplatesContentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('mailtemplates__contents', function (Blueprint $table) {
+        Schema::create('mailtemplates', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->boolean('is_active')->default(1)->index('isactive');
+            $table->integer('set_id')->unsigned()->index('mailtemplateset_id');
+            $table->integer('type_id')->unsigned()->index('mailtemplatetype_id');
             $table->string('variable');
-            $table->integer('type');
             $table->string('subject');
             $table->text('message');
             $table->string('description');
-            $table->integer('set_id');
             $table->timestamps();
         });
     }
