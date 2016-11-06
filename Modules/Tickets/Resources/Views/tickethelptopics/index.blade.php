@@ -112,7 +112,7 @@
                                     @endif
                                 </td>
                                 <!-- Priority -->
-                                <?php $priority = Modules\Core\Models\Ticket\Ticket_Priority::where('priority_id', '=', $topic->priority)->first(); ?>
+                                <?php $priority = Modules\Tickets\Models\TicketPriority::where('priority_id', '=', $topic->priority)->first(); ?>
                                 <td>{!! $priority->priority_desc !!}</td>
                                 <!-- Department -->
                                 @if($topic->department != null)
@@ -146,10 +146,6 @@
             </table>
         </div>
     </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
+
 
 @stop

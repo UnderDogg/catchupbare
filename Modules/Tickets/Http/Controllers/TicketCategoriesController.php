@@ -1,31 +1,45 @@
 <?php
-
-namespace Modules\Core\Http\Controllers;
+namespace Modules\Tickets\Http\Controllers;
 
 // controllers
 use App\Http\Controllers\Controller;
-// requests
-use Modules\Core\Requests\HelptopicRequest;
-use Modules\Core\Requests\HelptopicUpdate;
+use Illuminate\Support\Facades\Auth;
+
 // models
-use Modules\Core\Models\Agents;
-use Modules\Core\Models\Department;
-use Modules\Core\Models\Form\Forms;
-use Modules\Tickets\Models\TicketHelpTopic;
-use Modules\Tickets\Models\SlaPlan;
-use Modules\Core\Models\Settings\Ticket;
-use Modules\Core\Models\Ticket\Ticket_Priority;
 use Modules\Core\Models\Staff;
-// classes
+use Modules\Core\Models\Department;
+use Modules\Core\Models\Team;
+use Modules\Core\Models\Form\Forms;
+use Modules\Tickets\Models\Ticket;
+
+use Modules\Tickets\Models\SlaPlan;
+
+use Modules\Core\Models\User;
+use Modules\Relations\Models\Relation;
+
+use Modules\Tickets\Models\TicketAttachment;
+use Modules\Tickets\Models\TicketCategory;
+use Modules\Tickets\Models\TicketCollaborator;
+use Modules\Tickets\Models\TicketHelpTopic;
+use Modules\Tickets\Models\TicketPriority;
+use Modules\Tickets\Models\TicketSource;
+use Modules\Tickets\Models\TicketStatus;
+use Modules\Tickets\Models\TicketThread;
+use Modules\Tickets\Models\TicketTime;
+use Modules\Tickets\Models\TicketType;
+//classes
+use Illuminate\Http\Request;
 use DB;
 use Exception;
+use Datatables;
+use Carbon;
 
 /**
  * HelptopicController.
  *
  * @author      Ladybird <info@ladybirdweb.com>
  */
-class TicketHelpTopicsController extends Controller
+class TicketCategoriesController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -41,20 +55,42 @@ class TicketHelpTopicsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param type Help_topic $topic
-     *
-     * @return type Response
+     * @return Response
      */
-    public function index(Help_topic $topic)
+    public function index(TicketCategory $ticketcategory)
     {
         //try {
-            $topics = $topic->get();
-
-            return view('tickets::helptopics.index', compact('topics'));
+            return view('tickets::ticketcategories.index');
         //} catch (Exception $e) {
         //    return view('errors.404');
         //}
     }
+
+
+    public function anyData()
+    {
+        $ticketcategories = TicketCategory::select([
+            'id', 'name'
+        ]);
+        return Datatables::of($ticketcategories)
+            ->addColumn('ticketcatlink', function ($ticketcategories) {
+                return '<a href="ticketspanel/categories/' . $ticketcategories->id . '" ">' . $ticketcategories->name . '</a>';
+            })
+
+            ->addColumn('actions', function ($ticketcategories) {
+                return '
+                <form action="' . route('ticketcategories.destroy', [$ticketcategories->id]) .'" method="POST">
+                <div class=\'btn-group\'>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <a href="' . route('ticketcategories.edit', [$ticketcategories->id]) . '" class=\'btn btn-success btn-xs\'>Edit</a>
+                    <input type="submit" name="submit" value="Delete" class="btn btn-danger btn-xs" onClick="return confirm(\'Are you sure?\')"">
+                </div>
+                </form>';
+            })
+            ->make(true);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -78,7 +114,7 @@ class TicketHelpTopicsController extends Controller
       | 5.Forms Model
       ================================================
      */
-    public function create(Ticket_Priority $priority, Department $department, Help_topic $topic, Forms $form, User $agent, Sla_plan $sla)
+    public function create(TicketPriority $priority, Department $department, Help_topic $topic, Forms $form, User $agent, Sla_plan $sla)
     {
         try {
             $departments = $department->get();

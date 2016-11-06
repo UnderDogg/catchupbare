@@ -4,7 +4,7 @@ namespace Modules\Tickets\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HelpTopic extends Model
+class TicketHelpTopic extends Model
 {
     protected $table = 'tickethelptopics';
     protected $fillable = [

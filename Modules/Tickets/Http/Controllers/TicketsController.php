@@ -18,19 +18,20 @@ use Modules\Tickets\Models\Ticket;
 
 use Modules\Tickets\Models\HelpTopic;
 use Modules\Tickets\Models\SlaPlan;
-
 use Modules\Core\Models\Staff;
 use Modules\Core\Models\User;
 use Modules\Relations\Models\Relation;
-use Modules\Tickets\Models\TicketTime;
+
 use Modules\Tickets\Models\TicketAttachment;
+use Modules\Tickets\Models\TicketCategory;
 use Modules\Tickets\Models\TicketCollaborator;
-use Modules\Tickets\Models\TicketPriority;
+use Modules\Tickets\Models\TicketHelpTopic;
+use Modules\Core\Models\Ticket\TicketPriority;
 use Modules\Tickets\Models\TicketSource;
 use Modules\Tickets\Models\TicketStatus;
 use Modules\Tickets\Models\TicketThread;
-
-
+use Modules\Tickets\Models\TicketTime;
+use Modules\Tickets\Models\TicketType;
 
 
 

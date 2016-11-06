@@ -29,6 +29,7 @@ Route::group(['prefix' => 'ticketspanel'], function () {
 
 
     Route::resource('ticketsettings', 'TicketSettingsController');
+    Route::resource('ticketcategories', 'TicketCategoriesController');
     Route::resource('tickettypes', 'TicketTypesController');
     Route::resource('ticketstatuses', 'TicketStatusesController');
     Route::resource('ticketpriorities', 'TicketPrioritiesController');

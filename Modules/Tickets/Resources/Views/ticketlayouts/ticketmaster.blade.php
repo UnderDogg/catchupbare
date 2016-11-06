@@ -67,7 +67,9 @@
 
 
 <header class="main-header">
-  <a href="{{ route('home') }}" class="logo">
+
+    <!-- Logo -->
+    <a href="{{ route('home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">{{ config('app.short_name') }}</span>
         <!-- logo for regular state and mobile devices -->
@@ -76,29 +78,195 @@
 
     <!-- Header Navbar -->
     <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top" role="navigation">
-    <!-- Sidebar toggle button-->
-    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </a>
-    <div class="collapse navbar-collapse" id="navbar-collapse">
-      <ul class="tabs tabs-horizontal nav navbar-nav navbar-left">
-        <li @yield('Dashboard')><a data-target="#tabA" href="#">dashboard</a></li>
-        <li @yield('Templates')><a data-target="#tabB" href="#">templates</a></li>
-        <li @yield('Mailboxes')><a data-target="#tabC" href="#">mailboxes</a></li>
-        <li @yield('Cron Jobs')><a data-target="#tabD" href="#">cronjobs</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-          <li><a href="{{url('/kbpanel')}}">Kb Panel</a></li>
-          <li><a href="{{url('/mailpanel')}}">Mail Panel</a></li>
-          <li><a href="{{url('/staffpanel')}}">Staff Panel</a></li>
-          <li><a href="{{url('/adminpanel')}}">Admin Panel</a></li>
-      </ul>
-    </div>
-  </nav>
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </a>
+
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="tabs tabs-horizontal nav navbar-nav navbar-left">
+                <li @yield('AdminPanel')><a data-target="#tabAdminPanel" href="{{url('/adminpanel')}}">{!! Lang::get('core::lang.adminpanel') !!}</a></li>
+                <li @yield('StaffPanel')><a data-target="#tabStaffPanel" href="{{url('/staffpanel')}}">{!! Lang::get('core::lang.staffpanel') !!}</a></li>
+                <li @yield('TicketsPanel')><a data-target="#tabTicketsPanel" href="{{url('/ticketspanel')}}">{!! Lang::get('tickets::lang.ticketspanel') !!}</a></li>
+                <li @yield('EmailPanel')><a data-target="#tabMailPanel" href="{{url('/mailpanel')}}">{!! Lang::get('email::lang.mailpanel') !!}</a></li>
+                <li @yield('RelationsPanel')><a data-target="#tabRelPanel" href="{{url('/relationspanel')}}">{!! Lang::get('relations::lang.relationspanel') !!}</a>
+                <li @yield('KnowledgeBase')><a data-target="#tabKbPanel" href="{{url('/kbpanel')}}">{!! Lang::get('knowledgebase::lang.kbpanel') !!}</a></li>
+            </ul>
+
+            @if ( config('app.context_help_area') && (isset($context_help_area)))
+                <span class="pull-right">
+                {!! $context_help_area   !!}
+                </span>
+            @endif
+
+            <ul class="nav navbar-nav navbar-right">
+                @if ( config('app.notification_area') )
+                        <!-- Messages: style can be found in dropdown.less-->
+                <li class="dropdown messages-menu">
+                    <!-- Menu toggle button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-envelope-o"></i>
+                        <span class="label label-success">4</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have 4 messages</li>
+                        <li>
+                            <!-- inner menu: contains the messages -->
+                            <ul class="menu">
+                                <li><!-- start message -->
+                                    <a href="#">
+                                        <div class="pull-left">
+                                            <!-- Staff Image -->
+                                            <img src="{{ asset("/bower_components/admin-lte/dist/img/generic_user_160x160.jpg") }}"
+                                                 class="img-circle" alt="Staff Image"/>
+                                        </div>
+                                        <!-- Message title and timestamp -->
+                                        <h4>
+                                            Support Team
+                                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                        </h4>
+                                        <!-- The message -->
+                                        <p>Why not buy a new awesome theme?</p>
+                                    </a>
+                                </li><!-- end message -->
+                            </ul><!-- /.menu -->
+                        </li>
+                        <li class="footer"><a href="#">See All Messages</a></li>
+                    </ul>
+                </li><!-- /.messages-menu -->
+                <!-- Notifications Menu -->
+                <li class="dropdown notifications-menu">
+                    <!-- Menu toggle button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="label label-warning">10</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have 10 notifications</li>
+                        <li>
+                            <!-- Inner Menu: contains the notifications -->
+                            <ul class="menu">
+                                <li><!-- start notification -->
+                                    <a href="#">
+                                        <i class="fa fa-staff text-aqua"></i> 5 new members joined today
+                                    </a>
+                                </li><!-- end notification -->
+                            </ul>
+                        </li>
+                        <li class="footer"><a href="#">View all</a></li>
+                    </ul>
+                </li>
+                <!-- Tasks Menu -->
+                <li class="dropdown tasks-menu">
+                    <!-- Menu Toggle Button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-flag-o"></i>
+                        <span class="label label-danger">9</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header">You have 9 tasks</li>
+                        <li>
+                            <!-- Inner menu: contains the tasks -->
+                            <ul class="menu">
+                                <li><!-- Task item -->
+                                    <a href="#">
+                                        <!-- Task title and progress text -->
+                                        <h3>
+                                            Task Header <small class="pull-right">20%</small>
+                                        </h3>
+                                        <!-- The progress bar -->
+                                        <div class="progress xs">
+                                            <!-- Change the css width attribute to simulate progress -->
+                                            <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">20% Complete</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li><!-- end task item -->
+                            </ul>
+                        </li>
+                        <li class="footer">
+                            <a href="#">View all tasks</a>
+                        </li>
+                    </ul>
+                </li>
+                @endif  {{--app.notification_area--}}
+
+                        <!-- Staff Account Menu -->
+                <li class="dropdown staff staff-menu">
+                    <!-- Menu Toggle Button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <!-- The staff image in the navbar-->
+                        <img src="{{ Gravatar::get(Auth::user()->email , 'tiny') }}" class="staff-image"
+                             alt="Staff Image"/>
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                        <span class="hidden-xs">{{ Auth::user()->username }}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- The staff image in the menu -->
+                        <li class="staff-header">
+                            <img src="{{ Gravatar::get(Auth::user()->email , 'medium') }}" class="img-circle"
+                                 alt="Staff Image"/>
+                            <p>
+                                {{ Auth::user()->full_name }}
+                                <small>Member since {{ Auth::user()->created_at->format("F, Y") }}</small>
+                            </p>
+                        </li>
+
+                        @if ( config('app.extended_staff_menu') )
+                                <!-- Menu Body -->
+                        <li class="staff-body">
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Followers</a>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Sales</a>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Friends</a>
+                            </div>
+                        </li>
+                        @endif
+
+                                <!-- Menu Footer-->
+                        <li class="staff-footer">
+
+                            @if ( config('app.staff_profile_link') )
+                                <div class="pull-left">
+                                    {!! link_to_route('staff.profile', 'Profile', [], ['class' => "btn btn-default btn-flat"]) !!}
+                                </div>
+                            @endif
+
+                            <div class="pull-right">
+                                {!! link_to_route('logout', 'Sign out', [], ['class' => "btn btn-default btn-flat"]) !!}
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                @if ( config('app.right_sidebar') )
+                        <!-- Control Sidebar Toggle Button -->
+                <li>
+                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                </li>
+                @endif
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{url('/kbpanel')}}">Kb Panel</a></li>
+              <li><a href="{{url('/mailpanel')}}">Mail Panel</a></li>
+              <li><a href="{{url('/staffpanel')}}">Staff Panel</a></li>
+              <li><a href="{{url('/adminpanel')}}">Admin Panel</a></li>
+            </ul>
+
+        </div><!--  class="collapse navbar-collapse" id="navbar-collapse" -->
+
+    </nav>
 </header>
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
@@ -113,7 +281,7 @@
           <div class="col-xs-2" style="width:50%;">
             <a href="{!! url('profile') !!}">
 
-              <img src="#" class="img-circle" alt="User Image"/>
+                            <img src="#" class="img-circle" alt="Ticket Master"/>
 
             </a>
           </div>
@@ -131,60 +299,21 @@
       </div>
     </div>
     <!-- sidebar menu: : style can be found in sidebar.less -->
-    <ul id="side-bar" class="sidebar-menu">
-      @yield('sidebar')
-      <li class="header">{!! Lang::get('tickets::lang.tickets') !!}</li>
-      <li @yield('inbox')>
-        <a href="{/ticket/inbox" id="load-inbox">
-          <i class="fa fa-envelope"></i> <span>{!! Lang::get('tickets::lang.inbox') !!}</span>
-          <small class="label pull-right bg-green">count($tickets)</small>
-        </a>
-      </li>
-      <li @yield('myticket')>
-        <a href="/ticket/myticket" id="load-myticket">
-          <i class="fa fa-user"></i> <span>{!! Lang::get('tickets::lang.my_tickets') !!} </span>
-          <small class="label pull-right bg-green">count($myticket)</small>
-        </a>
-      </li>
-      <li @yield('unassigned')>
-        <a href="/unassigned/" id="load-unassigned">
-          <i class="fa fa-th"></i> <span>{!! Lang::get('tickets::lang.unassigned') !!}</span>
-          <small class="label pull-right bg-green">count($unassigned)</small>
-        </a>
-      </li>
-      <li @yield('overdue')>
-        <a href="/ticket/overdue/" id="load-unassigned">
-          <i class="fa fa-calendar-times-o"></i> <span>{!! Lang::get('tickets::lang.overdue') !!}</span>
-          <small class="label pull-right bg-green">$overdue_ticket</small>
-        </a>
-      </li>
-      <li @yield('trash')>
-        <a href="/ticket/trash/">
-          <i class="fa fa-trash-o"></i> <span>{!! Lang::get('tickets::lang.trash') !!}</span>
-          <small class="label pull-right bg-green">count($deleted)</small>
-        </a>
-      </li>
-      <li class="header">{!! Lang::get('core::lang.departments') !!}</li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-folder-open"></i> <span>$dept->name</span> <i class="fa fa-angle-left pull-right"></i>
-        </a>
-        <ul class="treeview-menu">
-          <li><a href="{!! URL::route('dept.open.ticket','Support') !!}"><i
-                class="fa fa-circle-o"></i>{!! Lang::get('tickets::lang.open') !!}
-              <small class="label pull-right bg-green">$open</small>
-            </a></li>
-          <li><a href="{!! URL::route('dept.inprogress.ticket','Support') !!}"><i
-                class="fa fa-circle-o"></i>{!! Lang::get('tickets::lang.inprogress') !!}
-              <small class="label pull-right bg-green">$underprocess</small>
-            </a></li>
-          <li><a href="{!! URL::route('dept.closed.ticket','Support') !!}"><i
-                class="fa fa-circle-o"></i>{!! Lang::get('tickets::lang.closed') !!}
-              <small class="label pull-right bg-green">$closed</small>
-            </a></li>
+        <ul id="side-bar" class="sidebar-menu">
+            @yield('sidebar')
+            <li class="header">{!! Lang::get('tickets::lang.ticketspanel') !!}</li>
+            <li class="treeview @yield('TicketsPanel')">
+                <a href="#">
+                    <i class="fa fa-envelope-o"></i>
+                    <span>{!! Lang::get('tickets::lang.ticketspanel') !!}</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li @yield('ticketcategories')><a href="{{ url('/ticketspanel/ticketcategories') }}"><i
+                                    class="fa fa-plus"></i>{!! Lang::get('tickets::lang.ticketcategories') !!}</a></li>
+                </ul>
+            </li>
         </ul>
-      </li>
-    </ul>
   </section>
   <!-- /.sidebar -->
 </aside>
@@ -196,9 +325,9 @@
   <div class="tab-content" style="background-color: white;padding: 0 20px 0 20px">
     <div class="collapse navbar-collapse" id="navbar-collapse">
       <div class="tabs-content">
-        <div class="tabs-pane @yield('dashboard-bar')" id="tabA">
+        <div class="tabs-pane @yield('tickets-bar')" id="tabA">
           <ul class="nav navbar-nav">
-            <li id="bar" @yield('dashboard') ><a href="{{url('dashboard')}}">{!! Lang::get('core::lang.dashboard') !!}</a></li>
+            <li id="bar" @yield('ticketcategories') ><a href="{{url('/ticketspanel/ticketcategories')}}">{!! Lang::get('tickets::lang.ticketcategories') !!}</a></li>
             <li id="bar" @yield('profile') ><a href="{{url('profile')}}">{!! Lang::get('employees::lang.profile') !!}</a></li>
           </ul>
         </div>

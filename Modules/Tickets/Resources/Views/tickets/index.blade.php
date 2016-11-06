@@ -1,10 +1,10 @@
 @extends('tickets::ticketlayouts.ticketmaster')
 
-@section('Dashboard')
+@section('TicketsPanel')
     class="active"
 @stop
 
-@section('dashboard-bar')
+@section('tickets-bar')
     active
 @stop
 

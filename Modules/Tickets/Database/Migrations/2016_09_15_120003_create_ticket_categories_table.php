@@ -15,6 +15,7 @@ class CreateTicketCategoriesTable extends Migration
     {
         Schema::create('ticketcategories', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name', 100)->index('ticketcategory');
             $table->timestamps();
         });
     }

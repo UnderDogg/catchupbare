@@ -9,7 +9,7 @@
     <!-- faveo favicon -->
     <link rel="shortcut icon" href="{{asset("lb-faveo/media/images/favicon.ico")}}">
     <!-- Bootstrap 3.3.2 -->
-    <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    {{--<link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">--}}
 
 
     <!-- Font Awesome Icons -->
@@ -34,7 +34,7 @@
     <link href="{{asset("lb-faveo/plugins/iCheck/flat/blue.css")}}" rel="stylesheet" type="text/css"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <link href="{{asset("lb-faveo/css/tabby.css")}}" type="text/css" rel="stylesheet">
-    <link href="{{asset('css/notification-style.css')}}" rel="stylesheet" type="text/css">
+    {{--<link href="{{asset('css/notification-style.css')}}" rel="stylesheet" type="text/css">--}}
     <link href="{{asset("lb-faveo/css/jquerysctipttop.css")}}" rel="stylesheet" type="text/css">
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <link href="{{asset("lb-faveo/css/editor.css")}}" type="text/css" rel="stylesheet">
@@ -50,24 +50,24 @@
     <link rel="stylesheet" href="{{asset("lb-faveo/plugins/select2/select2.min.css")}}">
 
 
-    <link rel="stylesheet" type="text/css" href="{{asset("lb-faveo/css/notification-style.css")}}">
+    {{--<link rel="stylesheet" type="text/css" href="{{asset("lb-faveo/css/notification-style.css")}}">--}}
 
-    <link href="{{ URL::asset('css/jasny-bootstrap.css') }}" rel="stylesheet" type="text/css">
+    {{--<link href="{{ URL::asset('css/jasny-bootstrap.css') }}" rel="stylesheet" type="text/css">--}}
 
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700, 300' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="{{ URL::asset('js/vue.min.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/jquery-2.2.3.min.js') }}"></script>
+{{--    <script type="text/javascript" src="{{ URL::asset('js/vue.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/jquery-2.2.3.min.js') }}"></script>--}}
 
 
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/semantic.css') }}">
+{{--    <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/semantic.css') }}">--}}
 
 
-    <script type="text/javascript" src="{{ URL::asset('js/bootstrap-paginator.js') }}"></script>
+    {{--<script type="text/javascript" src="{{ URL::asset('js/bootstrap-paginator.js') }}"></script>--}}
 
-    <link href="{{ URL::asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css">
+    {{--<link href="{{ URL::asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css">--}}
     <!---   <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css"> -->
-    <link href="{{ URL::asset('css/dropzone.css') }}" rel="stylesheet" type="text/css">
+    {{--<link href="{{ URL::asset('css/dropzone.css') }}" rel="stylesheet" type="text/css">--}}
 
     <link rel="stylesheet" href="{{ asset(elixir('css/app.css')) }}">
     <!-- <script type="text/javascript" src="https://js.stripe.com/v2/"></script>-->
@@ -75,9 +75,9 @@
 
 
     <script src="//js.pusher.com/3.0/pusher.min.js"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/Chart.min.js') }}"></script>
+    {{--<script type="text/javascript" src="{{ URL::asset('js/Chart.min.js') }}"></script>--}}
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.1.1/Chart.min.js"></script>-->
-    <script type="text/javascript" src="{{ URL::asset('js/jquery-2.2.3.min.js') }}"></script>
+    {{--<script type="text/javascript" src="{{ URL::asset('js/jquery-2.2.3.min.js') }}"></script>--}}
     @yield('HeadInclude')
 
 </head>
@@ -114,6 +114,7 @@
 
                 <li><a href="{{url('/kbpanel')}}">Kb Panel</a></li>
                 <li><a href="{{url('/ticketspanel')}}">Tickets Panel</a></li>
+                <li><a href="{{url('/mailpanel')}}">Mail Panel</a></li>
                 <li><a href="{{url('/staffpanel')}}">Staff Panel</a></li>
                 <li><a href="{{url('/adminpanel')}}">Admin Panel</a></li>
 
@@ -204,7 +205,7 @@
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-        <div class="user-panel">
+        <div class="staff-panel">
             @if (trim($__env->yieldContent('profileimg')))
                 <h1>@yield('profileimg')</h1>
             @else
@@ -244,7 +245,7 @@
         <ul id="side-bar" class="sidebar-menu">
             @yield('sidebar')
             <li class="header">{!! Lang::get('email::lang.email') !!}</li>
-            <li class="treeview @yield('Mailboxes')">
+            <li class="treeview @yield('TicketsPanel')">
                 <a href="#">
                     <i class="fa fa-envelope-o"></i>
                     <span>{!! Lang::get('email::lang.mailboxes') !!}</span>
@@ -270,89 +271,6 @@
                                     class="fa fa-plus"></i>{!! Lang::get('email::lang.mailrules') !!}</a></li>
                 </ul>
             </li>
-
-            <li class="treeview @yield('MailParser')">
-                <a href="#">
-                    <i class="fa fa-envelope-o"></i>
-                    <span>{!! Lang::get('email::lang.mailparser') !!}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li @yield('mailparser')><a href="{{ url('/adminpanel/mailparser') }}"><i
-                                    class="fa fa-envelope"></i>{!! Lang::get('email::lang.mailparser') !!}</a></li>
-                    <li @yield('mailboxes')><a href="{{ url('/mailpanel/mailboxes') }}"><i
-                                    class="fa fa-mail-forward"></i>{!! Lang::get('email::lang.mailboxes') !!}</a></li>
-                    <li @yield('mailrules')><a href="{{ url('/adminpanel/mailrules') }}"><i
-                                    class="fa fa-ban"></i>{!! Lang::get('email::lang.mailrules') !!}</a></li>
-                    <li @yield('mailbans')><a href="{{ url('/adminpanel/mailbanlist') }}"><i
-                                    class="fa fa-ban"></i>{!! Lang::get('email::lang.mailbans') !!}</a></li>
-                    <li @yield('mailcatch-all')><a href="{{ url('/adminpanel/mailcatch-all') }}"><i
-                                    class="fa fa-mail-forward"></i>{!! Lang::get('email::lang.mailcatch-all') !!}</a>
-                    </li>
-                    <li @yield('maildiagnostics')><a href="{{ url('/adminpanel/getmaildiagno') }}"><i
-                                    class="fa fa-plus"></i>{!! Lang::get('email::lang.diagnostics') !!}</a></li>
-                </ul>
-            </li>
-
-
-            <li class="treeview @yield('MailTemplates')">
-                <a href="#">
-                    <i class="fa fa-envelope-o"></i>
-                    <span>{!! Lang::get('email::lang.mailtemplates') !!}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li @yield('mailtemplategroups')><a href="{{ url('/adminpanel/mailtemplategroups') }}"><i
-                                    class="fa fa-envelope"></i>{!! Lang::get('email::lang.mailtemplategroups') !!}</a>
-                    </li>
-                    <li @yield('mailtemplates')><a href="{{ url('/adminpanel/mailtemplates') }}"><i
-                                    class="fa fa-mail-forward"></i>{!! Lang::get('email::lang.mailtemplates') !!}</a>
-                    </li>
-                    <li @yield('maillogos')><a href="{{ url('/adminpanel/maillogos') }}"><i
-                                    class="fa fa-ban"></i>{!! Lang::get('email::lang.maillogos') !!}</a></li>
-                    <li @yield('templateimport')><a href="{{ url('/adminpanel/templateimport') }}"><i
-                                    class="fa fa-mail-forward"></i>{!! Lang::get('email::lang.templateimport') !!}</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="treeview @yield('Logs')">
-                <a href="#">
-                    <i class="fa fa-pie-chart"></i>
-                    <span>{!! Lang::get('core::lang.logs') !!}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li @yield('errorlogs')><a href="{{ url('/adminpanel/errorlogs') }}"><i
-                                    class="fa fa-list-alt"></i> {!! Lang::get('core::lang.errorlogs') !!}</a></li>
-                    <li @yield('joblogs')><a href="{{ url('/adminpanel/joblogs') }}"><i
-                                    class="fa fa-list-alt"></i> {!! Lang::get('core::lang.joblogs') !!}</a></li>
-                    <li @yield('activitylogs')><a href="{{ url('/adminpanel/activitylogs') }}"><i
-                                    class="fa fa-list-alt"></i> {!! Lang::get('core::lang.activitylogs') !!}</a></li>
-                    <li @yield('loginlogs')><a href="{{ url('/adminpanel/loginlogs') }}"><i
-                                    class="fa fa-list-alt"></i> {!! Lang::get('core::lang.loginlogs') !!}</a></li>
-                </ul>
-            </li>
-
-            <li class="treeview @yield('Cron')">
-                <a href="#">
-                    <i class="fa fa-pie-chart"></i>
-                    <span>{!! Lang::get('core::lang.cron') !!}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li @yield('cron')><a href="{{ url('/adminpanel/cronjobs') }}"><i
-                                    class="fa fa-list-alt"></i> {!! Lang::get('core::lang.cronjobs') !!}</a></li>
-                    <li @yield('cron')><a href="{{url('/adminpanel/job-scheduler')}}"><i
-                                    class="fa fa-hourglass"></i>{!! Lang::get('core::lang.cron') !!}</a></li>
-                    <li @yield('joblogs')><a href="{{ url('/adminpanel/joblogs') }}"><i
-                                    class="fa fa-list-alt"></i> {!! Lang::get('core::lang.joblogs') !!}</a></li>
-                </ul>
-            </li>
-
-        </ul>
-        </li>
-
         </ul>
     </section>
     <!-- /.sidebar -->
@@ -431,12 +349,10 @@
 </div>
 
 <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <b>Version</b> {!! Config::get('app.version') !!}
-    </div>
-    <strong>{!! Lang::get('core::lang.copyright') !!} &copy; {!! date('Y') !!} <a href="#"
-                                                                                  target="_blank">company_name</a>.</strong> {!! Lang::get('core::lang.all_rights_reserved') !!}
-    . {!! Lang::get('core::lang.powered_by') !!} <a href="http://www.faveohelpdesk.com/" target="_blank">Faveo</a>
+  <div class="pull-right hidden-xs">
+    <b>Version</b> {!! Config::get('app.version') !!}
+  </div>
+      <strong>{!! Lang::get('core::lang.copyright') !!} &copy; {!! date('Y') !!}  <a href="#" target="_blank">company_name</a>.</strong> {!! Lang::get('core::lang.all_rights_reserved') !!}. {!! Lang::get('core::lang.powered_by') !!} <a href="http://www.faveohelpdesk.com/" target="_blank">Faveo</a>
 </footer>
 </div><!-- ./wrapper -->
 {{-- // <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
@@ -465,8 +381,7 @@
 <script src="{{asset("lb-faveo/plugins/datatables/dataTables.bootstrap.js")}}" type="text/javascript"></script>
 <script src="{{asset("lb-faveo/plugins/datatables/jquery.dataTables.js")}}" type="text/javascript"></script>
 <!-- Page Script -->
-<script src="{{asset("lb-faveo/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")}}"
-        type="text/javascript"></script>
+<script src="{{asset("lb-faveo/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js")}}" type="text/javascript"></script>
 {{-- // <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script> --}}
 <script type="text/javascript" src="{{asset("lb-faveo/js/jquery.dataTables1.10.10.min.js")}}"></script>
 
@@ -569,7 +484,7 @@
 <!-- Bootstrap Core JavaScript -->
 
 <script type="text/javascript" src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('js/jasny-bootstrap.min.js') }}"></script>
+{{--<script type="text/javascript" src="{{ URL::asset('js/jasny-bootstrap.min.js') }}"></script>--}}
 
 @stack('scripts')
 </body>

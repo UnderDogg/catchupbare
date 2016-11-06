@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TicketTime extends Model
 {
+    protected $table = 'tickets_time';
+
     protected $fillable = [
         'time',
         'overtime',
@@ -15,8 +17,6 @@ class TicketTime extends Model
     ];
 
     protected $hidden = ['remember_token'];
-
-    protected $table = 'tickets_time';
 
     public function tickets()
     {

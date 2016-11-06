@@ -15,7 +15,7 @@ use Exception;
  *
  * @author      Ladybird <info@ladybirdweb.com>
  */
-class ThreadController extends Controller
+class TicketThreadController extends Controller
 {
     /**
      * get the values from ticket_thread Table and direct to view page.
