@@ -35,6 +35,32 @@ class="active"
 
 
 @section('content')
+
+
+
+
+
+
+  @if(Session::has('success'))
+    <div class="alert alert-success alert-dismissable">
+      <i class="fa fa-ban"></i>
+      <b>Alert!</b> Success.
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      {{Session::get('success')}}
+    </div>
+    @endif
+            <!-- fail message -->
+    @if(Session::has('fails'))
+      <div class="alert alert-danger alert-dismissable">
+        <i class="fa fa-ban"></i>
+        <b>Alert!</b> Failed.
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{Session::get('fails')}}
+      </div>
+    @endif
+
+
+
   <script>
     $(document).ready(function () {
       $('[data-toggle="tooltip"]').tooltip(); //Tooltip on icons top
@@ -51,272 +77,6 @@ class="active"
       });
     });
   </script>
-
-
-
-  <div class="box">
-    <div class="box-header with-border">
-      <h3 class="box-title">{!! Lang::get('core::lang.settings') !!}</h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-      <div class="row">
-        <div class="col-md-12">
-          <!--/.col-md-2-->
-          <div class="col-md-2 col-sm-6">
-            <div class="settingiconblue">
-              <div class="settingdivblue">
-                <a href="{{url('/adminpanel/companies/getcompany')}}"><span class="fa-stack fa-2x">
-
-                 <i class="fa fa-building-o fa-stack-1x"></i>
-               </span></a>
-              </div>
-              <center class="box-title" >{!! Lang::get('core::lang.company') !!}</center>
-            </div>
-          </div>
-          <!--/.col-md-2-->
-          <!--/.col-md-2-->
-          <div class="col-md-2 col-sm-6">
-            <div class="settingiconblue">
-              <div class="settingdivblue">
-                <a href="{{url('/adminpanel/getsystem')}}"><span class="fa-stack fa-2x">
-
-                 <i class="fa fa-laptop fa-stack-1x"></i>
-                 </span></a>
-              </div>
-              <center class="box-title" >{!! Lang::get('core::lang.system') !!}</center>
-            </div>
-          </div>
-          <!--/.col-md-2-->
-
-          <!--/.col-md-2-->
-          <div class="col-md-2 col-sm-6">
-            <div class="settingiconblue">
-              <div class="settingdivblue">
-                <a href="{{url('/mailpanel/getmail')}}"><span class="fa-stack fa-2x">
-
-                 <i class="fa fa-at fa-stack-1x"></i>
-                 </span></a>
-              </div>
-              <center class="box-title" >{!! Lang::get('email::lang.mailboxes') !!}</center>
-            </div>
-          </div>
-          <!--/.col-md-2-->
-
-          <!--/.col-md-2-->
-          <div class="col-md-2 col-sm-6">
-            <div class="settingiconblue">
-              <div class="settingdivblue">
-                <a href="{{url('/ticketspanel/gettickets')}}"><span class="fa-stack fa-2x">
-
-                 <i class="fa fa-file-text-o fa-stack-1x"></i>
-                 </span></a>
-              </div>
-              <center class="box-title" >{!! Lang::get('tickets::lang.ticket') !!}</center>
-            </div>
-          </div>
-          <!--/.col-md-2-->
-
-          <!--/.col-md-2-->
-          <div class="col-md-2 col-sm-6">
-            <div class="settingiconblue">
-              <div class="settingdivblue">
-                <a href="{{url('/mailpanel/autoresponder')}}"><span class="fa-stack fa-2x">
-
-                 <i class="fa fa-reply-all fa-stack-1x"></i>
-                 </span></a>
-              </div>
-              <center class="box-title" >{!! Lang::get('tickets::lang.auto_response') !!}</center>
-            </div>
-          </div>
-          <!--/.col-md-2-->
-
-          <!--/.col-md-2-->
-          <div class="col-md-2 col-sm-6">
-            <div class="settingiconblue">
-              <div class="settingdivblue">
-                <a href="{{url('/adminpanel/getalert')}}"><span class="fa-stack fa-2x">
-                 <i class="fa fa-bell-o fa-stack-1x"></i>
-                 </span></a>
-              </div>
-              <center class="box-title" >{!! Lang::get('core::lang.alert_notices') !!}</center>
-            </div>
-          </div>
-          <!--/.col-md-2-->
-
-          <!--/.col-md-2-->
-          <div class="col-md-2 col-sm-6">
-            <div class="settingiconblue">
-              <div class="settingdivblue">
-                <a href="{{url('/adminpanel/languages')}}"><span class="fa-stack fa-2x">
-                 <i class="fa fa-language fa-stack-1x"></i>
-                 </span></a>
-              </div>
-              <center class="box-title">{!! Lang::get('core::lang.language') !!}</center>
-            </div>
-          </div>
-          <!--/.col-md-2-->
-          <div class="col-md-2 col-sm-6">
-            <div class="settingiconblue">
-              <div class="settingdivblue">
-                <a href="{{url('/adminpanel/job-scheduler')}}"><span class="fa-stack fa-2x">
-
-                 <i class="fa fa-hourglass-o fa-stack-1x"></i>
-                 </span></a>
-              </div>
-              <center class="box-title" >{!! Lang::get('core::lang.cron') !!}</center>
-            </div>
-          </div>
-          <!--/.col-md-2-->
-
-        </div>
-      </div>
-      <!-- /.row -->
-    </div>
-    <!-- ./box-body -->
-  </div><!-- /.box -->
-
-
-
- <div class="box">
-   <div class="box-header with-border">
-     <h3 class="box-title">{!! Lang::get('core::lang.staff') !!}</h3>
-   </div>
-   <!-- /.box-header -->
-   <div class="box-body">
-     <div class="row">
-       <div class="col-md-12">
-         <!--/.col-md-2-->
-         <div class="col-md-2 col-sm-6">
-           <div class="settingiconblue">
-             <div class="settingdivblue">
-               <a href="{{ url('/adminpanel/staff/manage/') }}"><span class="fa-stack fa-2x">
-                 <i class="fa fa-user fa-stack-1x"></i>
-               </span></a>
-             </div>
-             <center class="box-title" >{!! Lang::get('core::lang.staff') !!}</center>
-           </div>
-         </div>
-         <!--/.col-md-2-->
-         <!--/.col-md-2-->
-         <div class="col-md-2 col-sm-6">
-           <div class="settingiconblue">
-             <div class="settingdivblue">
-               <a href="{{ url('/adminpanel/departments/manage') }}"><span class="fa-stack fa-2x">
-                 <i class="fa fa-sitemap fa-stack-1x"></i>
-                 </span></a>
-             </div>
-             <center class="box-title" >{!! Lang::get('core::lang.departments') !!}</center>
-           </div>
-         </div>
-         <!--/.col-md-2-->
-
-         <!--/.col-md-2-->
-         <div class="col-md-2 col-sm-6">
-           <div class="settingiconblue">
-             <div class="settingdivblue">
-               <a href="{{ url('/adminpanel/teams/manage') }}"><span class="fa-stack fa-2x">
-                 <i class="fa fa-users fa-stack-1x"></i>
-                 </span></a>
-             </div>
-             <center class="box-title" >{!! Lang::get('core::lang.teams') !!}</center>
-           </div>
-         </div>
-         <!--/.col-md-2-->
-         <!--/.col-md-2-->
-         <div class="col-md-2 col-sm-6">
-           <div class="settingiconblue">
-             <div class="settingdivblue">
-               <a href="{{ url('/adminpanel/roles/manage') }}"><span class="fa-stack fa-2x">
-
-                 <i class="fa fa-group fa-stack-1x"></i>
-                 </span></a>
-             </div>
-             <center class="box-title" >{!! Lang::get('core::lang.roles') !!}</center>
-           </div>
-         </div>
-         <!--/.col-md-2-->
-       </div>
-     </div>
-     <!-- /.row -->
-   </div>
-   <!-- ./box-body -->
- </div>
- <!-- /.box -->
-
-
-
- <div class="box">
-   <div class="box-header with-border">
-     <h3 class="box-title">{!! Lang::get('email::lang.mailboxes') !!}</h3>
-   </div>
-   <!-- /.box-header -->
-   <div class="box-body">
-     <div class="row">
-       <div class="col-md-12">
-         <!--/.col-md-2-->
-         <div class="col-md-2 col-sm-6">
-           <div class="settingiconblue">
-             <div class="settingdivblue">
-               <a href="{{ url('/mailpanel/mailboxes/manage') }}"><span class="fa-stack fa-2x">
-               <i class="fa fa-envelope-o fa-stack-1x"></i>
-               </span></a>
-             </div>
-             <center class="box-title" >{!! Lang::get('email::lang.mailboxes') !!}</center>
-           </div>
-         </div>
-         <!--/.col-md-2-->
-
-         <!--/.col-md-2-->
-         <div class="col-md-2 col-sm-6">
-           <div class="settingiconblue">
-             <div class="settingdivblue">
-               <a href="{{ url('/mailpanel/mailbanlist') }}"><span class="fa-stack fa-2x">
-                 <i class="fa fa-ban fa-stack-1x"></i>
-                 </span></a>
-             </div>
-             <center class="box-title" >{!! Lang::get('email::lang.ban_lists') !!}</center>
-           </div>
-         </div>
-         <!--/.col-md-2-->
-
-         <!--/.col-md-2-->
-         <div class="col-md-2 col-sm-6">
-           <div class="settingiconblue">
-             <div class="settingdivblue">
-               <a href="{{ url('/mailpanel/mailtemplates/') }}"><span class="fa-stack fa-2x">
-
-                 <i class="fa fa-mail-forward fa-stack-1x"></i>
-                 </span></a>
-             </div>
-             <center class="box-title" >{!! Lang::get('email::lang.mailtemplates') !!}</center>
-           </div>
-         </div>
-         <!--/.col-md-2-->
-
-         <!--/.col-md-2-->
-         <div class="col-md-2 col-sm-6">
-           <div class="settingiconblue">
-             <div class="settingdivblue">
-               <a href="{{ url('/mailpanel/maildiagno/getmaildiagno') }}"><span class="fa-stack fa-2x">
-
-                 <i class="fa fa-plus fa-stack-1x"></i>
-                 </span></a>
-             </div>
-             <center class="box-title" >{!! Lang::get('email::lang.diagnostics') !!}</center>
-           </div>
-         </div>
-         <!--/.col-md-2-->
-
-       </div>
-     </div>
-     <!-- /.row -->
-   </div>
-   <!-- ./box-body -->
- </div>
-
-
-
 
  <div class="box">
    <div class="box-header with-border">

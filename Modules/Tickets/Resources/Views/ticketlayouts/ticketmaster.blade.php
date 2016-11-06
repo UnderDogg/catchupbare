@@ -22,15 +22,15 @@
 
     <!-- Theme style -->
     <link href="{{ asset("/bower_components/admin-lte/dist/css/AdminLTE.min.css") }}" rel="stylesheet" type="text/css" />
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
+  <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+    <link href="{{asset("lb-faveo/css/AdminLTE.css")}}" rel="stylesheet" type="text/css" />
   <link href="{{asset("lb-faveo/css/skins/_all-skins.min.css")}}" rel="stylesheet" type="text/css"/>
 
   <!-- iCheck -->
   <link href="{{asset("lb-faveo/plugins/iCheck/flat/blue.css")}}" rel="stylesheet" type="text/css"/>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <link href="{{asset("lb-faveo/css/tabby.css")}}" type="text/css" rel="stylesheet">
-    <link href="{{asset('css/notification-style.css')}}" rel="stylesheet" type="text/css">
+    {{--<link href="{{asset('css/notification-style.css')}}" rel="stylesheet" type="text/css">--}}
   <link href="{{asset("lb-faveo/css/jquerysctipttop.css")}}" rel="stylesheet" type="text/css">
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <link type="text/css" href="{{asset("lb-faveo/css/jquery.ui.css")}}" rel="stylesheet">
@@ -42,25 +42,23 @@
   <link rel="stylesheet" href="{{asset("lb-faveo/plugins/select2/select2.min.css")}}">
 
 
-  <link rel="stylesheet" type="text/css" href="{{asset("lb-faveo/css/notification-style.css")}}">
+  {{--<link rel="stylesheet" type="text/css" href="{{asset("lb-faveo/css/notification-style.css")}}">--}}
 
-  <link href="{{ URL::asset('css/jasny-bootstrap.css') }}" rel="stylesheet" type="text/css">
+  {{--<link href="{{ URL::asset('css/jasny-bootstrap.css') }}" rel="stylesheet" type="text/css">--}}
 
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700, 300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,300|Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
-  <script type="text/javascript" src="{{ URL::asset('js/jquery-2.2.3.min.js') }}"></script>
-
-
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/semantic.css') }}">
+  {{--<script type="text/javascript" src="{{ URL::asset('js/jquery-2.2.3.min.js') }}"></script>--}}
 
 
-  <script type="text/javascript" src="{{ URL::asset('js/bootstrap-paginator.js') }}"></script>
-
-  <link href="{{ URL::asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css">
 
 
-  <link rel="stylesheet" href="{{ asset(elixir('css/app.css')) }}">
+  {{--<script type="text/javascript" src="{{ URL::asset('js/bootstrap-paginator.js') }}"></script>--}}
+
+  {{--<link href="{{ URL::asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css">--}}
+
+    <!-- Application CSS-->
+    <link href="{{ asset(elixir('css/all.css')) }}" rel="stylesheet" type="text/css" />
 
   @yield('HeadInclude')
 
@@ -172,15 +170,15 @@
           <i class="fa fa-folder-open"></i> <span>$dept->name</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li><a href="{!! url::route('dept.open.ticket','Support') !!}"><i
+          <li><a href="{!! URL::route('dept.open.ticket','Support') !!}"><i
                 class="fa fa-circle-o"></i>{!! Lang::get('tickets::lang.open') !!}
               <small class="label pull-right bg-green">$open</small>
             </a></li>
-          <li><a href="{!! url::route('dept.inprogress.ticket','Support') !!}"><i
+          <li><a href="{!! URL::route('dept.inprogress.ticket','Support') !!}"><i
                 class="fa fa-circle-o"></i>{!! Lang::get('tickets::lang.inprogress') !!}
               <small class="label pull-right bg-green">$underprocess</small>
             </a></li>
-          <li><a href="{!! url::route('dept.closed.ticket','Support') !!}"><i
+          <li><a href="{!! URL::route('dept.closed.ticket','Support') !!}"><i
                 class="fa fa-circle-o"></i>{!! Lang::get('tickets::lang.closed') !!}
               <small class="label pull-right bg-green">$closed</small>
             </a></li>
@@ -377,8 +375,8 @@ headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
 <script type="text/javascript" src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
 <!-- Bootstrap Core JavaScript -->
 
-<script type="text/javascript" src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('js/jasny-bootstrap.min.js') }}"></script>
+{{--<script type="text/javascript" src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>--}}
+{{--<script type="text/javascript" src="{{ URL::asset('js/jasny-bootstrap.min.js') }}"></script>--}}
 
 @stack('scripts')
 </body>
