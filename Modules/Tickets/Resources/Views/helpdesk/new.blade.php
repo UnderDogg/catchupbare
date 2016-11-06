@@ -100,7 +100,7 @@ class="active"
                     <div class="form-group {{ $errors->has('phone') ? 'has-error' : '' }}">
                         <label>{!! Lang::get('tickets::lang.phone') !!}:</label>
                         {!! Form::input('number','phone',null,['class' => 'form-control']) !!}
-                        {!! $errors->first('phone', '<spam class="help-block text-red">:message</spam>') !!}
+                        {!! $errors->first('phone', '<span class="help-block text-red">:message</span>') !!}
                     </div>
                 </div>
                 <!--  <div class="form-group">
@@ -123,7 +123,7 @@ class="active"
                             <!-- helptopic -->
                                 <?php $helptopic = Modules\Tickets\Models\TicketHelpTopic::all();?>
                                     {!! Form::select('helptopic', ['Helptopic'=>$helptopic->lists('topic','id')],null,['class' => 'form-control select']) !!}
-                                        {!! $errors->first('helptopic', '<spam class="help-block text-red">:message</spam>') !!}
+                                        {!! $errors->first('helptopic', '<span class="help-block text-red">:message</span>') !!}
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -132,7 +132,7 @@ class="active"
                                         <label>{!! Lang::get('tickets::lang.sla_plan') !!}:</label>
                                         <?php $sla_plan = Modules\Tickets\Models\SlaPlan::all();?>
                                         {!! Form::select('sla', ['SLA'=>$sla_plan->lists('grace_period','id')],null,['class' => 'form-control select']) !!}
-                                        {!! $errors->first('sla', '<spam class="help-block text-red">:message</spam>') !!}
+                                        {!! $errors->first('sla', '<span class="help-block text-red">:message</span>') !!}
                                     </div>
                                 </div>
                                 <div class="col-md-3">

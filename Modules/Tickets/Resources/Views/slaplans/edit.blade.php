@@ -51,7 +51,7 @@ class="active"
                           <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
 
 		                     {!! Form::label('name',Lang::get('tickets::lang.name')) !!}
-			                 {!! $errors->first('name', '<spam class="help-block">:message</spam>') !!}
+			                 {!! $errors->first('name', '<span class="help-block">:message</span>') !!}
 			                 {!! Form::text('name',null,['class' => 'form-control']) !!}
 			             </div>
 		              </div>
@@ -61,7 +61,7 @@ class="active"
 		              <div class="form-group {{ $errors->has('grace_period') ? 'has-error' : '' }}">
 
 			           {!! Form::label('grace_period',Lang::get('tickets::lang.grace_period')) !!}
-		               {!! $errors->first('grace_period', '<spam class="help-block">:message</spam>') !!}
+		               {!! $errors->first('grace_period', '<span class="help-block">:message</span>') !!}
 			            {!! Form::select('grace_period',['6 Hours'=>'6 Hours', '12 Hours'=>'12 Hours', '18 Hours'=>'18 Hours', '24 Hours'=>'24 Hours', '36 Hours'=>'36 Hours', '48 Hours'=>'48 Hours'],null,['class' => 'form-control']) !!}
 			          </div>
 		            </div>
@@ -71,7 +71,7 @@ class="active"
 		          <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
 
 			       {!! Form::label('status',Lang::get('tickets::lang.status')) !!}&nbsp;
-			       {!! $errors->first('status', '<spam class="help-block">:message</spam>') !!}&nbsp;&nbsp;
+			       {!! $errors->first('status', '<span class="help-block">:message</span>') !!}&nbsp;&nbsp;
 			       {!! Form::radio('status','1',true) !!} &nbsp; {{Lang::get('tickets::lang.active')}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			       {!! Form::radio('status','0') !!} &nbsp; {{Lang::get('tickets::lang.inactive')}}
 			</div>

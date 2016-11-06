@@ -301,7 +301,7 @@ echo UTC::usertimezone(date_format($time, 'Y-m-d H:i:s'));
                                     <div class="col-md-10">
                                         <div id="refreshTo">
                                             {!! Form::text('To',$user->email,['disabled'=>'disabled','id'=>'email','class'=>'form-control','style'=>'width:55%'])!!}
-                                            {!! $errors->first('To', '<spam class="help-block text-red">:message</spam>') !!}
+                                            {!! $errors->first('To', '<span class="help-block text-red">:message</span>') !!}
                                             <a href="#" data-toggle="modal" data-target="#addccc"> {!! Lang::get('tickets::lang.add_cc') !!} </a>
                                             <div id="recepients">
                                             <?php $Collaborator =  Modules\Core\Models\Ticket\Ticket_Collaborator::where('ticket_id', '=', $tickets->id)->get();
@@ -347,7 +347,7 @@ $canneds = Modules\Email\Models\CannedResponse::where('user_id','=',Auth::guard(
                                         <div id="newtextarea">
                                             <textarea style="width:98%;height:20%;" name="reply_content" class="form-control" id="reply_content"></textarea>
                                         </div>
-                                        {!! $errors->first('reply_content', '<spam class="help-block text-red">:message</spam>') !!}
+                                        {!! $errors->first('reply_content', '<span class="help-block text-red">:message</span>') !!}
                                         <br/>
                                         <div type="file" class="btn btn-default btn-file"><i class="fa fa-paperclip"> </i> {!! Lang::get('tickets::lang.attachment') !!}<input type="file" name="attachment[]" multiple/></div><br/>
                                         {!! Lang::get('tickets::lang.max') !!}. 10MB
@@ -402,7 +402,7 @@ $canneds = Modules\Email\Models\CannedResponse::where('user_id','=',Auth::guard(
                                             <div id="newtextarea1">
                                                 <textarea class="form-control" name="InternalContent" id="InternalContent" style="width:98%; height:150px;"></textarea>
                                             </div>
-                                            {!! $errors->first('InternalContent', '<spam class="help-block text-red">:message</spam>') !!}
+                                            {!! $errors->first('InternalContent', '<span class="help-block text-red">:message</span>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -756,7 +756,7 @@ $data = $ConvDate[0];
                     <div class="form-group">
                         <label>{!! Lang::get('tickets::lang.title') !!}</label>
                         <input type="text" name="subject" class="form-control" value="{{$thread->title}}" >
-                        <spam id="error-subject" style="display:none" class="help-block text-red">This is a required field</spam>
+                        <span id="error-subject" style="display:none" class="help-block text-red">This is a required field</span>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -768,7 +768,7 @@ $data = $ConvDate[0];
                                     <option value="{!! $sla_plan->id !!}" <?php  if($SlaPlan->id == $sla_plan->id){ echo "selected"; } ?> >{!! $sla_plan->grace_period !!}</option>
                                 @endforeach
                                 </select>
-                                <spam id="error-sla" style="display:none" class="help-block text-red">This is a required field</spam>
+                                <span id="error-sla" style="display:none" class="help-block text-red">This is a required field</span>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -780,7 +780,7 @@ $data = $ConvDate[0];
                                     <option value="{!! $helptopic->id !!}" <?php if($help_topic->id == $helptopic->id){echo 'selected';} ?> >{!! $helptopic->topic !!}</option>
                                 @endforeach
                                 </select>
-                                <spam id="error-help" style="display:none" class="help-block text-red">This is a required field</spam>
+                                <span id="error-help" style="display:none" class="help-block text-red">This is a required field</span>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -792,7 +792,7 @@ $data = $ConvDate[0];
                                     <option value="{!! $ticketsource->id !!}" <?php  if($tickets->source == $ticketsource->id){echo "selected"; } ?> >{!! $ticketsource->value !!}</option>
                                 @endforeach 
                                 </select>
-                                <spam id="error-source" style="display:none" class="help-block text-red">This is a required field</spam>
+                                <span id="error-source" style="display:none" class="help-block text-red">This is a required field</span>
                             </div>
                         </div>
                         <?php 
@@ -807,7 +807,7 @@ $data = $ConvDate[0];
                                    <option value="{!! $ticket_priority->priority_id !!}" <?php if($tickets->priority_id == $ticket_priority->priority_id){echo "selected";} ?> >{!! $ticket_priority->priority_desc !!}</option>
                                 @endforeach
                                 </select>
-                                <spam id="error-priority" style="display:none" class="help-block text-red">This is a required field</spam>
+                                <span id="error-priority" style="display:none" class="help-block text-red">This is a required field</span>
                             </div>
                         </div>
                     </div>
@@ -893,7 +893,7 @@ $data = $ConvDate[0];
                                 <input type="hidden" name="ticket_id" value="{!! $tickets->id !!}">
                                 <input type="hidden" name="action" value="change-owner">
                                 <div class="row">
-                                    <div class="col-md-2"><spam class="glyphicon glyphicon-user fa-5x"></spam></div>
+                                    <div class="col-md-2"><span class="glyphicon glyphicon-user fa-5x"></span></div>
                                     <div id="change-refresh" class="col-md-10">
                                     <?php $user = Modules\Core\Models\Staff::where('id', '=', $tickets->user_id)->first();?>
 

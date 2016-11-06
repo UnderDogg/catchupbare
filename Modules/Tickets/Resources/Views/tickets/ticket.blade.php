@@ -287,7 +287,7 @@
                                                      @endforeach
                                                     <td class="mailbox-last-reply">client</td>
                                                     <td class="mailbox-replies">11</td>
-                                                    <td class="mailbox-priority"><spam class="text-green">Low</spam></td>
+                                                    <td class="mailbox-priority"><span class="text-green">Low</span></td>
                                             <td class="mailbox-last-activity">11h 59m 23s</td>
                                             <td class="mailbox-date">5h 23m 03s</td>
                                             </tr>
@@ -298,7 +298,7 @@
                                                 <td class="mailbox-Id">#12345</td>
                                                 <td class="mailbox-last-reply">client</td>
                                                 <td class="mailbox-replies">11</td>
-                                                <td class="mailbox-priority"><spam class="text-yellow">Medium</spam></td>
+                                                <td class="mailbox-priority"><span class="text-yellow">Medium</span></td>
                                             <td class="mailbox-last-activity">11h 59m 23s</td>
                                             <td class="mailbox-date">5h 23m 03s</td>
                                             </tr>
@@ -309,7 +309,7 @@
                                                 <td class="mailbox-Id">#12345</td>
                                                 <td class="mailbox-last-reply">client</td>
                                                 <td class="mailbox-replies">11</td>
-                                                <td class="mailbox-priority"><spam class="text-red">High</spam></td>
+                                                <td class="mailbox-priority"><span class="text-red">High</span></td>
                                             <td class="mailbox-last-activity">11h 59m 23s</td>
                                             <td class="mailbox-date">5h 23m 03s</td>
                                             </tr>
@@ -320,7 +320,7 @@
                                                 <td class="mailbox-Id">#12345</td>
                                                 <td class="mailbox-last-reply">client</td>
                                                 <td class="mailbox-replies">11</td>
-                                                <td class="mailbox-priority"><spam class="text-yellow">Medium</spam></td>
+                                                <td class="mailbox-priority"><span class="text-yellow">Medium</span></td>
                                             <td class="mailbox-last-activity">11h 59m 23s</td>
                                             <td class="mailbox-date">5h 23m 03s</td>
                                             </tr>
@@ -331,7 +331,7 @@
                                                 <td class="mailbox-Id">#12345</td>
                                                 <td class="mailbox-last-reply">client</td>
                                                 <td class="mailbox-replies">11</td>
-                                                <td class="mailbox-priority"><spam class="text-red">High</spam></td>
+                                                <td class="mailbox-priority"><span class="text-red">High</span></td>
                                             <td class="mailbox-last-activity">11h 59m 23s</td>
                                             <td class="mailbox-date">5h 23m 03s</td>
                                             </tr>

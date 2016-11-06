@@ -15,6 +15,8 @@ use Modules\Core\Requests\TemplateUpdate;
 // models
 use Modules\Email\Models\Mailbox;
 use Modules\Email\Models\MailTemplate;
+use Modules\Email\Models\MailTemplateSet;
+use Modules\Email\Models\MailTemplateType;
 use Modules\Core\Models\Language;
 // classes
 use Exception;
@@ -60,10 +62,16 @@ class MailTemplatesController extends Controller
             })
 
             ->addColumn('templatenamelink', function ($mailtemplates) {
-                return '<a href="/mailpanel/mailtemplates/' . $mailtemplates->id . '">' . $mailtemplates->name . '</a>';
+                return '<a href="/mailpanel/mailtemplates/edit/' . $mailtemplates->id . '">' . $mailtemplates->name . '</a>';
             })
             ->addColumn('templatestatuslink', function ($mailtemplates) {
-                return $mailtemplates->is_active;
+
+                if($mailtemplates->is_active=='1')
+                $return = '<p style="color:green">Active</p>';
+                else
+                $return = '<p style="color:red">Disabled</p>';
+
+                return $return;
             })
 
             ->addColumn('type_id', function ($mailtemplates) {
@@ -90,17 +98,13 @@ class MailTemplatesController extends Controller
                 <form action="' . route('mailpanel.mailtemplates.destroy', [$mailtemplates->id]) . '" method="POST">
                 <div class=\'btn-group\'>
                     <input type="hidden" name="_method" value="DELETE">
-                    <a href="' . route('admin.mailboxes.mailbox.edit', [$mailtemplates->id]) . '" class=\'btn btn-success btn-xs\'>Edit</a>
+                    <a href="' . route('mailpanel.mailtemplates.edit', [$mailtemplates->id]) . '" class=\'btn btn-success btn-xs\'>Edit</a>
                     <input type="submit" name="submit" value="Delete" class="btn btn-danger btn-xs" onClick="return confirm(\'Are you sure?\')"">
                 </div>
                 </form>';
             })
             ->make(true);
     }
-
-
-
-
 
     /**
      * Display a listing of the resource.
@@ -192,7 +196,7 @@ class MailTemplatesController extends Controller
         $directories = scandir($path);
         $directory = str_replace('/', '-', $path);
 
-        return view('core::emails.template.listdirectories', compact('directories', 'directory'));
+        return view('emails::emails.template.listdirectories', compact('directories', 'directory'));
     }
 
     public function listtemplates($template, $path)
@@ -203,7 +207,7 @@ class MailTemplatesController extends Controller
         $templates = scandir($directory2);
         $directory = str_replace('/', '-', $directory2.'/');
 
-        return view('core::emails.template.listtemplates', compact('templates', 'directory'));
+        return view('emails::emails.template.listtemplates', compact('templates', 'directory'));
     }
 
     public function readtemplate($template, $path)
@@ -213,7 +217,7 @@ class MailTemplatesController extends Controller
         $contents = fread($handle, filesize($directory.$template));
         fclose($handle);
 
-        return view('core::emails.template.readtemplates', compact('contents', 'template', 'path'));
+        return view('emails::emails.template.readtemplates', compact('contents', 'template', 'path'));
     }
 
     public function createtemplate()
@@ -289,16 +293,13 @@ class MailTemplatesController extends Controller
         return \Redirect::back()->with('success', 'You have Successfully Activated this Set');
     }
 
-    public function edit($id, MailTemplate $template, Languages $language)
+    public function edit($id, MailTemplate $template, MailTemplateSet $templateset, MailTemplateType $templatetype)
     {
-        try {
-            $templates = $template->whereId($id)->first();
-            $languages = $language->get();
+        $templates = $template->whereId($id)->first();
+        $templatesets = ['' => 'Select Set'] + MailTemplateSet::pluck('name', 'id')->all();
+        $templatetypes = ['' => 'Select Type'] + MailTemplateType::pluck('name', 'id')->all();
 
-            return view('core::emails.template.edit', compact('templates', 'languages'));
-        } catch (Exception $e) {
-            return view('errors.404');
-        }
+        return view('email::mailtemplates.edit', compact('templates', 'templatesets', 'templatetypes'));
     }
 
     /**
@@ -310,7 +311,7 @@ class MailTemplatesController extends Controller
      *
      * @return type Response
      */
-    public function update($id, MailTemplate $template, TemplateUdate $request)
+    public function update($id, MailTemplate $template, TemplateUpdate $request)
     {
         try {
             //TODO validation

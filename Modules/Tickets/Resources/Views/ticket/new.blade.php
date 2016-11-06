@@ -118,7 +118,7 @@ class="active"
                     <div class="form-group {{ $errors->has('mobile') ? 'has-error' : '' }}">
                         <label>{!! Lang::get('lang.mobile_number') !!}:</label>
                         {!! Form::input('number','mobile',null,['class' => 'form-control', 'id' => 'mobile']) !!}
-                        {!! $errors->first('mobile', '<spam class="help-block text-red">:message</spam>') !!}
+                        {!! $errors->first('mobile', '<span class="help-block text-red">:message</span>') !!}
                     </div>
                 </div>
                 <div class="col-md-5">
@@ -126,7 +126,7 @@ class="active"
                     <div class="form-group {{ $errors->has('phone') ? 'has-error' : '' }}">
                         <label>{!! Lang::get('lang.phone') !!}:</label>
                         {!! Form::input('number','phone',null,['class' => 'form-control', 'id' => 'phone_number']) !!}
-                        {!! $errors->first('phone', '<spam class="help-block text-red">:message</spam>') !!}
+                        {!! $errors->first('phone', '<span class="help-block text-red">:message</span>') !!}
                     </div>
                 </div>
                 <!--  <div class="form-group">

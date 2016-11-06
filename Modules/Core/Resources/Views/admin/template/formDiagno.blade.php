@@ -71,7 +71,7 @@ class="active"
                     <label>{!! Lang::get('lang.from') !!} <span class="text-red">*</span> :</label>
                 </div>
                 <div class="col-md-4">
-                    {!! $errors->first('fetching_encryption', '<spam class="help-block">:message</spam>') !!}
+                    {!! $errors->first('fetching_encryption', '<span class="help-block">:message</span>') !!}
                     <select name="from" class="form-control" id="from">
                         <option value="">{!! Lang::get('lang.choose_an_email') !!}</option>
                         <optgroup label="{!! Lang::get('lang.email') !!}">

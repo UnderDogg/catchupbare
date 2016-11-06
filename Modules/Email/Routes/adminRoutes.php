@@ -214,6 +214,12 @@ Route::group(['prefix' => 'mailpanel'], function () {
             //'middleware' => 'can:mailboxes.mailboxes.index'
         ]);
 
+        Route::get('/{mailtemplate}/edit', [
+            'as' => 'mailpanel.mailtemplates.edit',
+            'uses' => 'MailTemplatesController@edit',
+            //'middleware' => 'can:mailboxes.mailboxes.edit'
+        ]);
+
         Route::delete('/{mailtemplate}', [
             'as' => 'mailpanel.mailtemplates.destroy',
             'uses' => 'MailTemplatesController@destroy',

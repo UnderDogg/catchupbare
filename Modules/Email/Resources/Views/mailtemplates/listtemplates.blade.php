@@ -1,4 +1,4 @@
-@extends('core::adminlayouts.adminmaster')
+@extends('email::maillayouts.mailmaster')
 
 @section('Mailboxes')
     active

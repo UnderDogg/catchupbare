@@ -637,7 +637,7 @@ class="active"
                                                     @if($attach > 0)&nbsp;<i class="fa fa-paperclip"></i>@endif</td>
                                                 <td class="mailbox-Id"><a href="{!! route('ticket.thread',[$ticket->id]) !!}" title="{!! $title->title !!}">#{!! $ticket->ticket_number !!}</a></td>
                                                 <?php $priority = App\Model\helpdesk\Ticket\Ticket_Priority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
-                                                <td class="mailbox-priority">@if($priority != null)<spam class="btn btn-{{$priority->priority_color}} btn-xs">{{$priority->priority}}</spam>@endif</td>
+                                                <td class="mailbox-priority">@if($priority != null)<span class="btn btn-{{$priority->priority_color}} btn-xs">{{$priority->priority}}</span>@endif</td>
                                         <?php $from = App\User::where('id', '=', $ticket->user_id)->first(); ?> 
                                         <td class="mailbox-last-reply" style="color:{!! $rep !!}">{!! str_limit($username,20) !!}</td>
                                         <td>{!! $assigned !!}</td>
@@ -759,7 +759,7 @@ class="active"
                                                     @if($attach > 0)&nbsp;<i class="fa fa-paperclip"></i>@endif</td>
                                                 <td class="mailbox-Id"><a href="{!! route('ticket.thread',[$ticket->id]) !!}" title="{!! $title->title !!}">#{!! $ticket->ticket_number !!}</a></td>
                                                 <?php $priority = App\Model\helpdesk\Ticket\Ticket_Priority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
-                                                <td class="mailbox-priority">@if($priority != null)<spam class="btn btn-{{$priority->priority_color}} btn-xs">{{$priority->priority}}</spam>@endif</td>
+                                                <td class="mailbox-priority">@if($priority != null)<span class="btn btn-{{$priority->priority_color}} btn-xs">{{$priority->priority}}</span>@endif</td>
                                         <?php $from = App\User::where('id', '=', $ticket->user_id)->first(); ?> 
                                         <td class="mailbox-last-reply" style="color:{!! $rep !!}">{!! str_limit($username,20) !!}</td>
                                         <td>{!! $assigned !!}</td>
@@ -885,7 +885,7 @@ class="active"
                                                     @if($attach > 0)&nbsp;<i class="fa fa-paperclip"></i>@endif</td>
                                                 <td class="mailbox-Id"><a href="{!! route('ticket.thread',[$ticket->id]) !!}" title="{!! $title->title !!}">#{!! $ticket->ticket_number !!}</a></td>
                                                 <?php $priority = App\Model\helpdesk\Ticket\Ticket_Priority::where('priority_id', '=', $ticket->priority_id)->first(); ?>
-                                                <td class="mailbox-priority">@if($priority != null)<spam class="btn btn-{{$priority->priority_color}} btn-xs">{{$priority->priority}}</spam>@endif</td>
+                                                <td class="mailbox-priority">@if($priority != null)<span class="btn btn-{{$priority->priority_color}} btn-xs">{{$priority->priority}}</span>@endif</td>
                                         <?php $from = App\User::where('id', '=', $ticket->user_id)->first(); ?> 
                                         <td class="mailbox-last-reply" style="color:{!! $rep !!}">{!! str_limit($username,20) !!}</td>
                                         <td>{!! $assigned !!}</td>
@@ -1029,8 +1029,8 @@ class="active"
                             <div class="form-group">
                                 <label>{!! Lang::get('lang.name') !!}</label>
                                 <input type="text" name="name" class="form-control">
-                                <spam id="error-name" style="display:none;position:fixed" class="call-out text-red">This is a required field</spam>
-                                <spam id="error-name1" style="display:none;position:fixed" class="call-out text-red">! Allready Taken</spam>
+                                <span id="error-name" style="display:none;position:fixed" class="call-out text-red">This is a required field</span>
+                                <span id="error-name1" style="display:none;position:fixed" class="call-out text-red">! Allready Taken</span>
                                 <br/>
                             </div>
                         </div>
@@ -1045,7 +1045,7 @@ class="active"
                             <div class="form-group">
                                 <label>{!! Lang::get('lang.website') !!}</label>
                                 <input type="url" name="website" placeholder="https://www.example.com" class="form-control">
-                                <spam id="error-website" style="display:none" class="help-block text-red">! Allready Taken</spam>
+                                <span id="error-website" style="display:none" class="help-block text-red">! Allready Taken</span>
                                 <br/>
                             </div>
                         </div>

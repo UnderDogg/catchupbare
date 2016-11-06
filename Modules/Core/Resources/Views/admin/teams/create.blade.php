@@ -52,7 +52,7 @@ class="active"
             <div class="col-xs-6 form-group {{ $errors->has('name') ? 'has-error' : '' }}">
 
                 {!! Form::label('name',Lang::get('core::lang.name')) !!}
-                {!! $errors->first('name', '<spam class="help-block">:message</spam>') !!}
+                {!! $errors->first('name', '<span class="help-block">:message</span>') !!}
                 {!! Form::text('name',null,['class' => 'form-control']) !!}
 
             </div>
@@ -61,7 +61,7 @@ class="active"
             <div class="col-xs-6 form-group {{ $errors->has('team_lead') ? 'has-error' : '' }}">
 
                 {!! Form::label('team_lead',Lang::get('core::lang.team_lead')) !!}
-                {!! $errors->first('team_lead', '<spam class="help-block">:message</spam>') !!}
+                {!! $errors->first('team_lead', '<span class="help-block">:message</span>') !!}
                 <?php $user = Modules\Core\Models\Staff::where('role', 'admin')->orWhere('role', 'agent')->get(); ?>
                 {!! Form::select('team_lead',[''=>'Select a Team Leader','Members'=>$user->lists('user_name','id')],null,['class' => 'form-control']) !!}	
 
@@ -72,7 +72,7 @@ class="active"
         <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
 
             {!! Form::label('status',Lang::get('core::lang.status')) !!}
-            {!! $errors->first('status', '<spam class="help-block">:message</spam>') !!}
+            {!! $errors->first('status', '<span class="help-block">:message</span>') !!}
             <div class="row">
                 <div class="col-xs-1">
                     {!! Form::radio('status','1',true) !!} {{Lang::get('core::lang.active')}}

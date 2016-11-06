@@ -73,21 +73,21 @@ class="active"
             <div class="col-md-6">
                 <div class="form-group {{ $errors->has('client_id') ? 'has-error' : '' }}">
                     {!! Form::label('client_id',Lang::get('lang.client_id')) !!}
-                    {!! $errors->first('client_id', '<spam class="help-block">:message</spam>') !!}
+                    {!! $errors->first('client_id', '<span class="help-block">:message</span>') !!}
                     {!! Form::text('client_id',$social->getvalueByKey($provider,'client_id'),['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group {{ $errors->has('client_secret') ? 'has-error' : '' }}">
                     {!! Form::label('client_secret',Lang::get('lang.client_secret')) !!}
-                    {!! $errors->first('client_secret', '<spam class="help-block">:message</spam>') !!}
+                    {!! $errors->first('client_secret', '<span class="help-block">:message</span>') !!}
                     {!! Form::text('client_secret',$social->getvalueByKey($provider,'client_secret'),['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group {{ $errors->has('redirect') ? 'has-error' : '' }}">
                     {!! Form::label('redirect',Lang::get('lang.redirect')) !!}
-                    {!! $errors->first('redirect', '<spam class="help-block">:message</spam>') !!}
+                    {!! $errors->first('redirect', '<span class="help-block">:message</span>') !!}
                     {!! Form::text('redirect',$social->getvalueByKey($provider,'redirect'),['class' => 'form-control']) !!}
                 </div>
             </div>
@@ -96,7 +96,7 @@ class="active"
                     <div class="row">
                         <div class="col-md-12">
                             {!! Form::label('status',Lang::get('lang.status')) !!}
-                            {!! $errors->first('status', '<spam class="help-block">:message</spam>') !!}
+                            {!! $errors->first('status', '<span class="help-block">:message</span>') !!}
                             
                         </div>
                         <div class="col-md-6">

@@ -112,7 +112,7 @@ class="active"
                 @if ($email_mandatory->status == 0 || $settings->status == 1)
                      <span class="text-red"> *</span>
                 @endif
-                <!-- {!! $errors->first('country_code', '<spam class="help-block">:message</spam>') !!} -->
+                <!-- {!! $errors->first('country_code', '<span class="help-block">:message</span>') !!} -->
                 {!! Form::text('country_code',null,['class' => 'form-control', 'placeholder' => $phonecode, 'title' => Lang::get('lang.enter-country-phone-code')]) !!}
             </div>
             <!-- mobile Number : Text :  -->

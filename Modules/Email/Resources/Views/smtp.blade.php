@@ -51,7 +51,7 @@ class="active"
 			<!-- email Address : Text form : Required -->
 			<div class="col-md-3 form-group {{ $errors->has('driver') ? 'has-error' : '' }}">
 				{!! Form::label('driver',Lang::get('email::lang.driver')) !!}
-				{!! $errors->first('driver', '<spam class="help-block">:message</spam>') !!}
+				{!! $errors->first('driver', '<span class="help-block">:message</span>') !!}
 				<select name="driver" class="form-control">
 					<option <?php if($settings->driver == "mail"){ echo "selected='selected'"; } ?> value="mail">mail</option>
 					<option <?php if($settings->driver == "smtp"){ echo "selected='selected'"; } ?>  value="smtp">smtp</option>
@@ -60,19 +60,19 @@ class="active"
 
 			<div class="col-md-3 form-group {{ $errors->has('host') ? 'has-error' : '' }}">
 				{!! Form::label('host',Lang::get('email::lang.host')) !!}
-				{!! $errors->first('host', '<spam class="help-block">:message</spam>') !!}
+				{!! $errors->first('host', '<span class="help-block">:message</span>') !!}
 				{!! Form::text('host',null,['class' => 'form-control']) !!}
 			</div>
 
 			<div class="col-md-3 form-group {{ $errors->has('port') ? 'has-error' : '' }}">
 				{!! Form::label('port',Lang::get('email::lang.port')) !!}
-				{!! $errors->first('port', '<spam class="help-block">:message</spam>') !!}
+				{!! $errors->first('port', '<span class="help-block">:message</span>') !!}
 				{!! Form::text('port',null,['class' => 'form-control']) !!}
 			</div>
 
 			<div class="col-md-3 form-group {{ $errors->has('encryption') ? 'has-error' : '' }}">
 				{!! Form::label('encryption',Lang::get('email::lang.encryption')) !!}
-				{!! $errors->first('encryption', '<spam class="help-block">:message</spam>') !!}
+				{!! $errors->first('encryption', '<span class="help-block">:message</span>') !!}
 				<select name="encryption" class="form-control">
 					<option <?php if($settings->encryption == "ssl"){ echo "selected='selected'"; } ?>  value="ssl">SSL</option>
 					<option <?php if($settings->encryption == "tls"){ echo "selected='selected'"; } ?> value="tls">TLS</option>
@@ -81,19 +81,19 @@ class="active"
 
 			<div class="col-md-4 form-group {{ $errors->has('name') ? 'has-error' : '' }}">
 				{!! Form::label('name',Lang::get('email::lang.name')) !!}
-				{!! $errors->first('name', '<spam class="help-block">:message</spam>') !!}
+				{!! $errors->first('name', '<span class="help-block">:message</span>') !!}
 				{!! Form::text('name',null,['class' => 'form-control']) !!}
 			</div>
 
 			<div class="col-md-4 form-group {{ $errors->has('email') ? 'has-error' : '' }}">
 				{!! Form::label('email',Lang::get('email::lang.email')) !!}
-				{!! $errors->first('email', '<spam class="help-block">:message</spam>') !!}
+				{!! $errors->first('email', '<span class="help-block">:message</span>') !!}
 				{!! Form::text('email',null,['class' => 'form-control']) !!}
 			</div>
 
 			<div class="col-md-4 form-group {{ $errors->has('password') ? 'has-error' : '' }}">
 				{!! Form::label('password',Lang::get('email::lang.password')) !!}
-				{!! $errors->first('password', '<spam class="help-block">:message</spam>') !!}
+				{!! $errors->first('password', '<span class="help-block">:message</span>') !!}
 				@if($settings->password)
 					<input type="password" name="password" class="form-control" value="{!! Crypt::decrypt($settings->password) !!}">
 				@else

@@ -58,7 +58,7 @@ class="active"
 
 		<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
 			{!! Form::label('email',Lang::get('core::lang.email_address')) !!}
-			{!! $errors->first('email', '<spam class="help-block">:message</spam>') !!}
+			{!! $errors->first('email', '<span class="help-block">:message</span>') !!}
 			{!! Form::text('email',null,['disabled'=>'disabled','class' => 'form-control']) !!}
 
 		</div>

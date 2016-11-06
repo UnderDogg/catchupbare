@@ -133,7 +133,7 @@ class="active"
                     <div class="form-group {{ $errors->has('phone') ? 'has-error' : '' }}">
                         <label>{!! Lang::get('lang.phone') !!}:</label>
                         {!! Form::input('number','phone',null,['class' => 'form-control', 'id' => 'phone_number']) !!}
-                        {!! $errors->first('phone', '<spam class="help-block text-red">:message</spam>') !!}
+                        {!! $errors->first('phone', '<span class="help-block text-red">:message</span>') !!}
                     </div>
                 </div>
                 <!--  <div class="form-group">

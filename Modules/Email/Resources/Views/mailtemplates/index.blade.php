@@ -15,22 +15,25 @@
 @stop
 
 
-    @section('HeadInclude')
-    @stop
-            <!-- header -->
+@section('HeadInclude')
+@stop
+
+
+<!-- header -->
 @section('PageHeader')
     <h1>{{Lang::get('email::lang.templates')}}</h1>
 
-    @stop
-            <!-- /header -->
-    <!-- breadcrumbs -->
+@stop
+<!-- /header -->
+
+<!-- breadcrumbs -->
 @section('breadcrumbs')
     <ol class="breadcrumb">
 
     </ol>
     @stop
-            <!-- /breadcrumbs -->
-    <!-- content -->
+<!-- /breadcrumbs -->
+<!-- content -->
 @section('content')
     <div class="row">
 

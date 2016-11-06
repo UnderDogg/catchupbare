@@ -38,7 +38,7 @@
 		<div class="form-group {{ $errors->has('first_name') ? 'has-error' : '' }}">
 
 			{!! Form::label('first_name',Lang::get('lang.first_name')) !!}
-			{!! $errors->first('first_name', '<spam class="help-block">:message</spam>') !!}
+			{!! $errors->first('first_name', '<span class="help-block">:message</span>') !!}
 			{!! Form::text('first_name',null,['class' => 'form-control']) !!}
 
 		</div>
@@ -46,7 +46,7 @@
 		<div class="form-group {{ $errors->has('last_name') ? 'has-error' : '' }}">
 
 			{!! Form::label('last_name',Lang::get('lang.last_name')) !!}
-			{!! $errors->first('last_name', '<spam class="help-block">:message</spam>') !!}
+			{!! $errors->first('last_name', '<span class="help-block">:message</span>') !!}
 			{!! Form::text('last_name',null,['class' => 'form-control']) !!}
 
 		</div>
@@ -76,7 +76,7 @@
 		<div class="form-group {{ $errors->has('company') ? 'has-error' : '' }}">
 
 			{!! Form::label('company',Lang::get('lang.company')) !!}
-			{!! $errors->first('company', '<spam class="help-block">:message</spam>') !!}
+			{!! $errors->first('company', '<span class="help-block">:message</span>') !!}
 			{!! Form::text('company',null,['class' => 'form-control']) !!}
 
 		</div>
@@ -86,7 +86,7 @@
 			<div class="col-xs-3 form-group {{ $errors->has('ext') ? 'has-error' : '' }}">
 
 				{!! Form::label('ext',Lang::get('lang.ext')) !!}
-				{!! $errors->first('ext', '<spam class="help-block">:message</spam>') !!}
+				{!! $errors->first('ext', '<span class="help-block">:message</span>') !!}
 				{!! Form::text('ext',null,['class' => 'form-control']) !!}
 
 			</div>
@@ -94,7 +94,7 @@
 			<div class="col-xs-9 form-group {{ $errors->has('phone_number') ? 'has-error' : '' }}">
 
 				{!! Form::label('phone_number',Lang::get('lang.phone')) !!}
-				{!! $errors->first('phone_number', '<spam class="help-block">:message</spam>') !!}
+				{!! $errors->first('phone_number', '<span class="help-block">:message</span>') !!}
 				{!! Form::text('phone_number',null,['class' => 'form-control']) !!}
 
 			</div>
@@ -103,7 +103,7 @@
 			<div class="form-group {{ $errors->has('mobile') ? 'has-error' : '' }}">
 
 				{!! Form::label('mobile',Lang::get('lang.mobile_number')) !!}
-				{!! $errors->first('mobile', '<spam class="help-block">:message</spam>') !!}
+				{!! $errors->first('mobile', '<span class="help-block">:message</span>') !!}
 				{!! Form::text('mobile',null,['class' => 'form-control']) !!}
 
 			</div>
@@ -112,7 +112,7 @@
 	<div class="form-group {{ $errors->has('profile_pic') ? 'has-error' : '' }}">
 
 		{!! Form::label('profile_pic',Lang::get('lang.profile_pic')) !!}
-		{!! $errors->first('profile_pic', '<spam class="help-block">:message</spam>') !!}
+		{!! $errors->first('profile_pic', '<span class="help-block">:message</span>') !!}
 		{!! Form::file('profile_pic') !!}
 
 	</div>
@@ -156,21 +156,21 @@
 	<div class="form-group has-feedback {{ $errors->has('old_password') ? 'has-error' : '' }}">
 			{!! Form::label('old_password',Lang::get('lang.old_password')) !!}
             {!! Form::password('old_password',['placeholder'=>'Password','class' => 'form-control']) !!}
-			{!! $errors->first('old_password', '<spam class="help-block">:message</spam>') !!}
+			{!! $errors->first('old_password', '<span class="help-block">:message</span>') !!}
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
     </div>
     <!-- new password -->
     <div class="form-group has-feedback {{ $errors->has('new_password') ? 'has-error' : '' }}">
     		{!! Form::label('new_password',Lang::get('lang.new_password')) !!}
             {!! Form::password('new_password',['placeholder'=>'New Password','class' => 'form-control']) !!}
-			{!! $errors->first('new_password', '<spam class="help-block">:message</spam>') !!}
+			{!! $errors->first('new_password', '<span class="help-block">:message</span>') !!}
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
     </div>
     <!-- confirm password -->
     <div class="form-group has-feedback {{ $errors->has('confirm_password') ? 'has-error' : '' }}">
     		{!! Form::label('confirm_password',Lang::get('lang.confirm_password')) !!}
             {!! Form::password('confirm_password',['placeholder'=>'Confirm Password','class' => 'form-control']) !!}
-			{!! $errors->first('confirm_password', '<spam class="help-block">:message</spam>') !!}
+			{!! $errors->first('confirm_password', '<span class="help-block">:message</span>') !!}
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
     </div>
 

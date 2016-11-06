@@ -102,7 +102,7 @@ class="active"
         <div class="row">     
             <div class="col-xs-1 form-group {{ Session::has('country_code_error') ? 'has-error' : '' }}">
                 {!! Form::label('country_code',Lang::get('lang.country-code')) !!}
-                {!! $errors->first('country_code', '<spam class="help-block">:message</spam>') !!}
+                {!! $errors->first('country_code', '<span class="help-block">:message</span>') !!}
                 {!! Form::text('country_code',null,['class' => 'form-control', 'placeholder' => $phonecode, 'title' => Lang::get('lang.enter-country-phone-code')]) !!}
             </div>
             <!-- mobile Number : Text :  -->

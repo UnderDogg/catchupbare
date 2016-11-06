@@ -31,7 +31,7 @@
                 <div class="col-xs-6 form-group {{ $errors->has('title') ? 'has-error' : '' }}">
 
                     {!! Form::label('title',Lang::get('tickets::lang.title')) !!}
-                    {!! $errors->first('title', '<spam class="help-block">:message</spam>') !!}
+                    {!! $errors->first('title', '<span class="help-block">:message</span>') !!}
                     {!! Form::text('title',null,['class' => 'form-control']) !!}
 
                 </div>
@@ -39,7 +39,7 @@
                 <div class="col-xs-12 form-group {{ $errors->has('message') ? 'has-error' : '' }}">
 
                     {!! Form::label('message',Lang::get('tickets::lang.message')) !!}
-                    {!! $errors->first('message', '<spam class="help-block">:message</spam>') !!}
+                    {!! $errors->first('message', '<span class="help-block">:message</span>') !!}
                     {!! Form::textarea('message',null,['class' => 'form-control']) !!}
 
                 </div>

@@ -78,7 +78,7 @@ class="active"
             <div class="col-md-4">
                 <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                     {!! Form::label('name',Lang::get('lang.name/title')) !!}
-                    {!! $errors->first('name', '<spam class="help-block">:message</spam>') !!}
+                    {!! $errors->first('name', '<span class="help-block">:message</span>') !!}
                     {!! Form::text('name',$systems->name,['class' => 'form-control']) !!}
                 </div>
             </div>
@@ -86,7 +86,7 @@ class="active"
              <div class="col-md-4">
                 <div class="form-group {{ $errors->has('url') ? 'has-error' : '' }}">
                     {!! Form::label('url',Lang::get('lang.url')) !!}
-                    {!! $errors->first('url', '<spam class="help-block">:message</spam>') !!}
+                    {!! $errors->first('url', '<span class="help-block">:message</span>') !!}
                     {!! Form::text('url',$systems->url,['class' => 'form-control']) !!}
                 </div>
             </div>
@@ -94,7 +94,7 @@ class="active"
             <div class="col-md-4">
                 <div class="form-group {{ $errors->has('time_zone') ? 'has-error' : '' }}">
                     {!! Form::label('time_zone',Lang::get('lang.timezone')) !!}
-                    {!! $errors->first('time_zone', '<spam class="help-block">:message</spam>') !!}
+                    {!! $errors->first('time_zone', '<span class="help-block">:message</span>') !!}
                     {!!Form::select('time_zone',['Time Zones'=>$timezones->lists('name','id')->toArray()],null,['class'=>'form-control']) !!}
                 </div>
             </div>
@@ -104,7 +104,7 @@ class="active"
             <div class="col-md-4">
                 <div class="form-group {{ $errors->has('date_time_format') ? 'has-error' : '' }}">
                     {!! Form::label('date_time_format',Lang::get('lang.date_time')) !!}
-                    {!! $errors->first('date_time_format', '<spam class="help-block">:message</spam>') !!}
+                    {!! $errors->first('date_time_format', '<span class="help-block">:message</span>') !!}
                     {!! Form::select('date_time_format',['Date Time Formats'=>$date_time->lists('format','id')->toArray()],null,['class' => 'form-control']) !!}
                 </div>
             </div>

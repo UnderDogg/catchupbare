@@ -1,4 +1,4 @@
-@extends('core::adminlayouts.adminmaster')
+@extends('email::maillayouts.mailmaster')
 
 @section('Mailboxes')
 active
@@ -50,7 +50,7 @@ class="active"
 
     {!! Form::text('folder_name',null,['class'=>'form-control'])!!}
 
-    {!! $errors->first('folder', '<spam class="help-block">:message</spam>') !!}
+    {!! $errors->first('folder', '<span class="help-block">:message</span>') !!}
   
   </div>
                                      </div>
