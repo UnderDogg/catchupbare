@@ -35,6 +35,22 @@ return [
 
     'Ticket-created-successfully' => 'Ticket created successfully',
 
+    'tickethelptopic' => 'Ticket Help Topic',
+    'tickethelptopics' => 'Ticket Help Topics',
+    /*
+      |--------------------------------------
+      |  Help Topic index Page
+      |--------------------------------------
+     */
+    'help_topics' => 'Help Topics',
+    'topic' => 'Topic',
+    'type' => 'Type',
+    'priority' => 'Priority',
+    'last_updated' => 'Last Updated',
+    'create_helptopic' => 'Create Ticket Help topic',
+    'action' => 'Action',
+
+
     /*
       |--------------------------------------
       |   Error
@@ -397,18 +413,10 @@ return [
       |
      */
     'manage' => 'Manage',
-    /*
-      |--------------------------------------
-      |  Help Topic index Page
-      |--------------------------------------
-     */
-    'help_topics' => 'Help Topics',
-    'topic' => 'Topic',
-    'type' => 'Type',
-    'priority' => 'Priority',
-    'last_updated' => 'Last Updated',
-    'create_help_topic' => 'Create Help topic',
-    'action' => 'Action',
+
+
+
+
     /*
       |--------------------------------------
       |  Help Topic Create Page

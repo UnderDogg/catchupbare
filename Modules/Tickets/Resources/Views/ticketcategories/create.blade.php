@@ -1,4 +1,4 @@
-@extends('core::adminlayouts.adminmaster')
+@extends('tickets::ticketlayouts.ticketmaster')
 @section('heading')
   <h1>Create user</h1>
 @stop

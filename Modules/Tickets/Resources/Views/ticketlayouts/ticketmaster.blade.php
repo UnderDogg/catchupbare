@@ -309,6 +309,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
+                    <li @yield('tickethelptopics')><a href="{{ url('/ticketspanel/tickethelptopics') }}"><i
+                                    class="fa fa-plus"></i>{!! Lang::get('tickets::lang.tickethelptopics') !!}</a></li>
                     <li @yield('ticketcategories')><a href="{{ url('/ticketspanel/ticketcategories') }}"><i
                                     class="fa fa-plus"></i>{!! Lang::get('tickets::lang.ticketcategories') !!}</a></li>
                 </ul>

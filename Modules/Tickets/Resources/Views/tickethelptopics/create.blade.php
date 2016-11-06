@@ -1,4 +1,4 @@
-@extends('core::adminlayouts.adminmaster')
+@extends('tickets::ticketlayouts.ticketmaster')
 
 @section('Manage')
 active

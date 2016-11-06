@@ -34,11 +34,40 @@
             <!-- /breadcrumbs -->
     <!-- content -->
 @section('content')
+    <div class="box box-primary">
+        <div class="form-group">
+            <div class="box-header">
+    <h2 class="box-title">{!! Lang::get('tickets::lang.ticketcategories') !!}</h2><a href="{{route('ticketcategories.create')}}" class="btn btn-primary pull-right">{{Lang::get('tickets::lang.create_ticketcategory')}}</a></h2>
 
-    <h2>{!! Lang::get('tickets::lang.ticketcategories') !!}</h2><a href="{{route('ticketcategories.create')}}"
-                                                          class="btn btn-primary pull-right">{{Lang::get('tickets::lang.create_ticketcategory')}}</a></h2>
 
-    <table class="table table-hover table-bordered table-striped" id="ticketcategories-table">
+
+            <div class="box-body table-responsive">
+
+                <!-- check whether success or not -->
+
+                @if(Session::has('success'))
+                    <div class="alert alert-success alert-dismissable">
+                        <i class="fa  fa-check-circle"></i>
+                        <b>Success!</b>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {!! Session::get('success') !!}
+                    </div>
+                    @endif
+                            <!-- failure message -->
+                    @if(Session::has('fails'))
+                        <div class="alert alert-danger alert-dismissable">
+                            <i class="fa fa-ban"></i>
+                            <b>Fail!</b>
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {!! Session::get('fails') !!}
+                        </div>
+                    @endif
+
+    <table class="table table-bordered table-hover table-striped dataTable" style="overflow:hidden;" id="ticketcategories-table">
+
+
+
+
         <thead>
         <tr>
             <th>Category</th>

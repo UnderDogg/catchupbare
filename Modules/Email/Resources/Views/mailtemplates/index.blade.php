@@ -58,7 +58,6 @@
                 </div>
             @endif
 
-
             <div class="col-md-12 mailboxtemplates" style="overflow:hidden;">
                 <div class="box box-primary">
                     <div class="box-header">
@@ -96,8 +95,6 @@
                     </div>
                 </div>
             </div>
-
-{{--       {data: 'set_id', name: 'set_id'},   --}}
 
             <script type="text/javascript">
                 $(document).ready(function () {

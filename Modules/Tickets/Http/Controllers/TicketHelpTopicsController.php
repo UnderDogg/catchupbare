@@ -1,24 +1,41 @@
 <?php
 
-namespace Modules\Core\Http\Controllers;
+namespace Modules\Tickets\Http\Controllers;
 
 // controllers
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 // requests
 use Modules\Core\Requests\HelptopicRequest;
 use Modules\Core\Requests\HelptopicUpdate;
 // models
-use Modules\Core\Models\Agents;
-use Modules\Core\Models\Department;
-use Modules\Core\Models\Form\Forms;
-use Modules\Tickets\Models\TicketHelpTopic;
-use Modules\Tickets\Models\SlaPlan;
-use Modules\Core\Models\Settings\Ticket;
-use Modules\Core\Models\Ticket\Ticket_Priority;
 use Modules\Core\Models\Staff;
+use Modules\Core\Models\Department;
+use Modules\Core\Models\Team;
+use Modules\Core\Models\Form\Forms;
+use Modules\Tickets\Models\Ticket;
+
+use Modules\Tickets\Models\SlaPlan;
+
+use Modules\Core\Models\User;
+use Modules\Relations\Models\Relation;
+
+use Modules\Tickets\Models\TicketAttachment;
+use Modules\Tickets\Models\TicketCategory;
+use Modules\Tickets\Models\TicketCollaborator;
+use Modules\Tickets\Models\TicketHelpTopic;
+use Modules\Tickets\Models\TicketPriority;
+use Modules\Tickets\Models\TicketSource;
+use Modules\Tickets\Models\TicketStatus;
+use Modules\Tickets\Models\TicketThread;
+use Modules\Tickets\Models\TicketTime;
+use Modules\Tickets\Models\TicketType;
 // classes
+use Illuminate\Http\Request;
 use DB;
 use Exception;
+use Datatables;
+use Carbon;
 
 /**
  * HelptopicController.
@@ -45,16 +62,79 @@ class TicketHelpTopicsController extends Controller
      *
      * @return type Response
      */
-    public function index(Help_topic $topic)
+    public function index(TicketHelptopic $topic)
     {
         //try {
-            $topics = $topic->get();
-
-            return view('tickets::helptopics.index', compact('topics'));
+        return view('tickets::tickethelptopics.index');
         //} catch (Exception $e) {
         //    return view('errors.404');
         //}
     }
+
+
+    public function anyData()
+    {
+        /*
+        'id', 'topic', 'parent_topic', 'custom_form', 'department_id', 'ticketstatus_id', 'ticketpriority_id', 'slaplan_id',
+        'thank_page', 'ticket_num_format', 'status', 'type', 'auto_assign', 'auto_response', 'internal_notes'
+         **/
+
+
+        $tickethelptopics = TicketHelptopic::select([
+            'id', 'topic', 'parent_topic', 'custom_form', 'department_id', 'ticketstatus_id', 'ticketpriority_id', 'slaplan_id',
+            'thank_page', 'ticket_num_format', 'status', 'type', 'auto_assign', 'auto_response', 'internal_notes'
+        ]);
+
+        return Datatables::of($tickethelptopics)
+            /*If Topic_id = Default Topic, Disable Editing*/
+            ->addColumn('tickettopiclink', function ($tickethelptopics) {
+                return '<a href="ticketspanel/tickethelptopics/' . $tickethelptopics->id . '" ">' . $tickethelptopics->topic . '</a>';
+            })
+            ->addColumn('topicstatus', function ($tickethelptopics) {
+                if ($tickethelptopics->status == 1) {
+                    $return = '<span style="color:green">Active</span>';
+                } else {
+                    $return = '<span style="color:red">Disabled</span>';
+                }
+                return $return;
+            })
+            ->addColumn('topictype', function ($tickethelptopics) {
+                if ($tickethelptopics->type == 1) {
+                    $return = '<span style="color:green">Public</span>';
+                } else {
+                    $return = '<span style="color:red">Private</span>';
+                }
+                return $return;
+            })
+            /*
+             *  If Priority is not null, fetch and return department name
+             **/
+            ->addColumn('ticketpriority', function ($tickethelptopics) {
+                return '<span>' . $tickethelptopics->ticketpriority_id . '</span>';
+            })
+            /*
+             *  If Department is not null, fetch and return department name
+             **/
+            ->addColumn('department', function ($tickethelptopics) {
+                return '<span style="background-color:#f6f6f6">'.$tickethelptopics->department_id . '</span>';
+            })
+            ->addColumn('last_updated', function ($tickethelptopics) {
+                return $tickethelptopics->updated_date . '</span>';
+            })
+            ->addColumn('actions', function ($tickethelptopics) {
+                return '
+                <form action="' . route('tickethelptopics.destroy', [$tickethelptopics->id]) . '" method="POST">
+                <div class=\'btn-group\'>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <a href="' . route('tickethelptopics.edit', [$tickethelptopics->id]) . '" class=\'btn btn-success btn-xs\'>Edit</a>
+                    <input type="submit" name="submit" value="Delete" class="btn btn-danger btn-xs" onClick="return confirm(\'Are you sure?\')"">
+                </div>
+                </form>';
+            })
+            ->make(true);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -78,7 +158,7 @@ class TicketHelpTopicsController extends Controller
       | 5.Forms Model
       ================================================
      */
-    public function create(Ticket_Priority $priority, Department $department, Help_topic $topic, Forms $form, User $agent, Sla_plan $sla)
+    public function create(TicketPriority $priority, Department $department, Help_topic $topic, Forms $form, User $agent, Sla_plan $sla)
     {
         try {
             $departments = $department->get();
@@ -122,14 +202,14 @@ class TicketHelpTopicsController extends Controller
             return redirect('helptopic')->with('success', 'Helptopic Created Successfully');
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('helptopic')->with('fails', 'Helptopic can not Create'.'<li>'.$e->errorInfo[2].'</li>');
+            return redirect('helptopic')->with('fails', 'Helptopic can not Create' . '<li>' . $e->errorInfo[2] . '</li>');
         }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param type            $id
+     * @param type $id
      * @param type Priority   $priority
      * @param type Department $department
      * @param type Help_topic $topic
@@ -151,14 +231,14 @@ class TicketHelpTopicsController extends Controller
 
             return view('core::manage.helptopic.edit', compact('priority', 'departments', 'topics', 'forms', 'agents', 'slas'));
         } catch (Exception $e) {
-            return redirect('helptopic')->with('fails', '<li>'.$e->errorInfo[2].'</li>');
+            return redirect('helptopic')->with('fails', '<li>' . $e->errorInfo[2] . '</li>');
         }
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param type                 $id
+     * @param type $id
      * @param type Help_topic      $topic
      * @param type HelptopicUpdate $request
      *
@@ -188,7 +268,7 @@ class TicketHelpTopicsController extends Controller
             return redirect('helptopic')->with('success', 'Helptopic Updated Successfully');
         } catch (Exception $e) {
             /* redirect to Index page with Fails Message */
-            return redirect('helptopic')->with('fails', 'Helptopic can not Update'.'<li>'.$e->errorInfo[2].'</li>');
+            return redirect('helptopic')->with('fails', 'Helptopic can not Update' . '<li>' . $e->errorInfo[2] . '</li>');
         }
     }
 
@@ -214,7 +294,7 @@ class TicketHelpTopicsController extends Controller
                 } else {
                     $text_tickets = 'Ticket';
                 }
-                $ticket = '<li>'.$tickets.' '.$text_tickets.' have been moved to default Help Topic</li>';
+                $ticket = '<li>' . $tickets . ' ' . $text_tickets . ' have been moved to default Help Topic</li>';
             } else {
                 $ticket = '';
             }
@@ -227,22 +307,22 @@ class TicketHelpTopicsController extends Controller
                 } else {
                     $text_emails = 'Email';
                 }
-                $email = '<li>'.$emails.' System '.$text_emails.' have been moved to default Help Topic</li>';
+                $email = '<li>' . $emails . ' System ' . $text_emails . ' have been moved to default Help Topic</li>';
             } else {
                 $email = '';
             }
 
-            $message = $ticket.$email;
+            $message = $ticket . $email;
 
             $topics = $topic->whereId($id)->first();
             /* Check whether function success or not */
             try {
                 $topics->delete();
                 /* redirect to Index page with Success Message */
-                return redirect('helptopic')->with('success', 'Helptopic Deleted Successfully'.$message);
+                return redirect('helptopic')->with('success', 'Helptopic Deleted Successfully' . $message);
             } catch (Exception $e) {
                 /* redirect to Index page with Fails Message */
-                return redirect('helptopic')->with('fails', 'Helptopic can not Delete'.'<li>'.$e->errorInfo[2].'</li>');
+                return redirect('helptopic')->with('fails', 'Helptopic can not Delete' . '<li>' . $e->errorInfo[2] . '</li>');
             }
         }
     }
